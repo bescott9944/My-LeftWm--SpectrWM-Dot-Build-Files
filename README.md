@@ -16,13 +16,16 @@
  Note         : dmidecode may produce error messages in some systems. They can be
                 safely ignored and removed from file with any text editor.
 
-* ---------------------------------------------------------------------
+ ---------------------------------------------------------------------
 
->> <---> "ABOUT MyStat.sh" <--->     Copyright (C) 2019, Bruce E. Scott
->>>   <<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
->>>       <<<---================}[ Hal-9000-info.sh ]{================--->>>
+> <---> "ABOUT MyStat.sh" <--->
+>Copyright (C) 2019, Bruce E. Scott
 
-* ---------------------------------------------------------------------
+><<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
+
+><<<---================}[ Hal-9000-info.sh ]{================--->>>
+
+ ---------------------------------------------------------------------
 
 ## A Few Words about Hal
 There has been a few months testing and the script is working ok for now. There is still
