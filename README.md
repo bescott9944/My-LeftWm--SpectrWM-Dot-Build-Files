@@ -17,17 +17,17 @@
 
  ---------------------------------------------------------------------
 
->####   <---> "ABOUT MyStat.sh" <--->
->####   Copyright (C) 2019, Bruce E. Scott
+####   <---> "ABOUT MyStat.sh" <--->
+####   Copyright (C) 2019, Bruce E. Scott
 
->####   <<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
+####   <<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
 
->####    <<<---================}[ Hal-9000-info.sh ]{================--->>>
+####    <<<---================}[ Hal-9000-info.sh ]{================--->>>
 
  ---------------------------------------------------------------------
 
 ## A Few Words about Hal
->Hal started out as MyStat.sh with v.0.3 Beta on 04/12/2019.
+Hal started out as MyStat.sh with v.0.3 Beta on 04/12/2019.
 MyStats.sh started out as a need to get some system information for a issue I was having with
 Linux Mint and EndeavourOS Arch. The folks that was trying to help were asking question on the Distros
 and hardware, this setting, what did this say and so on...
@@ -45,18 +45,18 @@ Anyway I finally got this all working to probe the system to get all the informa
 that are installed on 99.9% of the Linux Distros by default... This was kinda important so user did not have
 to install additional software...
 
->There has been a few months testing and the script is working OK for now. There is still
+There has been a few months testing and the script is working OK for now. There is still
 a issue with "INXI" on some systems where it is stored in different location on some Distros.
 I am working on this issue and will update this script as soon as I get the wording worked
 out... :-)
 
->There is also a name change from Mystats.sh to Hal-9000-info.sh because it sounds cooler and I
+There is also a name change from Mystats.sh to Hal-9000-info.sh because it sounds cooler and I
 am a big fan of both the movies!
 
 ## Known Issues:
->There is still a issue with "INXI" on some systems where it is stored in different location on some Distros.
+There is still a issue with "INXI" on some systems where it is stored in different location on some Distros.
 Just edit the script and set the location of INXI path to your path of your INXI... (IE. /bin/inxi or /use/bin/inxi)
 This will fix the issue until I get the chance to add testing in the script for the location of INXI..
 
->Thanks you for looking at my Hal-9000-Info script...
+Thanks you for looking at my Hal-9000-Info script...
 -Bruce
