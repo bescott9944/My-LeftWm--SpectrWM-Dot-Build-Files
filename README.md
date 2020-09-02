@@ -5,7 +5,7 @@
 
 #### Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
 * Script Name  : Hal-9000-info.sh v.1.3.0
-* Description  : Displays System and IP Network information
+* Description  : Terminal Based script to displays System and IP Network Information
 * Dependencies : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
 * Arguments    : None
 * Author       : Bruce E. Scott, 03 Jun 2019
