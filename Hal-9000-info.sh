@@ -8,7 +8,7 @@
 # Dependencies : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
 # Arguments    : None
 # Author       : Bruce E. Scott, 03 Jun 2019
-# Email        : bescott9944@gmail.com
+# Email        : 
 # Linux Form   : I can be reached at https://www.ezeelinux.com/talk/index.php (bescott9944)
 # Comment 1.   : v.0.3 script concept and building.. Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
 # Comment 2.   : Requires root/sudo privileges
