@@ -19,7 +19,7 @@ ipinfo.sh and sysinfo.sh...
 > *  Web: https://leon-plickat.org/
 
 ***
-#### All the folks that share there work on the internet!
+>#### All the folks that share there work on the internet!
 > *  I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work 
  and I add my own to make up this full script. This script displays the information on screen
  and a file in your /home/your-name under the name of the system "XXXXX.stat"...
