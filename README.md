@@ -28,20 +28,28 @@
 ## A Few Words about Hal
 Hal started out as MyStat.sh with v.0.3 Beta on 04/12/2019.
 MyStats.sh started out as a need to get some system information for a issue I was having with
-Linux Mint and EndeavourOS Arch. The folks that was trying to help were asking question on the Distros
+Linux Mint and EndeavourOS Arch. The folks that were trying to help were asking question on the Distros
 and hardware, this setting, what did this say and so on...
 
 So I found Richard Romig's scripts that he posted over at https://www.ezeelinux.com/talk where I was getting
-some of the information they wanted and running command that they gave me. So I decided to learn who to make a
-script. Now I was use to making BAT file back in the DOS days with Dos 3.3 so I thought it can not be that hard! Lol
-Well I did have tho learn how to use some syntax but that wasn't that hard... :-)
+some of the information they wanted and running command that they gave me. So I decided to learn how to make a
+script. Now I was use to making BAT file back in the DOS days with Dos 3.3, so I thought it can not be that hard! Right? Lol
+Well I did have to learn how to use some new syntax but it wasn't that hard, kinda... :-)
+I want you to understand that I am not a programmer or a experienced in scripting so the script is not perfect but it works as is...
 
 Well that stared several months of testing and more testing and help from the good folks over at
 https://www.ezeelinux.com/talk forum... Great bunch of folks. I also had some help from Leon.P at Ezeetalk
 forum with a issue with INXI... The folks over at EndeavourOS forum, https://forum.endeavouros.com/ ...
+I did a bunch of VM testing with all kinds of Distros from Arch, Debian and Debian based distros like Mint EndeavourOS
+MX, Debian 10 and Ubuntu server.
 
-Anyway I finally got this all working to probe the system to get all the information with all the standard files
-that are installed on 99.9% of the Linux Distros by default... This was kinda important so user did not have
+I then went to real hardware with the same distros as I do use most of them anyway and that is where I found the Issue
+with INXI being in different directories on some distros...
+I tested on my used systems I built and several laptops from Dell and Acer and a few I borrowed. lol
+They were all kind of hardware combos so it was a good testing bed..
+
+Anyway, I finally got this all working to probe the system to get all the information with all the standard files
+that are installed on 99.9% of the Linux Distros by default... This was kinda important so users did not have
 to install additional software...
 
 There has been a few months testing and the script is working OK for now. There is still
