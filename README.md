@@ -17,12 +17,12 @@
 
  ---------------------------------------------------------------------
 
-####   <---> "ABOUT MyStat.sh" <--->
-####   Copyright (C) 2019, Bruce E. Scott
+####             <---> "ABOUT MyStat.sh" <--->
+####           Copyright (C) 2019, Bruce E. Scott
 
-####   <<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
+####      <<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
 
-####    <<<---================}[ Hal-9000-info.sh ]{================--->>>
+####        <<<---================}[ Hal-9000-info.sh ]{================--->>>
 
  ---------------------------------------------------------------------
 
@@ -32,12 +32,12 @@ MyStats.sh started out as a need to get some system information for a issue I wa
 Linux Mint and EndeavourOS Arch. The folks that was trying to help were asking question on the Distros
 and hardware, this setting, what did this say and so on...
 
->So I found Richard Romig's scripts that he posted over at https://www.ezeelinux.com/talk where I was getting
+So I found Richard Romig's scripts that he posted over at https://www.ezeelinux.com/talk where I was getting
 some of the information they wanted and running command that they gave me. So I decided to learn who to make a
 script. Now I was use to making BAT file back in the DOS days with Dos 3.3 so I thought it can not be that hard! Lol
 Well I did have tho learn how to use some syntax but that wasn't that hard... :-)
 
->Well that stared several months of testing and more testing and help from the good folks over at
+Well that stared several months of testing and more testing and help from the good folks over at
 https://www.ezeelinux.com/talk forum... Great bunch of folks. I also had some help from Leon.P at Ezeetalk
 forum with a issue with INXI... The folks over at EndeavourOS forum, https://forum.endeavouros.com/ ...
 
