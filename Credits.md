@@ -1,15 +1,18 @@
 
 # Credit's
-### People That Inspired Me:
+### People That Inspired Me and this script:
 
 ***
+
 >Richard Romig 
 > * A BIG Thanks goes out to Richard Romig for his 2 scripts.
 > * Mystat.sh is based on these fantastic scripts...
 > * The 2 scripts were written and Copyright (C) in 2018 by Richard Romig were
 ipinfo.sh and sysinfo.sh...
 > *	Richard can be reachec at this Email: rick.romig@gmail.com
+
 ***
+
 >leon-plickat
 > * A BIG Thanks goes out to Leon.P for his Hdd Function for the script.
  The function list all the hard drives and there information for the output
@@ -19,7 +22,8 @@ ipinfo.sh and sysinfo.sh...
 > *  Web: https://leon-plickat.org/
 
 ***
->#### All the folks that share there work on the internet!
+
+> #### All the folks that share there work on the internet!
 > *  I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work 
  and I add my own to make up this full script. This script displays the information on screen
  and a file in your /home/your-name under the name of the system "XXXXX.stat"...
