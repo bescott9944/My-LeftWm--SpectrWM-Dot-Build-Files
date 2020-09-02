@@ -25,6 +25,16 @@
 
  ---------------------------------------------------------------------
 
+## What is Hal
+Hal-9000-info.sh is a script that will produce a output in the terminal. Hal will also
+produce a file in the /home/username folder with the extension of system name.stats (ie Stargazer-PeP10.stat)
+That way with the information being in a text file you will always have a hard copy. Sure you can run the script
+as many times as you want as it will also be time stamped when the script was ran!
+
+NOTE: The System-name.stat (ie Stargazer-PeP10.stat) will be over written every time the script is ran, so with that in mind
+if you want to keep a running total of changes you will have to save the .stat file in you /home/user-name folder to another
+folder of rename the .stat to something else! You will have to know how to do this as it is beyond the scope of the script or
+this document....
 ## A Few Words about Hal
 Hal started out as MyStat.sh with v.0.3 Beta on 04/12/2019.
 MyStats.sh started out as a need to get some system information for a issue I was having with
