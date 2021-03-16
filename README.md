@@ -49,9 +49,10 @@ Now I had some screen resolution issue and I had to file a Bug Report. The Dev, 
  I got LeftWm all sorted.. Took a bit of work and a bunch of chatting on the Github Bug Report but thanks for the Great folks over there we got things working...
 The polybar was easy. I figured that one out. I looked at othere Themes that had the bar on the bottom and found out how they did that
 There is a setting you change and it is on the bottom... Like this
-
+```
 ; Put the polybar at the bottom of the screen-default = false
 bottom = true
+```
 
 The desktop was a 4 day message back and forth / testing and the great help I got was fantastic!
 LeftWm desktop would not go into 1920x1080 and stayed stuck in 1360x768. Arch's default boot this monitor / Tv at 1360x768 and EndeavourOS changes it to 1920x1080 on booting into Cinnamon.
@@ -69,11 +70,11 @@ I hope this may help anyone else that has these issues... :-)
 So that is some of the things I had fun with and yes it was a adventure! Lol
 
 
-## please read the rest of this Readme as it mostly came from LeftWM Github README.md
-Please install all the Dependencies and programs, Themes. Most of all follow the instruction on the Themes to make the Links to the folders.
+## Please READ the rest of this Readme as it mostly came from LeftWM Github README.md
+# Please install all the Dependencies and programs, Themes. Most of all follow the instruction on the Themes to make the Links to the folders.
 That is it! Have fun!
 Thanks LeftWm Devs for such a cool Window Manger!
----
+
 
 ## Config
 The settings file to change key bindings and the default mod key can be found at
