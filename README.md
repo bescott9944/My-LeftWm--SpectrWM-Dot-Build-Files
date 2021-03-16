@@ -24,11 +24,8 @@ Left is not a bar. But, there are lots of good bars out there. With themes, pick
 Here you will find my Dot Files and Scripts I use for my LeftWM setup that I use on my EndeavourOS Arch install...
 Some of these files were borrowed from OTB, DT, Linux Dabbler and other sources. I don't remember where I got them all
 but here they are!
-
-
 I know some of the script might not be worded right but they work for me. Edit them as you wish...
 I have included all my "~/bin files". Polybar, Rofi, and other files, my config file, Thenes build files.. Enjoy!
-
 
 I have found some things that were not in the Wiki and I got them from the Bug Reports and they fixed my issues.
 I fmund this in a Report but later found in ght Wiki.
