@@ -1,15 +1,20 @@
-## This is my LeftWM Window manager setup. (Use at your own Risk)
+## This is my LeftWM-SpectrWM Window Manager Setup. (Use At Your Own Risk)
 
 ![Screenshot of LeftWM in action](screenshots/4.jpg)
 
-Here you will find my Dot Files and Scripts I use for my LeftWM setup that I use on my EndeavourOS Arch install...
+Here you will find my Dot Files and Scripts I use for my LeftWM / SpectrWM setup that I use on my EndeavourOS Arch install...
 Some of these files were borrowed from OTB, DT, Linux Dabbler and other sources. I don't remember where I got them all
 but here they are! I know some of the script might not be worded right but they work for me. Edit them as you wish...
 I have included all my "~/bin files". Polybar, Rofi, and other files, my config file, Thenes build files.. Enjoy!
 
+```
+One thing I found useful is to search trhough the Bug Reports. I found some good
+information that was and is not in the Wike.
+So make sure you check their. Also there's lots of good help on the Github site...
+```
 
-I have found some things that were not in the Wiki and I got them from the Bug Reports and they fixed my issues.
-I fmund this in a Report but later found in ght Wiki.
+I have found some things that were not in the LeftWm Wiki and I got them from the Bug Reports and they fixed my issues.
+I fmund this in a Report but later found in the Wiki.
 ```
 [[keybind]]
 command = "FocusNextTag"
