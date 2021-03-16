@@ -11,8 +11,10 @@ I have included all my "~/bin files". Polybar, Rofi, and other files, my config 
 
 ```
 One thing I found useful is to search trhough the Bug Reports. I found some good
-information that was and is not in the Wike.
-So make sure you check their. Also there's lots of good help on the Github site...
+information that was and is not in the Wiki.
+So make sure you check there. Also there's lots of good help on the Github site...
+Also use YAY (or you fav AUR tool) and download the leftwm-git version. I was told
+by the Devs this is updated with all the patches often. Give it a try! I will...
 ```
 
 I have found some things that were not in the LeftWm Wiki and I got them from the Bug Reports and they fixed my issues.
