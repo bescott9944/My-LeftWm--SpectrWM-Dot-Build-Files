@@ -1,3 +1,8 @@
+
+# My Theme: Bruce_polybar
+I used parts of the basic_polybar along with some of OTB_polybar and created my Bruce_polybar with all the commands and setting in the "UP" file to start LeftWm and get all the conkys set and all... Use at you own Risk... Modifiy to make them work for you...
+
+
 # Why have themes
 
 With left there are two types of configs. First there are config settings that are specific to you but don’t really change. These are settings like keybindings. Workspace locations, and names of desktops/tags. These settings can be found in ~/.config/leftwm/config.toml
