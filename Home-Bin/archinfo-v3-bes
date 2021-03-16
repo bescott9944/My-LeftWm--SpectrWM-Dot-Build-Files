@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# vim: noai:ts=4:sw=4:expandtab
+# shellcheck source=/dev/null
+# shellcheck disable=2009
+
+###################################################################################
+# This script uses lsb_release, lscpu, and glxinfo. make sure they are installed. #
+###################################################################################
+#
+# START OF SCRIPT
+#
+#
+clear ; clear
+
+# Universal variables
+user="${USER}\e[33m@"
+Desktop="${XDG_CURRENT_DESKTOP}"
+Kernel="$(uname -sr)"
+Uptime="$(uptime -p | sed 's/up //')"
+Shell="$(basename "$SHELL")"
+CPU=$(grep 'model name' /proc/cpuinfo | uniq | cut -c 14-)
+GPU="$(/usr/bin/lspci | grep 'VGA' | cut -c 65-)"
+wm_theme="$(gsettings get org.cinnamon.desktop.wm.preferences theme)"
+# CPU="$(lscpu | grep Model\ name | sed 's/name:\ //' | sed "s/([^)]*)/()/g" | sed 's/[)(]//g')"
+RAM="$(free -h | awk '/^Mem:/ {print $3 " / " $2}')"
+# OS1="$(lsb_release -si)"
+OS="$(lsb_release -sirc)"
+Uptime="$(uptime -p | sed 's/up //')"
+
+if [ -f /usr/bin/dpkg ]; then
+    Packages="$(dpkg -l | grep -c ^i)"
+    elif
+   [ -f /usr/bin/pacman ]; then
+     Packages="$(pacman -Q | wc -l)"
+fi
+
+# Packages="$(pacman -Q | wc -l)"
+## LOCAL IP
+LOCALIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+# LOCALIP=$(echo -e "${COLOR_INFO}Local IP\t${COLOR_HL}$LOCALIP${NC}")
+## EXTERNAL IP
+EXTERNALIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+# EXTERNALIP=$(echo -e "${COLOR_INFO}External IP\t${COLOR_HL}$EXTERNALIP${NC}")
+
+if [ -z "${WM}" ]; then
+	if [ "${XDG_CURRENT_DESKTOP}" ]; then
+		envtype='Desktop'
+		WM="${XDG_CURRENT_DESKTOP}"
+	elif [ "${DESKTOP_SESSION}" ]; then
+		envtype='Desktop'
+		WM="${DESKTOP_SESSION}"
+	else
+		envtype='WM'
+		WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+	fi
+else
+	envtype='WM'
+
+fi
+
+# colors
+ c1="\e[31m" # Red
+ c2="\e[32m" # Light Green
+ c3="\e[33m" # Yellow
+ c4="\e[34m"  # Calm Blue
+ c5="\e[35m" # Violet
+ c6="\e[36m" # Arch Blue
+ c7="\e[37m" # White
+ c8="\e[38m" # Sky Blue
+ c9="\e[39m" # Light Grey
+ c10="\e[30m" # Dark Grey
+ c20="\e[0m" # Normal
+ c21="\e[0;94m" # High Intenisty Blue
+
+# Package count for Debian based systems
+Packages_dpkg(){
+         
+         Packages="$(dpkg -l | grep -c ^i)"
+}
+
+# Package count for Arch based systems
+Arch_Packages(){
+
+         Packages="$(pacman -Qs | wc -l)"
+
+}
+
+# An Error echo wrapper
+err0r()
+{
+
+    echo >&2 "$(tput bold; tput setaf 1)[-] ERROR: ${*}$(tput sgr0)"
+    echo ""
+    exit 86
+}
+
+# A Warning echo wrapper
+warn()
+{
+ echo >&2 "$(tput bold; tput setaf 3)[!] WARNING: ${*}$(tput sgr0)"
+ echo ""
+}
+
+# A Message echo wrapper
+msg()
+{
+ echo "$(tput bold; tput setaf 2)[+] ${*}$(tput sgr0)"
+}
+echo ""
+echo -e "${c21}                   _           __  __                      _                                        "
+echo -e "${c21}                  .o+\`        / / / / ______  _______     / \            __   ___                  "           
+echo -e "${c21}                 \`ooo/       / / / / / /___/ / /  / /    / _ \  ________/ /  / (_)__  __  ____ __  "           
+echo -e "${c21}                \`+oooo:     / /_/ / / /___/ / /__/_/    / ___ \/ __/ __/ _ \/ / / _ \/ / / /\ \ /  "            
+echo -e "${c21}               \`+ooooo:     \____/ /_/     /_/         /_/   \/_/  \__/_//_/_/_/_//_/\__,_//_\_\   "    
+echo -e "${c21}               \`+oooooo:            "       
+echo -e "${c21}               -+oooooo+:               "          ${c6}Logged In: ${c7}${user}${c7}$(hostname)
+echo -e "${c21}             \`/:-:++oooo+:              "         ${c6}OS: ${c7}$OS
+echo -e "${c21}            \`/++++/+++++++:             "         ${c6}$envtype: ${c7}$WM
+echo -e "${c21}           \`/++++++++++++++:            "         ${c6}Theme: ${c7}$wm_theme
+echo -e "${c21}          \`/+++ooooooooooooo/\`          "        ${c6}Kernel: ${c7}$Kernel 
+echo -e "${c21}         ./ooosssso++osssssso+\`         "        ${c6}Shell: ${c7}$Shell
+echo -e "${c21}        .oossssso-\`\`\`\`/ossssss+\`        "     ${c6}CPU: ${c7}$CPU
+echo -e "${c21}       -osssssso.      :ssssssso.       "          ${c6}GPU: ${c7}$GPU
+echo -e "${c21}      :osssssss/        osssso+++.      "          ${c6}RAM: ${c7}$RAM
+echo -e "${c21}     /ossssssss/        +ssssooo/-      "          ${c6}Packages: ${c7}$Packages 
+echo -e "${c21}   \`/ossssso+/:-        -:/+osssso+-    "          ${c6}Uptime: ${c7}${Uptime}${reset} 
+echo -e "${c21}  \`+sso+:-\`                 \`.-/+oso:   "        ${c6}Local Net IP: ${c7}$LOCALIP
+echo -e "${c21} \`++:.                           \`-/+/  "          ${c6}External IP: ${c7}$EXTERNALIP
+echo -e "${c21} /.\`                                .\`/ ${c20}"
+echo ""
