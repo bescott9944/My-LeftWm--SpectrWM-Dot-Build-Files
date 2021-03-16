@@ -1,24 +1,3 @@
-# LeftWM - A window manager for Adventurers
-![CI](https://github.com/leftwm/leftwm/workflows/CI/badge.svg)
-
-![Screenshot of LeftWM in action](screenshots/4.jpg)
-
-## Why go left 
-
-Left is a tiling window manager written in rust for stability and performance. The core of left is designed to do one thing and one thing well. Be a window manager. Because you probably want more than just a black screen, LeftWM is built around the concept of theming. With themes you can choose between different bars, compositors, backgrounds, colors, whatever makes you happy.   
-
-LeftWM has been built from the very beginning to support multiple screens and has been built around ultrawide monitors. You will see this with the default key bindings
-
-## Left is NOT
-
-Left is not a compositor.
-
-Left is not a lock screen.
-
-Left is not a bar. But, there are lots of good bars out there. With themes, picking one is as simple as setting a symlink.
-
-
-
 ## This is my LeftWM Window manager setup. (Use at your own Risk)
 
 Here you will find my Dot Files and Scripts I use for my LeftWM setup that I use on my EndeavourOS Arch install...
@@ -60,8 +39,9 @@ Logging into LeftWm you don't have that and there are things one needs get the r
 When I set the display with xrandr LeftWm would change but the desktop is all squished into the upper left of the screen.
 
 In the end to fix my issue after 4 days is they had me created a ".xprofile" and added the xrandr commands in there... This is the commands that I used for my Monitor / Tv...
-
+```
 xrandr --output VGA-0 --off --output DVI-0 --off --output HDMI-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal
+```
 
 Now LeftWm boots onto 1920x1080 and all is right as rain! :-D
 As a added Bonus, SpectrWm uses .xprofile too and I did away with 2 scripts I was using for Spectrwm to get the resolution set, so Yall.. Things are great!
@@ -74,6 +54,29 @@ So that is some of the things I had fun with and yes it was a adventure! Lol
 Please install all the Dependencies and programs, Themes. Most of all follow the instruction on the Themes to make the Links to the folders.
 That is it! Have fun!
 Thanks LeftWm Devs for such a cool Window Manger!
+
+
+
+
+# LeftWM - A window manager for Adventurers
+![CI](https://github.com/leftwm/leftwm/workflows/CI/badge.svg)
+
+![Screenshot of LeftWM in action](screenshots/4.jpg)
+
+## Why go left 
+
+Left is a tiling window manager written in rust for stability and performance. The core of left is designed to do one thing and one thing well. Be a window manager. Because you probably want more than just a black screen, LeftWM is built around the concept of theming. With themes you can choose between different bars, compositors, backgrounds, colors, whatever makes you happy.   
+
+LeftWM has been built from the very beginning to support multiple screens and has been built around ultrawide monitors. You will see this with the default key bindings
+
+## Left is NOT
+
+Left is not a compositor.
+
+Left is not a lock screen.
+
+Left is not a bar. But, there are lots of good bars out there. With themes, picking one is as simple as setting a symlink.
+
 
 
 ## Config
