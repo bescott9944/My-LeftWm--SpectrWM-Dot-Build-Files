@@ -1,0 +1,248 @@
+##################################################################
+# [][][]                              []
+# []    []                            []
+# []    []                            []
+# [][][]      [][][]    [][][]  [][][][]  [][][]    [][][]
+# []    []  []    []  [][]      []    []  []  []  []
+# []    []  []    []      [][]  []    []  []      []
+# [][][]      [][][]  [][][]    []    []  []        [][][]
+#
+#           ===============================
+#
+#     []][]      []        []    [][][]   [][][]  [][][][]   [][][]
+#    []   []     []            []    []  []       []        []
+#   [][][][[]    []        []  []    []    [][]   [][][]      [][]
+#  []       []   []        []  []    []       []  []             []
+# []         []  [][][][]  []    [][][]  [][][]   [][][][]  [][][]
+#
+# Alias definitions.
+# You may want to put all your additions into a separate file like this one.
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+## Command aliases  ##
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias back='cd $OLDPWD'
+alias c='clear'
+# alias chmod="chmod -c"
+alias df="df -h --exclude=squashfs"
+alias diff='colordiff'
+alias e="vim -O "
+alias E="vim -o "
+alias ht='htop'
+alias lsmount='mount |column -t'
+alias ports='netstat -tulanp'
+# alias mv='mv -iv'
+alias myip="curl http://ipecho.net/plain; echo"
+alias speedtest='curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -'
+alias ssha='eval $(ssh-agent) && ssh-add'
+alias svim='sudo vim'
+alias watch='watch -d'
+alias wget='wget -c'
+alias logs=" sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
+alias folders='find . -maxdepth 1 -type d -print0 | xargs -0 du -sk | sort -rn'
+alias userlist="cut -d: -f1 /etc/passwd"
+
+## Enable color support of ls and also add handy aliases  ##
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    # alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+    alias l.=' ls -lhFa --time-style=long-iso --color=auto'
+    alias ls=' ls -lhF --time-style=long-iso --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+
+fi
+
+## LS some more ls aliases  ##
+### For --color=auto COLORS See "Enable Colors Section"
+alias ld='ls -lah'
+alias ll='ls -alF'
+# alias ll=' ls'
+alias la='ls -A'
+alias l='ls -CF'
+# alias f='ls -l | wc -l'
+
+### For --color=auto COLORS See "Enable Colors"  ##
+# alias l.=' ls -lhFa --time-style=long-iso --color=auto'
+# alias ls=' ls -lhF --time-style=long-iso --color=auto'
+
+## Help ##
+alias myhelp='cat ~/.bash_aliases | grep'
+alias myhelpl='less ~/.bash_aliases'
+alias myhelplg='less ~/.bash_aliases | grep'
+
+##  Editing  ##
+alias ba='nano $HOME/.bash_aliases'  
+
+## History  ##
+alias h='history'
+alias wdil='history | grep'
+alias seecom='cat ~/.bash_history | grep'
+
+## Get top process eating memory  ##
+alias mem5='ps auxf | sort -nr -k 4 | head -5'
+alias mem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu  ##
+alias cpu5='ps auxf | sort -nr -k 3 | head -5'
+alias cpu10='ps auxf | sort -nr -k 3 | head -10'
+
+## List largest directories (aka "ducks")  ##
+alias dir5='du -cksh * | sort -hr | head -n 5'
+alias dir10='du -cksh * | sort -hr | head -n 10'
+
+## Safetynets  ##
+# do not delete / or prompt if deleting more than 3 files at a time  #
+alias rm='rm -I --preserve-root'
+
+## Confirmation  ##
+alias mv='mv -iv'
+alias cp='cp -i'
+alias ln='ln -i'
+alias mkdir='mkdir -pv'
+alias mkfile='touch'
+alias rm='rm -rfi'
+
+## Parenting changing perms on /   ##
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+## reload bash / Zsh config  ##
+alias reload='source ~/.bashrc'
+alias reloadz='source ~/.zshrc'
+
+##  Youtube-dl Aliases  ##
+alias yta-aac='youtube-dl --extract-audio --audio-format aac '
+alias yta-best='youtube-dl --extract-audio --audio-format best '
+alias yta-flac='youtube-dl --extract-audio --audio-format flac '
+alias yta-m4a='youtube-dl --extract-audio --audio-format m4a '
+alias yta-mp3='youtube-dl --extract-audio --audio-format mp3 '
+alias yta-opus='youtube-dl --extract-audio --audio-format opus '
+alias yta-vorbis='youtube-dl --extract-audio --audio-format vorbis '
+alias yta-wav='youtube-dl --extract-audio --audio-format wav '
+alias ytv-best='youtube-dl -i --config-location /home/bruce/youtube-dl.conf -f bestvideo+bestaudio '
+
+## ssh login alias  ##
+if [ -f /usr/bin/ssh ]; then
+# alias sshin='ssh -X 192.168.1."$1"'
+  alias ssh100='ssh -X 192.168.1.100'
+  alias ssh103='ssh -X 192.168.1.103'
+  alias ssh104='ssh -X 192.168.1.104'
+fi
+
+## Manage packages update easier  ##
+#---------------------------------#
+## Debian based Distros  ##
+if [ -f /usr/bin/apt ]; then
+  alias update='sudo apt update'
+  alias upgrade='sudo apt update && sudo apt dist-upgrade'
+  alias install='sudo apt install'
+  alias aptlist='apt list --upgradable'
+  alias upclean='up --clean' 
+# Up is Joe Collins UP Bash update script
+  alias aptll='apt list | less'
+fi
+
+## Arch based Distros  ##
+if [ -f /usr/bin/pacman ]; then
+  alias update='sudo pacman -Sy'
+  alias upgrade='sudo pacman -Syyu'
+  alias install='sudo pacman -S --needed'
+  alias yinstall='yay -S --needed'
+  alias yupdate='yay -Sy'
+  alias yupgrade='yay -Syyu'
+fi
+
+## The lonly Solus  ##
+if [ -f /usr/bin/eopkg ]; then
+  alias update='sudo eopkg update-repo'
+  alias upgrade='sudo eopkg upgrade'
+  alias updistro='~/bin/up-solus'
+  alias install='sudo eopkg it'
+fi
+
+## set common functions  ##
+#############
+
+function my_ip() # Get IP adress.
+{
+   curl ifconfig.co
+}
+
+## Find a file with a pattern in name:  ##
+function ff()
+{
+    find . -type f -iname '*'"$*"'*' -ls ;
+}
+
+
+function sysinfo()   # Get current host related info.
+{
+    echo -e "\n${BRed}System Informations:$NC " ; uname -a
+    echo -e "\n${BRed}Online User:$NC " ; w -hs |
+             cut -d " " -f1 | sort | uniq
+    echo -e "\n${BRed}Date :$NC " ; date
+    echo -e "\n${BRed}Server stats :$NC " ; uptime
+    echo -e "\n${BRed}Memory stats :$NC " ; free
+    echo -e "\n${BRed}Public IP Address :$NC " ; my_ip
+    echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
+    echo -e "\n${BRed}CPU info :$NC "; cat /proc/cpuinfo ;
+    echo -e "\n"
+}
+
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+ else
+    if [ -f $1 ] ; then
+        # NAME=${1%.*}
+        # mkdir $NAME && cd $NAME
+        case $1 in
+          *.tar.bz2)   tar xvjf ../$1    ;;
+          *.tar.gz)    tar xvzf ../$1    ;;
+          *.tar.xz)    tar xvJf ../$1    ;;
+          *.lzma)      unlzma ../$1      ;;
+          *.bz2)       bunzip2 ../$1     ;;
+          *.rar)       unrar x -ad ../$1 ;;
+          *.gz)        gunzip ../$1      ;;
+          *.tar)       tar xvf ../$1     ;;
+          *.tbz2)      tar xvjf ../$1    ;;
+          *.tgz)       tar xvzf ../$1    ;;
+          *.zip)       unzip ../$1       ;;
+          *.Z)         uncompress ../$1  ;;
+          *.7z)        7z x ../$1        ;;
+          *.xz)        unxz ../$1        ;;
+          *.exe)       cabextract ../$1  ;;
+          *)           echo "extract: '$1' - unknown archive method" ;;
+        esac
+    else
+        echo "$1 - file does not exist"
+    fi
+fi
+}
+
+
+## Creates an archive (*.tar.gz) from given directory.  ##
+function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+
+## Create a ZIP archive of a file or folder.  ##
+function makezip() { zip -r "${1%%/}.zip" "$1" ; }
+
+
+function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
+
+mcd () {
+    mkdir -p $1
+    cd $1
+}
+
+## End
