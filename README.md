@@ -29,8 +29,7 @@ I have included all my "~/bin files". Polybar, Rofi, and other files, my config 
 
 I have found some things that were not in the Wiki and I got them from the Bug Reports and they fixed my issues.
 I fmund this in a Report but later found in ght Wiki.
-
-
+...
 [[keybind]]
 command = "FocusNextTag"
 modifier = ["modkey"]
@@ -40,7 +39,7 @@ key = "Right"
 command = "FocusPreviousTag"
 modifier = ["modkey"]
 key = "Left"
-
+...
 
 With these I can use the arrow keys and it works just like in SpectrWm where you hold down the Modkey and use the arrow keys to move between the tags!
 This was a must for me. If you like to use the Vim keys just change the "KEY = "J"" or to what evr you want.
@@ -70,11 +69,12 @@ I hope this may help anyone else that has these issues... :-)
 So that is some of the things I had fun with and yes it was a adventure! Lol
 
 
-## please read the rest of this read me as it mostly came from LeftWM Github README.md
+## please read the rest of this Readme as it mostly came from LeftWM Github README.md
+...
 Please install all the Dependencies and programs, Themes. Most of all follow the instruction on the Themes to make the Links to the folders.
 That is it! Have fun!
 Thanks LeftWm Devs for such a cool Window Manger!
-
+...
 
 
 ## Config
