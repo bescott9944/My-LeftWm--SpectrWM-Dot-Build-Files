@@ -19,7 +19,7 @@ Left is not a bar. But, there are lots of good bars out there. With themes, pick
 
 
 
-# This is my LeftWM Window manager setup. (Use at your own Risk)
+## This is my LeftWM Window manager setup. (Use at your own Risk)
 
 Here you will find my Dot Files and Scripts I use for my LeftWM setup that I use on my EndeavourOS Arch install...
 Some of these files were borrowed from OTB, DT, Linux Dabbler and other sources. I don't remember where I got them all
