@@ -1,0 +1,5 @@
+# !/bin/bash
+# this starts Rofi Popup windiwed file manager like Dmenu
+# This shows the command with the theme added and the fonts with the icon theme too
+
+rofi -combi-modi window,drun,ssh -theme solarized -font "hack 10" -show combi -icon-theme "Papirus" -show-icons
