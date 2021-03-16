@@ -2,7 +2,9 @@
 
 ### (Use At Your Own Risk)
 
-![Screenshot of LeftWM in action](screenshots/4.jpg)
+![Screenshot of LeftWM in action](screenshots/03-16-2021-16:33-2.png)
+
+![Screenshot of LeftWM in action](screenshots/03-07-2021-14:16.png)
 
 Here you will find my Dot Files and Scripts I use for my LeftWM / SpectrWM setup that I use on my EndeavourOS Arch install...
 I also use these on my Linux Mint, my BTW Arch, MX 19 and others when I get a chance...
@@ -75,6 +77,9 @@ Thanks LeftWm Devs for such a cool Window Manger!
 
 
 # LeftWM - A window manager for Adventurers
+
+![Screenshot of LeftWM in action](screenshots/4.jpg)
+
 ![CI](https://github.com/leftwm/leftwm/workflows/CI/badge.svg)
 
 ## Why go left 
