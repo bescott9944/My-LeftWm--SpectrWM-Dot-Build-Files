@@ -46,7 +46,7 @@ With these I can use the arrow keys and it works just like in SpectrWm where you
 This was a must for me. If you like to use the Vim keys just change the "KEY = "J"" or to what evr you want.
 
 Now I had some screen resolution issue and I had to file a Bug Report. The Dev, an 2 theres jumped right in and had me fixed within 2 days of texting back and forth.
----
+
  I got LeftWm all sorted.. Took a bit of work and a bunch of chatting on the Github Bug Report but thanks for the Great folks over there we got things working...
 The polybar was easy. I figured that one out. I looked at othere Themes that had the bar on the bottom and found out how they did that
 There is a setting you change and it is on the bottom... Like this
@@ -68,7 +68,6 @@ As a added Bonus, SpectrWm uses .xprofile too and I did away with 2 scripts I wa
 I hope this may help anyone else that has these issues... :-)
 
 So that is some of the things I had fun with and yes it was a adventure! Lol
-
 
 
 ## please read the rest of this read me as it mostly came from LeftWM Github README.md
