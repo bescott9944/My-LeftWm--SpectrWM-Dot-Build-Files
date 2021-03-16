@@ -1,5 +1,7 @@
 ## This is my LeftWM Window manager setup. (Use at your own Risk)
 
+![Screenshot of LeftWM in action](screenshots/4.jpg)
+
 Here you will find my Dot Files and Scripts I use for my LeftWM setup that I use on my EndeavourOS Arch install...
 Some of these files were borrowed from OTB, DT, Linux Dabbler and other sources. I don't remember where I got them all
 but here they are! I know some of the script might not be worded right but they work for me. Edit them as you wish...
@@ -60,8 +62,6 @@ Thanks LeftWm Devs for such a cool Window Manger!
 
 # LeftWM - A window manager for Adventurers
 ![CI](https://github.com/leftwm/leftwm/workflows/CI/badge.svg)
-
-![Screenshot of LeftWM in action](screenshots/4.jpg)
 
 ## Why go left 
 
