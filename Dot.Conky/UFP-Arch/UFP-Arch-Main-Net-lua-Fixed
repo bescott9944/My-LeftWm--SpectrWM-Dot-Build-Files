@@ -1,0 +1,262 @@
+--[[
+#=====================================================================================
+#                -- Description --
+#              Name: UFP-Arch-Main-Net Conky
+# Date    : 12/6/2019
+# Author  :  Bruce E. Scott
+# Version : package-version 1M
+# License : Distributed under the terms of GNU GPL version 2 or later
+# Documentation : None. See Lua
+#======================================================================================
+# CONKY
+# For commands in conky.config section:
+# http://conky.sourceforge.net/config_settings.html
+#
+# For commands in conky.text section:
+# http://conky.sourceforge.net/variables.html
+#
+# A PDF with all variables is provided
+#=====================================================================================
+# FONTS
+# To avoid copyright infringements you will have to download
+# and install the fonts yourself sometimes.
+#=====================================================================================
+# GENERAL INFO ABOUT FONTS
+# Go and look for a nice font on sites like http://www.dafont.com/
+# Download and unzip - double click the font to install it (font-manager must be installed)
+# No font-manager then put fonts in ~/.fonts
+# Change the font name in the conky
+# The name can be known with a command in the terminal: fc-list | grep "part of name"
+# Change width and height of the conky according to font
+# Reboot your system or fc-cache -fv in terminal
+# Enjoy
+#=====================================================================================
+# FONTS FOR THIS CONKY
+# http://www.dafont.com/style-bats.font
+#======================================================================================
+# Titus Modifications
+#======================================================================================
+# Changed time from Roboto to GE Inspira which is a base Conky Gotham Addon
+# Changed Drives from 2 to 3
+# Modified one_window_type from desktop to normal for KDE compatibility
+# Modified Ethernet settings
+# Modified Pink Lines to Bright Blue
+# Removed Extra symbols and incorrect formatting
+#======================================================================================
+
+]]
+
+conky.config = {
+
+	--Various settings
+
+	background = true, 							-- forked to background
+	cpu_avg_samples = 2,						-- The number of samples to average for CPU monitoring.
+	diskio_avg_samples = 10,					-- The number of samples to average for disk I/O monitoring.
+	double_buffer = true,						-- Use the Xdbe extension? (eliminates flicker)
+	if_up_strictness = 'address',				-- how strict if testing interface is up - up, link or address
+	net_avg_samples = 2,						-- The number of samples to average for net data
+	no_buffers = true,							-- Subtract (file system) buffers from used memory?
+	temperature_unit = 'fahrenheit',				-- fahrenheit or celsius
+	text_buffer_size = 2048,					-- size of buffer for display of content of large variables - default 256
+	update_interval = 1,						-- update interval
+	imlib_cache_size = 0,                       -- disable image cache to get a new spotify cover per song
+
+
+	--Placement
+
+	alignment = 'middle_left',						-- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
+												-- middle_left,middle_middle,middle_right,none
+	--Arch Duoscreen
+	--gap_x = -1910,
+	gap_x = 435,									-- pixels between right or left border
+	gap_y = 60,									-- pixels between bottom or left border
+	minimum_height = 600,						-- minimum height of window
+	minimum_width = 300,						-- minimum height of window
+	maximum_width = 300,						-- maximum height of window
+
+	--Graphical
+
+	border_inner_margin = 10, 					-- margin between border and text
+	border_outer_margin = 5, 					-- margin between border and edge of window
+	border_width = 1, 							-- border width in pixels
+	default_bar_width = 80,					-- default is 0 - full width
+	default_bar_height = 10,					-- default is 6
+	default_gauge_height = 25,					-- default is 25
+	default_gauge_width =40,					-- default is 40
+	default_graph_height = 40,					-- default is 25
+	default_graph_width = 0,					-- default is 0 - full width
+	default_shade_color = '#000000',			-- default shading colour
+	default_outline_color = '#000000',			-- default outline colour
+	draw_borders = true,						-- draw borders around text
+	draw_graph_borders = true,					-- draw borders around graphs
+	draw_shades = false,						-- draw shades
+	draw_outline = false,						-- draw outline
+	stippled_borders = 0,						-- dashing the border
+
+	--Textual
+
+	extra_newline = false,						-- extra newline at the end - for asesome's wiboxes
+	format_human_readable = true,				-- KiB, MiB rather then number of bytes
+	font = 'Roboto Mono:size=09',  				-- font for complete conky unless in code defined
+	max_text_width = 0,							-- 0 will make sure line does not get broken if width too smal
+	max_user_text = 16384,						-- max text in conky _ 16384
+	override_utf8_locale = true,				-- force UTF8 requires xft
+	short_units = true,							-- shorten units from KiB to k
+	top_name_width = 21,						-- width for $top name value default 15
+	top_name_verbose = false,					-- If true, top name shows the full command line of  each  process - Default value is false.
+	uppercase = false,							-- uppercase or not
+	use_spacer = 'none',						-- adds spaces around certain objects to align - default none
+	use_xft = true,								-- xft font - anti-aliased font
+	xftalpha = 1,								-- alpha of the xft font - between 0-1
+
+	--Windows
+
+	own_window = true,							-- create your own window to draw
+	own_window_argb_value = 100,			    -- real transparency - composite manager required 0-255
+	own_window_argb_visual = true,				-- use ARGB - composite manager required
+	own_window_colour = '000000',				-- set colour if own_window_transparent no
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',  -- if own_window true - just hints - own_window_type sets it
+	own_window_transparent = false,				-- if own_window_argb_visual is true sets background opacity 0%
+	own_window_title = 'system_conky',			-- set the name manually  - default conky "hostname"
+	own_window_type = 'normal',				-- if own_window true options are: normal/override/dock/desktop/panel
+
+
+	--Colours
+
+    --default_color = '#D9DDE2',  				-- default color and border color
+    -- default_color D9DDE2  # -- (white-gray) default color and border color
+	default_color = '#00BFFF',-- --Mid-light-blue_(gray-blue) default color and border color
+
+	color1 = '#FF0000',
+	color2 = '#597AA1',
+	color3 = '#cccccc',
+	color4 = '#D9BC83',
+	color5 = '#00BFFF',
+	color6 = '#FFFFFF',
+
+	--Signal Colours
+	color7 = '#1F7411',  						--green
+	color8 = '#FFA726',  						--orange
+	color9 = '#F1544B',  						--firebrick
+
+    --Lua
+
+
+};
+
+conky.text = [[
+${color9}${voffset 4}${font GE Inspira:size=15}${alignc}${time %l}:${time %M} ${time %p}${font}${color}
+${color8}${voffset 4}${font GE Inspira:size=10}${alignc}${time %A} ${time %B} ${time %e}, ${time %Y}${font}${color}
+${color5}${font Roboto:size=7.5}${voffset 2}S Y S T E M   ${hr 2}${font}${color}
+# ${color yellow}System ${hr 2}$color
+${color6}Sys Name: ${color8}$nodename ${color6}${alignr}$sysname Ver: ${color8}$machine Linux
+${color6}Kernel Version: ${alignr}${color8}$kernel
+#
+# Note: The next line is for Linux Solus/Mint OS. You will have to change the file path for the "cat" command to read and display the
+# os-release file on your system to show the Linux Version Name. Ie "Linuc Mint 18.3"
+# Mint places it file is in the /usr/lib and others OS's are in the /etc, just do a search for the "os-release" file name
+# and chance the path below to reflect the path your os-release file...
+#
+${color6}On Linux: ${color8}${execi 1000 cat /etc/os-release | grep 'PRETTY_NAME' | sed -e 's/PRETTY_NAME.//'} ${alignr}${color6}On: ${color8}${execi 1000 cat /etc/os-release | grep 'ID_LIKE' | sed -e 's/ID_LIKE.//'} ${execi 6000 lsb_release -a | grep 'Release'|awk {'print $2""$3""$4""$5'}}
+# ${color6}Linux Ver ${color8}$machine Linux 
+${color6}System Uptime: ${alignr}${color8}$uptime
+## ${color white}${time %A %B %e, %G} ${alignr}${color 00ff00} ${time %I:%M:%S}${time %p} ${time %Z}
+# ${color light blue}      ${scroll 20 $nodename - $sysname $kernel on $machine |}
+#
+# ${color green}${hr 2}$color
+${color5}${font Roboto:size=7.5}${voffset 2}C P U   ${hr 2}${font}${color}
+# ${color yellow}Cpu ${hr 2}$color
+# ---------------------------
+# Note: The next line deals with displaying the CPU and Cores. And wasted screen space............
+# To keep from having 2-8 Core displayed on the Conky, you will have to copy the information from the "cpuinfo" file
+# on your system (/proc/cpuinof on Mint and most other OS's) and make a "cpuinfo" file
+# in your ~/.conly/system-folder-name. This file must contain the first Cores (0) information only copied from
+# the systems "cpuinfo"
+# file, just the first Core ONLY!
+# Then place the copied info into your "cpuinfo" file that you created in your ~/.conky/system-folder-name folder, that way the
+# the CPU Core will be displayed on one line and not all 2-8 lines of core's as in the systems "cpuinfo" file. If you want to see all 0-8
+# core's displayed just use the "cpuinfo" located in /proc/cpuinfo, it will list them all.... ):-D
+# ---------------------------
+# -->> NOTICE: UPDATED: New Way, See The Line BELOW HERE!!!
+# 10/02/19-- I added and upgraded the below line. Added new Sed commands..
+# Note: if CPU Mfg: display is off, Adjust the "cut -s 27-" part of the line to fix the out put... -Bruce
+# ---------------------------
+${color6}CPU Mfg:${color FF8700}${execi 1000 lscpu | grep Model\ name | sed 's/name:\ //' | cut -c 27- | sed "s/([^)]*)/()/g" | sed 's/[)(]//g'}
+# ---------------------------
+# ---> Notice: Old way for CPU Info below... 10/02/19 -Bruce
+# ${color FF8700}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}
+# ${color FF8700}${execi 1000 cat ~/.Conky/Manjaro-Reo/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}
+# ---------------------------
+# ${color green}CPU Freq: ${color white}${freq}Ghz
+# ${color lightgrey}CPU Usage:$color $cpu% ${color #cc2222} ${alignr}${cpubar 10,165 }
+# ${alignr}${cpugraph 15,280 0000ff 00ff00}
+#
+# ${color green}CPU Speed: ${color white}${freq}Ghz
+${color6}CPU Freq: ${color} $alignr${offset -30}${freq}MHz
+${color6}Total Usage:${color6} ${alignr}${offset -32}$cpu%${color1}${alignr}${cpubar 8,100}
+#
+# CPU useage and bar graph for all the cores. Just Commint out the ones that are
+# not needed. If you have more core't You will have to added them. -Bruce 07/04/19
+#
+# ---------------------------
+# NOTICE: 10/2/19 If you only have 1 core or 4 cores and you get a blank screen you will have to
+# comment out ONE if the CORE 2-4 entry's to get the conky screen to work...
+# ---------------------------
+#
+${color6}History:${alignr}${color1}${cpugraph 8,100 0000ff 00ff00}
+${color6}${offset 30}CPU Core 1:${color6} ${alignr}${offset -30}${cpu cpu1}%${color1}${alignr}${cpubar cpu1 8,100}
+${color6}${offset 30}CPU Core 2:${color6} ${alignr}${offset -30}${cpu cpu2}%${color1}${alignr}${cpubar cpu2 8,100}
+${color6}${offset 30}CPU Core 3:${color6} ${alignr}${offset -30}${cpu cpu3}%${color1}${alignr}${cpubar cpu3 8,100}
+${color6}${offset 30}CPU Core 4:${color6} ${alignr}${offset -30}${cpu cpu4}%${color1}${alignr}${cpubar cpu4 8,100}
+${color6}${offset 30}CPU Core 5:${color6} ${alignr}${offset -30}${cpu cpu5}%${color1}${alignr}${cpubar cpu5 8,100}
+${color6}${offset 30}CPU Core 6:${color6} ${alignr}${offset -30}${cpu cpu6}%${color1}${alignr}${cpubar cpu6 8,100}
+#
+${color6}Top Processes ${color2}${goto 170}PID${goto 228}cpu%${goto 288}mem%${color}
+${voffset 4}     ${color6}1  -  ${color9}${top name 1}${alignr} ${goto 168}${top pid 1} ${goto 170} ${goto 222}${top cpu 1} ${goto 274}${top mem 1}
+     ${color6}2  -  ${color8}${top name 2}${alignr} ${goto 168}${top pid 2} ${goto 222}${top cpu 2} ${goto 274}${top mem 2}
+     ${color6}3  -  ${color7}${top name 3}${alignr} ${goto 168}${top pid 3} ${goto 222}${top cpu 3} ${goto 274}${top mem 3}
+     ${color6}4  -  ${top name 4}${alignr} ${goto 168}${top pid 4} ${goto 222}${top cpu 4} ${goto 274}${top mem 4}
+     ${color6}5  -  ${top name 5}${alignr} ${goto 168}${top pid 5} ${goto 222}${top cpu 5} ${goto 274}${top mem 5}
+#
+${color5}${font Roboto:size=7.5}${voffset 2}M E M O R Y   ${hr 2}${font}${color}
+# ${color yellow}Memory ${hr 2}$color
+${color6}Ram:    $mem/$memmax - $memperc% ${alignr}${color FF6D00}${membar 6,110}
+${color6}Swap:   $swap/$swapmax - $swapperc% ${alignr}${color 00d8ff}${swapbar 6,110}
+# $color$stippled_hr
+#
+${color5}${font Roboto:size=7}M E M O R Y  U S A G E ${hr 2}${font}${color}
+# ${color2}${offset 30}RAM:  ${color6} ${alignr}${offset -10}${mem} / ${memmax}${alignr}${membar 8,100}
+# ${color2}${offset 30}Swap:  ${color6} ${alignr}${offset -10}${swap} / ${swapmax}${alignr}${swapbar 8,100}
+#
+${color6}Top Processes ${color2}${goto 170}PID${goto 228}cpu%${goto 288}mem%${color}
+${voffset 4}     ${color6}1  -  ${color9}${top_mem name 1}${alignr}${goto 168}${top_mem pid 1} ${goto 170} ${goto 222}${top_mem cpu 1} ${goto 274}${top_mem mem 1}
+     ${color6}2  -  ${color8}${top_mem name 2}${alignr}${goto 168}${top_mem pid 2} ${goto 170} ${goto 222}${top_mem cpu 2} ${goto 274}${top_mem mem 2}
+     ${color6}3  -  ${color7}${top_mem name 3}${alignr}${goto 168}${top_mem pid 3} ${goto 170} ${goto 222}${top_mem cpu 3} ${goto 274}${top_mem mem 3}
+     ${color6}4  -  ${top_mem name 4}${alignr}${goto 168}${top_mem pid 4} ${goto 170} ${goto 222}${top_mem cpu 4} ${goto 274}${top_mem mem 4}
+     ${color6}5  -  ${top_mem name 5}${alignr}${goto 168}${top_mem pid 5} ${goto 170} ${goto 222}${top_mem cpu 5} ${goto 274}${top_mem mem 5}
+#
+${color5}${font Roboto:size=7}D R I V E   S P A C E   ${hr 2}${font}${color}
+${offset 30}${color6}Root HDD : ${alignr}${offset -10}${fs_used /} / ${fs_size /}${color1}${alignr}${fs_bar 8,100 /}
+${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda1}${alignr}${color FF6D00}${diskiograph_read /dev/sda1 8,100}
+${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda1}${alignr}${color 00d8ff}${diskiograph_write /dev/sda1 8,100}
+
+${offset 30}${color6}Boot :${color6} ${alignr}${offset -10}${fs_used /boot} / ${fs_size /boot}${color1}${alignr}${fs_bar 8,100 /boot}
+${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda3}${alignr}${color FF6D00}${diskiograph_read sda3 8,100}
+${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda3}${alignr}${color 00d8ff}${diskiograph_write sda3 8,100}
+enp7s0
+${offset 30}${color6}Bruce :${color6} ${alignr}${offset -10}${fs_used /home/bruce} / ${fs_size /home/bruce}${color1}${alignr}${fs_bar 8,100 /home/bruce}
+${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda2}${alignr}${color FF6D00}${diskiograph_read /dev/sda2 8,100}
+${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda2}${alignr}${color 00d8ff}${diskiograph_write /dev/sda2 8,100}
+
+# ${offset 30}${color6}Data-UFP :${color6} ${alignr}${offset -10}${fs_used /home/bruce/Data-UFP} / ${fs_size /home/bruce/Data-UFP}${color1}${alignr}${fs_bar 8,100 /home/bruce/Data-UFP}
+# ${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sdb1}${alignr}${color FF6D00}${diskiograph_read /dev/sdb1 8,100}
+# ${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sdb1}${alignr}${color 00d8ff}${diskiograph_write /dev/sdb1 8,100}
+#
+${color5}${color5}${font Roboto:size=7}N E T W O R K   ${hr 2}${font}${color}
+${color6}${offset 30}IP Address: ${color6} ${alignr}${offset -10$}${color8}${addrs enp7s0}
+${color6}${offset 30}Eth Up:${color6} ${alignr}${offset -10$}${upspeed enp7s0}${alignr}${color FF6D00}${upspeedgraph enp7s0 8,100}
+${color6}${offset 30}Eth Down:${color6} ${alignr}${offset -10$}${downspeed enp7s0}${alignr}${color 00d8ff}${downspeedgraph enp7s0 8,100}
+${color6}${offset 30}Total Dl :${color 00d8ff}${totaldown enp7s0} ${alignr}${offset -30}${color6}Total UL: ${alignr}${offset -30}${color FF6D00}${totalup enp7s0}
+#
+]];

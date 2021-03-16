@@ -1,0 +1,218 @@
+# 
+# Name: UFP-Arch-Main-Net Conky
+#
+# Author: Bruce E. Scott 12/6/2019.
+#
+# Description
+#
+# Apart from the requirement for the Ubuntu font, this configuration is
+# really simple, using only a few conky objects and a script provided
+# with the configuration file.
+#
+# Installation (see below for terminal installation)
+# To install and use, the following 5 main steps are required:
+# 1. Install conky and the Ubuntu font (if using recent Ubuntu (based) 
+#    distributions, this step is most certainly not necessary.
+# 2. Create a directory named .conky in your home folder;
+# 3. Download the .zip file and unzip the contents to the newly 
+#    created folder.
+#
+# If you want conky to startup with gnome, copy the file named
+# conky.sh.desktop to ~.config/autostart/
+# If you do not want a given module to run (e.g. the GMAIL module),
+# edit the conky.sh file and comment or remove the line that loads the
+# respective configuration file.
+#
+# To install using the terminal, follow the next steps
+# 1. In Ubuntu (I have not tested the config in Ubuntu, only in Arch)
+#    sudo apt-get install conky-all
+#    In Arch Linux
+#    sudo yaourt -S conky-lua ttf-ubuntu-font-family 
+# 2. mkdir ~/.conky && cd ~/.conky
+# 3. wget http://www.deviantart.com/download/260230653/metro_style_conky_by_kant_o-d4axn99.zip
+# 4. unzip MetroStyleConky.zip
+# 5. chmod +x conky.sh
+# 6. chmod +x mail.sh
+# 7. ./conky.sh   
+# 8. (optional) run gnome-session-properties and add a new 
+#    startup program pointing to conky.sh to have the conky
+#    automatically comming up when you start the computer. 
+#
+
+alignment top_right
+background yes
+border_width 1
+cpu_avg_samples 1
+# default_color ffffff #--White
+draw_outline no
+draw_borders yes
+draw_shades no
+use_xft yes
+# xftfont Ubuntu:size=12
+xftfont Bitstream Vera Sans Mono:size=9
+# size of text area
+minimum_size 340 120
+maximum_width 360
+max_text_width 3600
+
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+own_window yes
+own_window_transparent yes
+own_window_class Conky
+own_window_type normal
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+stippled_borders 0
+update_interval 1.0
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+own_window_colour 136659
+update_interval 4
+
+gap_x 35
+gap_y 10
+own_window_argb_value 0
+own_window_argb_visual no
+
+#  --Colours
+
+# default_color D9DDE2  # -- (white-gray) default color and border color
+default_color 00BFFF # --Mid-light-blue_(gray-blue) default color and border color
+color1 FF0000 # --red
+color2 597AA1 # --blue-gray
+color3 cccccc # --light-gray
+color4 D9BC83 # --shade-of-gold
+color5 00BFFF # --Mid-light-blue_(gray-blue)
+color6 FFFFFF # --white
+#	--Signal Colours
+color7 1F7411 # --green
+color8 FFA726 # --orange
+color9 F1544B # --firebrick
+#   --Aditional Colors to Use
+# color DAE140 #  --Golden Yellow
+# color F5FF03 #  --Yellow
+# color 00d8ff #  --Pale Blue
+# color FF6D00 # --Burnt range
+
+
+TEXT
+${color9}${voffset 4}${font GE Inspira:size=15}${alignc}${time %l}:${time %M} ${time %p}${font}${color}
+${color8}${voffset 4}${font GE Inspira:size=10}${alignc}${time %A} ${time %B} ${time %e}, ${time %Y}${font}${color}
+${color5}${font Roboto:size=7.5}${voffset 2}S Y S T E M   ${hr 2}${font}${color}
+# ${color yellow}System ${hr 2}$color
+${color6}Sys Name: ${color8}$nodename ${color6}${alignr}$sysname Ver: ${color8}$machine Linux
+${color6}Kernel Version: ${alignr}${color8}$kernel
+#
+# Note: The next line is for Linux Solus/Mint OS. You will have to change the file path for the "cat" command to read and display the
+# os-release file on your system to show the Linux Version Name. Ie "Linuc Mint 18.3"
+# Mint places it file is in the /usr/lib and others OS's are in the /etc, just do a search for the "os-release" file name
+# and chance the path below to reflect the path your os-release file...
+#
+${color6}On Linux: ${color8}${execi 1000 cat /etc/os-release | grep 'PRETTY_NAME' | sed -e 's/PRETTY_NAME.//'} ${alignr}${color6}On: ${color8}${execi 1000 cat /etc/os-release | grep 'ID_LIKE' | sed -e 's/ID_LIKE.//'} ${execi 6000 lsb_release -a | grep 'Release'|awk {'print $2""$3""$4""$5'}}
+# ${color6}Linux Ver ${color8}$machine Linux 
+${color6}System Uptime: ${alignr}${color8}$uptime
+## ${color white}${time %A %B %e, %G} ${alignr}${color 00ff00} ${time %I:%M:%S}${time %p} ${time %Z}
+# ${color light blue}      ${scroll 20 $nodename - $sysname $kernel on $machine |}
+#
+# ${color green}${hr 2}$color
+${color5}${font Roboto:size=7.5}${voffset 2}C P U   ${hr 2}${font}${color}
+# ${color yellow}Cpu ${hr 2}$color
+# ---------------------------
+# Note: The next line deals with displaying the CPU and Cores. And wasted screen space............
+# To keep from having 2-8 Core displayed on the Conky, you will have to copy the information from the "cpuinfo" file
+# on your system (/proc/cpuinof on Mint and most other OS's) and make a "cpuinfo" file
+# in your ~/.conly/system-folder-name. This file must contain the first Cores (0) information only copied from
+# the systems "cpuinfo"
+# file, just the first Core ONLY!
+# Then place the copied info into your "cpuinfo" file that you created in your ~/.conky/system-folder-name folder, that way the
+# the CPU Core will be displayed on one line and not all 2-8 lines of core's as in the systems "cpuinfo" file. If you want to see all 0-8
+# core's displayed just use the "cpuinfo" located in /proc/cpuinfo, it will list them all.... ):-D
+# ---------------------------
+# -->> NOTICE: UPDATED: New Way, See The Line BELOW HERE!!!
+# 10/02/19-- I added and upgraded the below line. Added new Sed commands..
+# Note: if CPU Mfg: display is off, Adjust the "cut -s 27-" part of the line to fix the out put... -Bruce
+# ---------------------------
+${color6}CPU Mfg:${offset 30}${color FF8700}${execi 1000 lscpu | grep Model\ name | sed 's/name:\ //' | cut -c 27- | sed "s/([^)]*)/()/g" | sed 's/[)(]//g'}
+# ---------------------------
+# ---> Notice: Old way for CPU Info below... 10/02/19 -Bruce
+# ${color FF8700}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}
+# ${color FF8700}${execi 1000 cat ~/.Conky/Manjaro-Reo/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}
+# ---------------------------
+# ${color green}CPU Freq: ${color white}${freq}Ghz
+# ${color lightgrey}CPU Usage:$color $cpu% ${color #cc2222} ${alignr}${cpubar 10,165 }
+# ${alignr}${cpugraph 15,280 0000ff 00ff00}
+#
+# ${color green}CPU Speed: ${color white}${freq}Ghz
+${color6}CPU Freq: ${color} $alignr${offset -30}${freq}MHz
+${color6}Total Usage:${color6} ${alignr}${offset -32}$cpu%${color1}${alignr}${cpubar 8,100}
+#
+# CPU useage and bar graph for all the cores. Just Commint out the ones that are
+# not needed. If you have more core't You will have to added them. -Bruce 07/04/19
+#
+# ---------------------------
+# NOTICE: 10/2/19 If you only have 1 core or 4 cores and you get a blank screen you will have to
+# comment out ONE if the CORE 2-6 entry's to get the conky screen to work...
+# ---------------------------
+#
+${color6}History:${alignr}${color1}${cpugraph 8,100 0000ff 00ff00}
+${color6}${offset 30}CPU Core 1:${color6} ${alignr}${offset -30}${cpu cpu1}%${color1}${alignr}${cpubar cpu1 8,100}
+${color6}${offset 30}CPU Core 2:${color6} ${alignr}${offset -30}${cpu cpu2}%${color1}${alignr}${cpubar cpu2 8,100}
+${color6}${offset 30}CPU Core 3:${color6} ${alignr}${offset -30}${cpu cpu3}%${color1}${alignr}${cpubar cpu3 8,100}
+${color6}${offset 30}CPU Core 4:${color6} ${alignr}${offset -30}${cpu cpu4}%${color1}${alignr}${cpubar cpu4 8,100}
+# ${color6}${offset 30}CPU Core 5:${color6} ${alignr}${offset -30}${cpu cpu5}%${color1}${alignr}${cpubar cpu5 8,100}
+# ${color6}${offset 30}CPU Core 6:${color6} ${alignr}${offset -30}${cpu cpu6}%${color1}${alignr}${cpubar cpu6 8,100}
+#
+${color6}Top Processes ${color2}${goto 170}PID${goto 228}cpu%${goto 288}mem%${color}
+${voffset 4}     ${color}1  -  ${color9}${top name 1}${alignr} ${goto 168}${top pid 1} ${goto 170} ${goto 222}${top cpu 1} ${goto 274}${top mem 1}
+     ${color6}2  -  ${color8}${top name 2}${alignr} ${goto 168}${top pid 2} ${goto 222}${top cpu 2} ${goto 274}${top mem 2}
+     ${color6}3  -  ${color7}${top name 3}${alignr} ${goto 168}${top pid 3} ${goto 222}${top cpu 3} ${goto 274}${top mem 3}
+     ${color6}4  -  ${top name 4}${alignr} ${goto 168}${top pid 4} ${goto 222}${top cpu 4} ${goto 274}${top mem 4}
+     ${color6}5  -  ${top name 5}${alignr} ${goto 168}${top pid 5} ${goto 222}${top cpu 5} ${goto 274}${top mem 5}
+#
+${color5}${font Roboto:size=7.5}${voffset 2}M E M O R Y   ${hr 2}${font}${color}
+# ${color yellow}Memory ${hr 2}$color
+${color6}Ram:    $mem/$memmax - $memperc% ${alignr}${color FF6D00}${membar 6,110}
+${color6}Swap:   $swap/$swapmax - $swapperc% ${alignr}${color 00d8ff}${swapbar 6,110}
+# $color$stippled_hr
+#
+${color5}${font Roboto:size=7}M E M O R Y  U S A G E ${hr 2}${font}${color}
+# ${color2}${offset 30}RAM:  ${color6} ${alignr}${offset -10}${mem} / ${memmax}${alignr}${membar 8,100}
+# ${color2}${offset 30}Swap:  ${color6} ${alignr}${offset -10}${swap} / ${swapmax}${alignr}${swapbar 8,100}
+#
+${color6}Top Processes ${color2}${goto 170}PID${goto 228}cpu%${goto 288}mem%${color}
+${voffset 4}     ${color6}1  -  ${color9}${top_mem name 1}${alignr}${goto 168}${top_mem pid 1} ${goto 170} ${goto 222}${top_mem cpu 1} ${goto 274}${top_mem mem 1}
+     ${color6}2  -  ${color8}${top_mem name 2}${alignr}${goto 168}${top_mem pid 2} ${goto 170} ${goto 222}${top_mem cpu 2} ${goto 274}${top_mem mem 2}
+     ${color6}3  -  ${color7}${top_mem name 3}${alignr}${goto 168}${top_mem pid 3} ${goto 170} ${goto 222}${top_mem cpu 3} ${goto 274}${top_mem mem 3}
+     ${color6}4  -  ${top_mem name 4}${alignr}${goto 168}${top_mem pid 4} ${goto 170} ${goto 222}${top_mem cpu 4} ${goto 274}${top_mem mem 4}
+     ${color6}5  -  ${top_mem name 5}${alignr}${goto 168}${top_mem pid 5} ${goto 170} ${goto 222}${top_mem cpu 5} ${goto 274}${top_mem mem 5}
+#
+${color5}${font Roboto:size=7}D R I V E   S P A C E   ${hr 2}${font}${color}
+${offset 30}${color6}Root HDD : ${alignr}${offset -10}${fs_used /} / ${fs_size /}${color1}${alignr}${fs_bar 8,100 /}
+${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda3}${alignr}${color FF6D00}${diskiograph_read /dev/sda3 8,100}
+${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda3}${alignr}${color 00d8ff}${diskiograph_write /dev/sda3 8,100}
+
+${offset 30}${color6}Boot :${color6} ${alignr}${offset -10}${fs_used /boot} / ${fs_size /boot}${color1}${alignr}${fs_bar 8,100 /boot}
+${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda1}${alignr}${color FF6D00}${diskiograph_read sda1 8,100}
+${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda1}${alignr}${color 00d8ff}${diskiograph_write sda1 8,100}
+
+${offset 30}${color6}Bruce :${color6} ${alignr}${offset -10}${fs_used /home/bruce} / ${fs_size /home/bruce}${color1}${alignr}${fs_bar 8,100 /home/bruce}
+${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda4}${alignr}${color FF6D00}${diskiograph_read /dev/sda4 8,100}
+${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda4}${alignr}${color 00d8ff}${diskiograph_write /dev/sda4 8,100}
+#
+${color5}${color5}${font Roboto:size=7}N E T W O R K   ${hr 2}${font}${color}
+${color6}${offset 30}IP Address: ${color6} ${alignr}${offset -10$}${color8}${addrs enp7s0}
+${color6}${offset 30}Eth Up:${color6} ${alignr}${offset -10$}${upspeed enp7s0}${alignr}${color FF6D00}${upspeedgraph enp7s0 8,100}
+${color6}${offset 30}Eth Down:${color6} ${alignr}${offset -10$}${downspeed enp7s0}${alignr}${color 00d8ff}${downspeedgraph enp7s0 8,100}
+${color6}${offset 30}Total Dl :${color 00d8ff}${totaldown enp7s0} ${alignr}${offset -30}${color6}Total UL: ${alignr}${offset -30}${color FF6D00}${totalup enp7s0}
+
+# ${color6} Available Updates: ${alignr}${color CC2A2E}${font Cantarell:bold:size=10}${execpi 1000 checkupdates | wc -l}${font}${color}
+# ${color6} Last Updated On: ${alignr}${font Cantarell:size=7}${color8}${execi 10000 grep "starting full system upgrade" /var/log/pacman.log | tail -n1| cut --bytes=2-17} ]];
+#
