@@ -1,0 +1,353 @@
+modkey = "Mod1"
+workspaces = []
+tags = ["","", "", "", "", "", "", ""]
+
+[[keybind]]
+command = "Execute"
+value = "tilix -e /home/bruce/.config/leftwm/keybind.sh"
+modifier = ["modkey", "Control"]
+key = "k"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/leftwm/bes-exit-leftwm"
+modifier = ["modkey", "Control"]
+key = "q"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/spectrwm/powerspec"
+modifier = ["Control", "Shift"]
+key = "q"
+
+[[keybind]]
+command = "Execute"
+value = "~/bin/jgmenu_rm_lock.sh"
+modifier = ["modkey", "Control"]
+key = "m"
+
+[[keybind]]
+command = "Execute"
+value = "tilix"
+modifier = ["modkey"]
+key = "Return"
+
+[[keybind]]
+command = "Execute"
+value = "sakura"
+modifier = ["modkey"]
+key = "o"
+
+[[keybind]]
+command = "Execute"
+value = "dmenu.sh"
+modifier = ["modkey"]
+key = "d"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-combi-icons.sh"
+modifier = ["modkey", "Control"]
+key = "i"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-dmenu-like.sh"
+modifier = ["modkey", "Control"]
+key = "o"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-locate"
+modifier = ["modkey", "Control"]
+key = "l"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-drun.sh"
+modifier = ["modkey", "Control"]
+key = "u"
+
+[[keybind]]
+command = "Execute"
+value = "nemo"
+modifier = ["modkey", "Control"]
+key = "f"
+
+[[keybind]]
+command = "Execute"
+value = "xed"
+modifier = ["modkey", "Control"]
+key = "e"
+
+[[keybind]]
+command = "Execute"
+value = "gimp"
+modifier = ["modkey", "Control"]
+key = "g"
+
+[[keybind]]
+command = "Execute"
+value = "audacity"
+modifier = ["modkey", "Control"]
+key = "a"
+
+[[keybind]]
+command = "Execute"
+value = "deadbeef"
+modifier = ["Shift", "Control"]
+key = "a"
+
+[[keybind]]
+command = "Execute"
+value = "clementine"
+modifier = ["modkey", "Control"]
+key = "c"
+
+[[keybind]]
+command = "Execute"
+value = "scrot '%m-%d-%Y-%R.png' -e 'mv $f ~/Pictures/shots'"
+modifier = ["modkey"]
+key = "s"
+
+[[keybind]]
+command = "Execute"
+value = "scrot -u '%m-%d-%Y-%R-w.png' -e 'mv $f ~/Pictures/shots'"
+modifier = ["modkey", "Shift"]
+key = "s"
+
+[[keybind]]
+command = "Execute"
+value = "alacritty -e /home/bruce/.config/spectrwm/wallok"
+modifier = ["modkey", "Control"]
+key = "b"
+
+[[keybind]]
+command = "Execute"
+value = "brave"
+modifier = ["modkey", "Shift"]
+key = "w"
+
+[[keybind]]
+command = "Execute"
+value = "google-chrome-stable"
+modifier = ["modkey", "Control"]
+key = "w"
+
+[[keybind]]
+command = "Execute"
+value = "pcmanfm"
+modifier = ["modkey", "Control"]
+key = "p"
+
+[[keybind]]
+command = "CloseWindow"
+modifier = ["modkey"]
+key = "x"
+
+[[keybind]]
+command = "SoftReload"
+modifier = ["modkey", "Shift"]
+key = "b"
+
+[[keybind]]
+command = "SoftReload"
+modifier = ["modkey", "Shift"]
+key = "r"
+
+[[keybind]]
+command = "Execute"
+value = "pkill leftwm"
+modifier = ["modkey", "Shift"]
+key = "q"
+
+[[keybind]]
+command = "Execute"
+value = "pavucontrol"
+modifier = ["modkey", "Control"]
+key = "v"
+
+[[keybind]]
+command = "IncreaseMainWidth"
+value = "3"
+modifier = ["modkey"]
+key = "l"
+
+[[keybind]]
+command = "DecreaseMainWidth"
+value = "3"
+modifier = ["modkey"]
+key = "h"
+
+[[keybind]]
+command = "MoveToLastWorkspace"
+modifier = ["modkey"]
+key = "period"
+
+[[keybind]]
+command = "SwapTags"
+modifier = ["modkey"]
+key = "comma"
+
+[[keybind]]
+command = "MoveWindowUp"
+modifier = ["modkey", "Shift"]
+key = "k"
+
+[[keybind]]
+command = "MoveWindowDown"
+modifier = ["modkey", "Shift"]
+key = "j"
+
+[[keybind]]
+command = "MoveWindowTop"
+modifier = ["modkey", "Shift"]
+key = "Return"
+
+[[keybind]]
+command = "FocusNextTag"
+modifier = ["modkey"]
+key = "Right"
+
+[[keybind]]
+command = "FocusPreviousTag"
+modifier = ["modkey"]
+key = "Left"
+
+[[keybind]]
+command = "FocusWindowUp"
+modifier = ["modkey"]
+key = "k"
+
+[[keybind]]
+command = "FocusWindowDown"
+modifier = ["modkey"]
+key = "j"
+
+[[keybind]]
+command = "NextLayout"
+modifier = ["modkey", "Control"]
+key = "Up"
+
+[[keybind]]
+command = "PreviousLayout"
+modifier = ["modkey", "Control"]
+key = "Down"
+
+[[keybind]]
+command = "FocusWorkspaceNext"
+modifier = ["modkey", "Shift"]
+key = "Right"
+
+[[keybind]]
+command = "FocusWorkspacePrevious"
+modifier = ["modkey", "Shift"]
+key = "Left"
+
+[[keybind]]
+command = "GotoTag"
+value = "1"
+modifier = ["modkey"]
+key = "1"
+
+[[keybind]]
+command = "GotoTag"
+value = "2"
+modifier = ["modkey"]
+key = "2"
+
+[[keybind]]
+command = "GotoTag"
+value = "3"
+modifier = ["modkey"]
+key = "3"
+
+[[keybind]]
+command = "GotoTag"
+value = "4"
+modifier = ["modkey"]
+key = "4"
+
+[[keybind]]
+command = "GotoTag"
+value = "5"
+modifier = ["modkey"]
+key = "5"
+
+[[keybind]]
+command = "GotoTag"
+value = "6"
+modifier = ["modkey"]
+key = "6"
+
+[[keybind]]
+command = "GotoTag"
+value = "7"
+modifier = ["modkey"]
+key = "7"
+
+[[keybind]]
+command = "GotoTag"
+value = "8"
+modifier = ["modkey"]
+key = "8"
+
+[[keybind]]
+command = "GotoTag"
+value = "9"
+modifier = ["modkey"]
+key = "9"
+
+[[keybind]]
+command = "MoveToTag"
+value = "1"
+modifier = ["modkey", "Shift"]
+key = "1"
+
+[[keybind]]
+command = "MoveToTag"
+value = "2"
+modifier = ["modkey", "Shift"]
+key = "2"
+
+[[keybind]]
+command = "MoveToTag"
+value = "3"
+modifier = ["modkey", "Shift"]
+key = "3"
+
+[[keybind]]
+command = "MoveToTag"
+value = "4"
+modifier = ["modkey", "Shift"]
+key = "4"
+
+[[keybind]]
+command = "MoveToTag"
+value = "5"
+modifier = ["modkey", "Shift"]
+key = "5"
+
+[[keybind]]
+command = "MoveToTag"
+value = "6"
+modifier = ["modkey", "Shift"]
+key = "6"
+
+[[keybind]]
+command = "MoveToTag"
+value = "7"
+modifier = ["modkey", "Shift"]
+key = "7"
+
+[[keybind]]
+command = "MoveToTag"
+value = "8"
+modifier = ["modkey", "Shift"]
+key = "8"
+
+[[keybind]]
+command = "MoveToTag"
+value = "9"
+modifier = ["modkey", "Shift"]
+key = "9"
