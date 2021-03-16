@@ -1,0 +1,4 @@
+[module/network-localip]
+type = custom/script
+exec = ~/.config/polybar/network-localip.sh
+interval = 60
