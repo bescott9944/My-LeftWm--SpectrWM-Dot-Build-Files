@@ -1,4 +1,6 @@
-## This is my LeftWM-SpectrWM Window Manager Setup. (Use At Your Own Risk)
+## Welcome to my LeftWM-SpectrWM Window Manager Setup.
+
+### (Use At Your Own Risk)
 
 ![Screenshot of LeftWM in action](screenshots/4.jpg)
 
@@ -36,7 +38,7 @@ Now I had some screen resolution issue and I had to file a Bug Report. The Dev, 
 The polybar was easy. I figured that one out. I looked at othere Themes that had the bar on the bottom and found out how they did that
 There is a setting you change and it is on the bottom... Like this
 ```
-; Put the polybar at the bottom of the screen-default = false
+To Put the polybar at the bottom of the screen. The default = false
 bottom = true
 ```
 
@@ -83,7 +85,7 @@ Left is not a lock screen.
 Left is not a bar. But, there are lots of good bars out there. With themes, picking one is as simple as setting a symlink.
 
 
-
+![CI](https://github.com/leftwm/leftwm/workflows/CI/badge.svg)
 ## Config
 The settings file to change key bindings and the default mod key can be found at
 ```
@@ -111,7 +113,7 @@ Mod + p => Use dmenu to start application
 
 ### Workspaces
 By default, workspaces have a one-to-one relationship with screens, but this is configurable. There are many reasons you might want to change this, but the main reason is for ultrawide monitors. You might want to have two or even three workspaces on a single screen. 
-
+![CI](https://github.com/leftwm/leftwm/workflows/CI/badge.svg)
 Here is an example config changing the way workspaces are defined (~/.config/leftwm/config.toml)
 ```
 [[workspaces]]
