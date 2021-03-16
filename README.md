@@ -70,11 +70,10 @@ So that is some of the things I had fun with and yes it was a adventure! Lol
 
 
 ## please read the rest of this Readme as it mostly came from LeftWM Github README.md
-```
 Please install all the Dependencies and programs, Themes. Most of all follow the instruction on the Themes to make the Links to the folders.
 That is it! Have fun!
 Thanks LeftWm Devs for such a cool Window Manger!
-```
+---
 
 ## Config
 The settings file to change key bindings and the default mod key can be found at
