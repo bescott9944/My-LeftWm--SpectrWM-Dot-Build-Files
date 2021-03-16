@@ -44,8 +44,8 @@ The Dev, an 2 theres jumped right in on the Bug Report and had me fixed within f
 The polybar was easy. I figured that one out. I looked at othere Themes that had the bar on the bottom and found out how they did that
 There is a setting you change and it is on the bottom... Like this
 ```
-To Put the polybar at the bottom of the screen. The default = false
-bottom = true
+To Put the polybar at the bottom of the screen. The default is bottom = false
+bottom = true    <--- Set it to this for the bottom bar.
 ```
 
 The desktop was a 4 day message back and forth / testing and the great help I got was fantastic!
