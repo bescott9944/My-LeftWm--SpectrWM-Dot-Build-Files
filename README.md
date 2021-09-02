@@ -1,16 +1,15 @@
-
 ####   <<<---================}[ Hal-9000-info.sh ]{================--->>>
 
  ---------------------------------------------------------------------
 
-#### Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
-* Script Name  : Hal-9000-info.sh v.1.3.0
+#### Current Version: v.1.3.2 Modified by Bruce Scott 09/01/2021
+* Script Name  : Hal-9000-info.sh v.1.3.2
 * Description  : Terminal Based script to displays System and IP Network Information
 * Dependencies : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
 * Arguments    : None
 * Author       : Bruce E. Scott, 03 Jun 2019
 * Linux Form   : I can be reached at https://www.ezeelinux.com/talk/index.php (bescott9944)
-* Comment 1.   : v.0.3 script concept and building.. Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
+* Comment 1.   : v.0.3 script concept and building.. Current Version: v.1.3.2 Modified by Bruce Scott 09/01/2021
 * Comment 2.   : Requires root/sudo privileges
 * Note         : dmidecode may produce error messages in some systems. They can be
                 safely ignored and removed from file with any text editor.
@@ -21,7 +20,7 @@
 
 #### <<<---================}[ Name Change on 09/02/2020 ]{================--->>>
 
-####      <<<---================}[ Hal-9000-info.sh ]{================--->>>
+#### <<<---================}[ Hal-9000-info.sh ]{================--->>>
 
  ---------------------------------------------------------------------
 
