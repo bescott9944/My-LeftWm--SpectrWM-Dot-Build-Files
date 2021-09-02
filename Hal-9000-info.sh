@@ -2,32 +2,43 @@
 #
 #####################################################################
 # <<<---================}[ Hal-9000-info.sh ]{================--->>>
-# Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
-# Script Name  : Hal-9000-info.sh v.1.3.0
-# Description  : Displays System and IP Network information
-# Dependencies : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
-# Arguments    : None
-# Author       : Bruce E. Scott, 03 Jun 2019
-# Email        : 
-# Linux Form   : I can be reached at https://www.ezeelinux.com/talk/index.php (bescott9944)
-# Comment 1.   : v.0.3 script concept and building.. Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
-# Comment 2.   : Requires root/sudo privileges
-# Note         : dmidecode may produce error messages in some systems. They can be
+# Script Name   : Hal-9000-Info.sh v.1.3.2
+# Description   : Displays System and IP Network information
+# Dependencies  : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
+# Arguments     : None
+# Author        : Bruce E. Scott, 03 April 2019
+# Started On    : 12 April 12:44 p.m. EST 2019 v.0.3 Beta
+# Last Change   : 31 Augest 10:15 a.m. EST 2021
+# Author E-Mail : bescott9944@gmail.com
+# Author GitHub : https://github.com/bescott9944
+# Auther Gitlab : https://gitlab.com/bescott9944
+# Linux Forms   : I can be reached at https://www.ezeelinux.com/talk/index.php (bescott9944)
+# Comment 1.    : v.0.3 script concept and building.. Current Version is v.1.3.2 -Bruce - 08/31/2021
+# Comment 2.    : Requires root/sudo privileges
+# Note          : dmidecode may produce error messages on some systems. They can be
 #                safely ignored and removed from file with any text editor.
 #
 #####################################################################
+#          -->> Knowen Issues <<--
 #
-#       <---> "ABOUT MyStat.sh" <--->     Copyright (C) 2019, Bruce E. Scott
-#   <<<---================}[ Name Chang on 09/02/2020 ]{================--->>>
-#       <<<---================}[ Hal-9000-info.sh ]{================--->>>
+# 1. On some sustems you will get this Error at the top of the Terminal screen:
+# (df: /run/user/1000/doc: Operation not permitted) This can be ignored it is a
+# Permission issue with the group. I added (sudo) to the command this should help!
 #
+# 2. The INXI errors can also be dimissed as there path checking errors of the script
+# That I need to fix so they do not show up in the terminal...
+#
+#####################################################################
+#
+#####################################################################
+#       <---> "ABOUT Hal-9000-Info v.1.3.2" <--->     Copyright (C) 2019, Bruce E. Scott
 #####################################################################
 #
 # This script was created using other scripts and commands that I added
 # to get to more system Information. This script should be in the ~/bin...
 # mystat.sh - This file - Copyright (C) 2019, by Bruce E. Scott
 #
-###########################################
+####################################################################
 #
 # A BIG Thanks goes out to Richard Romig for his 2 scripts.
 #               # Mystat.sh is based on these fantastic scripts...
@@ -41,15 +52,15 @@
 # He can be reached at https://www.ezeelinux.com/talk/index.php
 # Web: https://leon-plickat.org/
 #
-###########################################
+####################################################################
 #
-# I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work 
+# I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work
 # and I add my own to make up this full script. This script displays the information on screen
 # and a file in your /home/your-name under the name of the system "XXXXX.stat"...
 # I merged all the scripts and commands to make it all work...
 # I also wrote some of the code my self and modified a lot of it for better output... :D --Bruce E. Scott
 #
-############################################
+#####################################################################
 #
 #            <<====> ( GNU General Public License )<====>>
 #
@@ -75,7 +86,7 @@
 # I added the "inxi -c0 -Fxzd" command to get another set information that has the Mobo -Bruce
 # NOTE: This decision led to some issues later in the Change log -Bruce
 #----------------------------------------
-# I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work 
+# I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work
 # and I add my own to make up this full script. This script displays the information on screen
 # and a file in your /home/your-name under the name of the system "XXXXX.stat"...
 # I merged all the scripts and commands to make it all work... :D --Bruce E. Scott
@@ -96,7 +107,7 @@
 # You need to changed the ("nmcli dev" an "print $1" to $6) variables so it will would read
 # "Active" Nic cards in a 2 Nic card system..... Like this...
 #
-#  ethint=$(nmcli dev | grep 'ethernet' | awk '{print $1}') 
+#  ethint=$(nmcli dev | grep 'ethernet' | awk '{print $1}')
 #  ethint=$(nmcli con show --active | grep 'ethernet' | awk '{print $6}')
 #  ethint=$(nmcli dev | grep 'ethernet' | awk '{print $1,$3}' to get -->($1)enp2s0  ($3)connected
 #-----------------------------------------------------------------------------------
@@ -111,12 +122,12 @@
 # The inxi section is still flaky... -Bruce
 #----------------------------------------
 # v1.0.3 Change log. 6/17/19
-# Added more Computer Information variables and commands so that 
+# Added more Computer Information variables and commands so that
 # the board info is pilled with dmidecode command. Created new output
 # variables for the information so that is can be displayed on the screen.
 # I added the same for the Bios/vendor too..
 # --> Note:  On some Distro's "hdpram" is not installed by default.
-# You will have to install it for this section to function... 
+# You will have to install it for this section to function...
 # still dealing with inxi not always working on various Distro's --Bruce E. Scott
 #----------------------------------------
 # v1.0.3 Change log. 7/04/19
@@ -124,7 +135,7 @@
 # for similarity.
 # I have found that for some reason this script will not run in a folder that is
 # in the $PATH statement on MX & Manjaro Arch Distro's. Works fine on other Debian/Ubuntu Distro's...
-# Someday I will figure it out. I is a issue with "INXI". In the script and in the $PATH, the 
+# Someday I will figure it out. I is a issue with "INXI". In the script and in the $PATH, the
 # script gets stuck in a loop on the "INXI" command in the script and will run until the
 # system crashes..... One has to use the key combo "Ctrl + C" to exit the script... -Bruce
 #----------------------------------------
@@ -207,12 +218,12 @@
 # I am now checking and testing the script on Mint 18.3 / 19.2, MX-18.3, Manjaro 18.04,
 # Ubuntu Server 18.04 Distro's. This is done to check "Portability" of the script.....
 # Also worked on some working and added some fancy ASCII art stuff to make the output pretty!
-# Started testing on laptops to see IF the wifi and battery section reports correctly as I never
+# Started testing on laptops to see IF the Wifi and battery section reports correctly as I never
 # checked these functions....                                                                       -Bruce
 #----------------------------------------
 # v.1.2.2 Change Log 10/01/19
 # Checking code. Fixed some spacing on some lines. Added some more separators...
-# **--- TO-DO Still need to work on the Wifi issues not showing like I want. Battary/AC reporting..  -Bruce
+# **--- TO-DO Still need to work on the Wifi issues not showing like I want. Battery/AC reporting..  -Bruce
 #----------------------------------------
 # v.1.2.2 Change Log 10/09/19
 # Today I did some more punctuation fixing. Also I worked on the Wifi section for laptops
@@ -229,25 +240,107 @@
 # The script has worked just fine the last few months so I am going to call it done for now! :-)
 # The new Version Number is v.1.3.0 Modified 09/2/2020 -Bruce
 #----------------------------------------
+
+# v.1.3.1 Change Log 10/19/19
+# Today I moved all the output to the right of the headers with the (:). This make for a cleaner look in
+# the IP Information Section.
+# Took out the empty spacing with the "new line \n tag" too.
+# I also changed some of the commands and added Variables to better fix the output on the screen
+# and I think it works a bit better too! -Bruce
+# Also a Version Change... ):-D
+# Today I added somw morw Variables to the IP Section better fix the output on the screen
+# and I think it works a bit better too! 10/19/19 -Bruce
+# Side note; this 5 minute project has been 4 months now...Lol
+#----------------------------------------
+# *** TO-DO Item's, Now I need to do some testing on the laptops to make sure that I didn't FooBar
+# anything for the "WIFI" Area of the IP Information Section...
+# Still need to work on the laptop Battery output... 10/19/19 -Bruce
+#----------------------------------------
+# v.1.3.1 Change Log 10/20/19
+# Today I changed the Hard Drive Section again. I put the output information back
+# to the right side of the "Label" for a cleaner look and understanding of the output.
+# I still have a issue with one hard drive that the capacity is offset to far to the left and is
+# rapped to the next line still. I played with the settings and their is no fixing it at this time.
+# All of the other hard drive wok fine, just one BUTT!
+# Still have some output that is "Left side" output and will not TAB over to the right. (:-(
+# Positive Note! Testing on the laptops complete and all is GOOD... LOL
+# That's it for now until my OCD kick's in again.... -Bruce
+#----------------------------------------#
+# Change Log 10/19/2020
+# Finally got the Laptop Battery Interface figured out thanks to
+# OTB YouTube Channel. He showed where to get the information
+# and I got the Battery Status working because of the video!
+# Thanks OTB!       -Bruce
+#----------------------------------------
+# v.1.3.1 Change Log 00/31/2021
+# Today we merged some new Wifi and Laptop Battery testing/stats to the script.
+# There are still some testing that needs to be done on the Battery part, I lost
+# My Acer Laptop as it stopped working. All I have are my Dells and there all the same.
+# Will get Eznix to test it for me as his Dell Laptop is newer than mine!
+#
+# Also bumped the Version Number Up to v.1.3.2
+# Also made the complete name change from Mystat.sh to Hal-9000-Info
+#
+# ***TODO List: 08/31/2021
+# Need to see if there is a way to show when the laptop is on the battery or AC when script is ran
+# And not to show anything on a Desktop System...
+#
+# Added some Dependencies checking 2 months ago but still need to finish what to check for...
+#
+# Knowen Issue... On some sustems you will get this Error at the top of the Terminal screen:
+# (df: /run/user/1000/doc: Operation not permitted) This can be ignored it is a
+# Permission issue with the group. I added (sudo) to the command this should help!
+#
+# Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+#----------------------------------------#
 #
 #
 ####################################################################
 
 # Set BASH to quit script and exit on errors:
 
- set -e
+ set -e pipefail #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+
+# Dependencies Function
+# Checking for Dependencies : awk, ip, nmcli, wget, dmidecode, grep, hdparm, lsblk, inxi, network-tools
+# Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+# NOTE: Work in progress...
+
+#if [[ -d /usr/bin ]]  && [[ -f /usr/bin/dmidecode ]]; then
+
+if [[ -d /usr/sbin ]]  && [[ -f /usr/sbin/dmidecode ]]; then
+
+echo -e "dmidecode : All Good Found in /usr/bin/dmidecode"
+
+else
+
+echo -e "ERROR : dmidecode not found Please Install Missing Package!" >&2
+exit
+
+fi
+
+if [[ -d /usr/bin ]]  && [[ -f /usr/bin/awk ]]; then
+
+echo -e "Awk : All Good Found in /usr/bin/awk"
+
+  else
+
+echo -e "ERROR : awk not found Please Install Missing Package!" >&2
+exit
+fi
+
 #
   echo
   echo -e  "\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
   echo -e "\t<<<---================}[ Hal-9000 OS v.2010 ]{================--->>>"
   echo -e  "\t\t<---====+++++++++++++++++++++++++++++++++++====--->\n"
-  echo -e "\t~:>  Hello, I'm The HAL-9000 Computer.                <Beep:Beep:Beep>\n"
-  echo -e "\t~:>  I will be Processing Your Information today..    <Beep:Beep:Beep>"
-  echo -e "\t~:>  Please Hold this will take a Bit..  Thank You!   <Beep:Beep:Beep>"
-  echo -e "\t~:>  We May Need You Password $USER..                 <Beep:Beep:Beep>\n"
-  echo -e "\t~:>  I am Checking.......                             <Beep:Beep:Beep>"
-  echo -e "\t~:>  ..---___---****---___...                         <Beep:Beep:Beep>"
-  echo -e "\t~:>  Yes we need your password.. Please Enter It Now!......."
+  echo -e "\t\t<:>  Hello, I'm The HAL-9000 Computer.\n"
+  echo -e "\t\t<:>  I will be Processing Your Information today.."
+  echo -e "\t\t<:>  Please Hold this will take a Bit..  Thank You!"
+  echo -e "\t\t<:>  We May Need You Password $USER.. \n"
+  echo -e "\t\t<:>  I am Checking......."
+  echo -e "\t\t<:>  ...---___---****---___...---___---****---___..."
+  echo -e "\t\t<:>  Yes we need your password.. Please Enter It Now!......."
   echo -e  "\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
 #
 # Base variables
@@ -255,8 +348,11 @@
 myuser=$USER
 myhost=$HOSTNAME
 infofile="/home/$myuser/$myhost.stat"
-today=$(date +"%d %B %Y %H:%M:%S")
+today=$(date +"%B %e, %G - %l:%M:%S %P")
 #
+# Checking for sudo permissions:
+sudo ls > /dev/null
+
 # Computer information
 
 biov=$(sudo /usr/sbin/dmidecode -s bios-vendor 2>/dev/null)
@@ -290,7 +386,7 @@ wifint=$(nmcli dev | awk '/wifi/ {print $1}')
 # You need to changed the ("nmcli dev" an "print $1" to $6) varables so it will would read
 # "Active" Nic cards in a 2 Nic card system..... Like this...
 #
-# ethint=$(nmcli dev | grep 'ethernet' | awk '{print $1}') 
+# ethint=$(nmcli dev | grep 'ethernet' | awk '{print $1}')
 # ethint=$(nmcli con show --active | grep 'ethernet' | awk '{print $6}')
 # ethint=$(nmcli dev | grep 'ethernet' | awk '{print $1,$3}' to get -->($1)enp2s0  ($3)connected
 #-----------------------------------------------------------------------------------
@@ -314,10 +410,10 @@ clear
 {
   echo -e
   echo -e  "\t    <---====+++++++++++++++++++++++++++++++++++====--->
-\t <<<---================}[ Hal-9000-info.sh ]{================--->>>
+\t <<<---================}[ Hal-9000-Info ]{================--->>>
 \t Mystat.sh, v.0.3 created on 04/12/2019 Copyright 2019, Bruce E. Scott
 \t SysInfo, Copyright 2019, Richard Romig....
-\t Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020" > "$infofile"
+\t Current Version: v.1.3.2 Modified by Bruce Scott 08/31/2021" > "$infofile"
 #
   echo -e  "\t    <---====+++++++++++++++++++++++++++++++++++====--->"
   echo -e "============"
@@ -362,11 +458,12 @@ clear
   echo -e "\tDesktop: $(inxi -S 2>/dev/null | grep 'Desktop' | awk '{print $4 " " $5}')" # Added to get Desktop Info 10/19/16 -Bruce
   echo -e "\tCodename: $(/usr/bin/lsb_release -c | cut -c 11-)"   # Added to get Codename 6/14/19 -bruce.
   echo -e "\tRelease: $(/usr/bin/lsb_release -r | cut -c 10-)"  # Added to get Release 6/14/19 -bruce.
-  echo -e "\tKernel Ver: $(cat /proc/sys/kernel/osrelease 2>/dev/null grep '.' | awk '{print}')" # Added to get Kernel Ver Info 6/19/19 -Bruce
+  echo -e "\tKernel Ver: $(cat /proc/sys/kernel/osrelease 2>/dev/null grep '.' | awk '{print}')" # Added to get Kernel Ver Info 6/19/16 -Bruce
 #  echo -e "\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$6" "$7" "$8$9}')"
-  echo -e "\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$7" "$8$9}')" # Added to get Kernel Bit Ver Info 10/19/19 -Bruce
+#  echo -e "\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$7" "$8$9}')" # Added to get Kernel Bit Ver Info 10/19/16 -Bruce
+  echo -e "\tSoftware Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print $6 " " $7}')" # Added to get Kernel Bit Ver Info 10/19/16 -Bruce
 #
-  echo -e "\n============" 
+  echo -e "\n============"
   echo "CPU Information:"
   echo -e "============"
   echo -e "\t$cpuinfo"
@@ -375,7 +472,7 @@ clear
   echo "RAM Information:"
   echo -e "============"
   echo -e "\t$physmem GB"
-# 
+#
  echo -e "\n============"
   echo "Graphics Adapter: "
   echo -e "============"
@@ -435,39 +532,46 @@ fi
 #
 #
 # Display IP Information
+###-->> 10/19/19 Today I moved all the output to the right of the headers with the (:).
+###  This make for a cleaner look in the IP Information Section. Took out the empty spacing with the "new line \n tag" too.
+### I also changed some of the commands and added Variables to better fix the output on the screen
+### and I think it works a bit better too! -Bruce
   echo -e "\n=============="
   echo -e "IP Information:"
   echo "=============="
-  echo -e "\tPublic IP:"
-  echo -e "\t$publicip\n"
-#
   echo -e "\tLocal IP:"
 if [ -n "$ethint" ] && [ -n "$localip1" ]; then
-  echo -e "\tEthernet:
-     $localip1\n"
+  echo -e "\tEthernet:\t$localip1"
 elif [ -n "$ethint" ]; then
-  echo -e "\tEthernet: Not connected\n"
+  echo -e "\tEthernet:\tNot connected"
 fi
+# /sbin/ip route | awk '/default/ {print "\t"$3}'
+eadaptor=$(/sbin/ip route | awk '/default/ {print "\t"$5}')
+  echo -e "\tE-Adaptor ID:$eadaptor"
+# /sbin/ip route | awk '/default/ {print "\t"$5}' ### NOTE: Split the AWK command into 2 AWK commands to get
+# /sbin/ip route | awk '/scope/ {print "\t"$9}'  ### better Gatway and Adaptor information on 09/17/2019  -Bruce
+# NOTE:->>  If you have a error here, change this "/sbin/ip" to "/bin/ip" for your system if needed.
+# To find out in a terminal,type: "whereis ip on CLi" -bruce
 #
 if [ -n "$wifint" ] && [ -n "$localip2" ]; then
-  echo -e "\tWireless: $localip2"
+  echo -e "\tWireless:\t$localip2"
 elif [ -n "$wifint" ]; then
-  echo -e "\tWireless: Not connected\n"
+  echo -e "\tWireless:\tNot connected"
 fi
-  echo -e "\tDefault Gateway:"
- /sbin/ip route | awk '/default/ {print "\t"$3}'
-  echo -e "\n\tEthernet Adaptor ID:"                   ### NOTE: Split the AWK command into 2 AWK commands to get
- /sbin/ip route | awk '/default/ {print "\t"$5}'       ### better Gatway and Adaptor information on 09/17/2019  -Bruce
-# /sbin/ip route | awk '/scope/ {print "\t"$9}'
-#   If you have a error here, change this "/sbin/ip" to "/bin/ip"
-#   for your system if needed. To find out in a terminal,type: "whereis ip on CLi" -bruce
-  echo
-  echo -e "\tDNS Servers:"
+  echo -e "\tPublic IP:\t$publicip"
+#
+gate=$(/sbin/ip route | awk '/default/ {print "\t"$3}')
+ echo -e "\tGateway:$gate"
+#
+dnssrv=$(/usr/bin/nmcli dev show | awk '/IP4.DNS/ {printf "%s",$2}')
+  echo -e "\tDNS Servers:\t$dnssrv\n"
 # /usr/bin/nmcli dev show | awk '/IP4.DNS/ {printf "\t%s\n",$2}'
 #         ## Changed the AWK output to read the "IP4.GATEWAY to get a better IP output
 #         ## because some Distro's do not use the IP$.DNS, like Ubuntu Server 18.04. I checked Mint 18.3,
 #         ## MX 18.3, Manjaro, Peppermint 10. So this should be good for now... 09/20/2019 -bruce
-/usr/bin/nmcli dev show | awk '/IP4.GATEWAY/ {printf "\t%s\n",$2}'
+#
+#       ### today I added Variables to better fix the output on the screen
+#       ### and I think it works a bit better too! 10/19/19 -Bruce
 #
 # Hard drive
 #    Note: On some Distro's "hdpram" is not installed by default.
@@ -485,18 +589,18 @@ do
     trans=$(sudo /sbin/hdparm -I "${Disk}" | grep 'Transport:' | cut -c 22-)
     firm=$(sudo /sbin/hdparm -I "${Disk}" | grep 'Firmware Revision' | cut -c 22-)
 
-    echo -e "\tModel Number : $hdmodel"
-    echo -e "\tSerial Number: $hdserial"
-    echo -e "\tCapacity: $hdsize"
-    echo -e "\tTransport: $trans"
-    echo -e "\tFirmware Revision: $firm\n"
+    echo -e "\tModel Number:\t$hdmodel"
+    echo -e "\tSerial Number:\t$hdserial"
+    echo -e "\tCapacity:\t$hdsize"
+    echo -e "\tTransport:\t$trans"
+    echo -e "\tFirmware Revision:\t$firm\n"
 
 done
 ### Note: Added "Other HDD Information:" to get more HDD information on 09/17/2019  -Bruce
-  echo -e "\n============"
-  echo -e "Other HDD Information:"
   echo -e "============"
-    df -h     >> "$infofile"
+  echo -e "Other DF HDD Information:"
+  echo -e "============"
+    sudo df -h     >> "$infofile"
 ####
   echo -e "\n============"
   echo -e "Partition Information:"
@@ -510,58 +614,109 @@ done
 # until today.
 # Also added the ( echo -e "Battery Information:") to the output, it did not have one
 # Things to do; write the code to show when the "AC" power is plugged in and it is charging... 09/19/2019/ -Bruce
+#
+# Change Log 10/19/2020
+# Finally got the Laptop Battery Interface figured out thanks to
+# OTB YouTube Channel. He showed where to get the information
+# and I got the Battery Status working because of the video!
+# Thanks OTB!       -Bruce
+# Added this to the main Hal-9000 on 08/31/2021.. -Bruce
 #-----
 #
-  if  
-    [ "$(ls -A /sys/class/power_supply/)" ]; then
+
+if [ "$(ls -A /sys/class/power_supply/)" ]; then
   echo -e "\n============"
   echo -e "Battery Information:"
   echo -e "============"
-#    echo -e "Charging Power:"
-    echo -e "\nPower and battery:"
-    ls -1 /sys/class/power_supply
+  echo -e "\nPower and battery:"
+  echo -e " Notice if you see hidpp_battery_?
+ This is your wireless keyboard/mouse. Not configured at this time.:"
+ #   ls -1 /sys/class/power_supply
   fi
+
+# Change Log 10/19/2020
+# Finally got the Laptop Battery Interface figured out thanks to
+# OTB YouTube Channel. He showed where to get the information
+# and I got the Battery Status working because of the video!
+# Thanks OTB!       -Bruce
+
+# Battery/Laptop Varables
+# Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+if [[ -d /sys/class/power_supply/BAT0/ ]];then
+
+	EXTERNAL=$(cat /sys/class/power_supply/BAT0/capacity)
+	STATUS=$(cat /sys/class/power_supply/BAT0/status)
+	ONLINE=$(cat /sys/class/power_supply/AC/online)
+	ONLINEN="0"
+	ONLINEY="1"
+ fi
+
+ if [ "$ONLINE" = "1" ] && [ -d /sys/class/power_supply/BAT0/ ];then
+	echo -e "Battery Capacity : $EXTERNAL%"
+	echo -e "Battery Status   : On Mains Voltage & $STATUS"
+  
+  elif [ -d /sys/class/power_supply/BAT0/ ];then #Added this to keep the below
+  # from showing up on Desktops until I find a better way... -Bruce 08/31/2021
+	
+	echo -e "Battery Capacity : $EXTERNAL%"
+	echo -e "Battery Status   : Not On Mains Voltage & $STATUS"
+
+ fi
+
 ####
-#
+set -e pipefail #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+# set -e
  echo -e "\n============"
  echo -e "Inxi - System Data Information:"
- echo "================"
+ echo -e "============"
 #
 #   On 8/20/19 Deck_luck on EzeeTalk.com came up with this small script that fix's
 #   the INXI command from hanging and getting caught in a loop on any INXI v2.3.x.x-00
 #   or higher! There is a bug in newer versions that keep calling the parent --version.
 #   Thank you Deck_luck for your time and the fix! -Bruce
 #
-if [[ "${1}" == "--version" ]] ; then
+ if [[ "${1}" == "--version" ]] ; then
 	# patch for inxi_3.0.32 parent --version anomaly Per Deck_luck 8/20/19
-	exit 1
-fi
+ 	exit 1
+ fi
 #
+# INXI Verable's... Looking for INXI on the system...
 # Looking for INXI 06/06/2020
-# /usr/bin/inxi -c0 -Fxzd
-#if [ /bin/inxi ] ; then
-inxi -c0 -Fxzd
+# revisiting INXI 10/20/2020 - Might work!
+# revisiting INXI again 10/26/2020 - I think I got all the (if) statements
+# working to find all the locations of INXI...
+# Cleaned up some more code for INXI too... -Bruce
+# Added this to the main Hal-9000 on 08/31/2021.. -Bruce
 
-#elif [ /usr/bin/inxi ] ; then
-#/usr/bin/inxi -c0 -Fxzd
+# if [ -f /bin/inxi ];then
+#	/bin/inxi -c0 -Fxzd
+#		echo -e "\n \t    All Good Found INXI in /bin/inxi!"
+#  else
+#        echo  "*** ERROR! - INXI Not Found in /bin/inxi!" >&2
+# fi
 
-#elif [ /usr/local/bin/inxi ] ; then
-#/usr/local/bin/inxi -c0 -Fxzd
+ if [ -f /usr/bin/inxi ];then
+	/usr/bin/inxi -c0 -Fxzd
+        echo -e "\n \t    All Good Found INXI in /usr/bin/inxi!"
+  else
+        echo  "*** ERROR! - INXI Not Found in /usr/bin/inxi!" >&2
+ fi
 
-#else
-#echo -e "INXI Not Found!"
-#/bin/inxi -c0 -Fxzd
- 
-#fi 
+ if [ -f /usr/local/bin/inxi ];then
+	/usr/local/bin/inxi -c0 -Fxzd
+     echo -e "\n \t    All Good Found INXI in /usr/local/bin/inxi!"
+  else
+        echo  "*** ERROR! - INXI Not Found in /usr/local/bin/inxi!" >&2
+ fi
 #
   echo -e "\n"
   echo -e  "\t\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
   echo -e "\t\t  <<<---================ Hal-9000 OS v.2010 ================--->>>\n"
-  echo -e " \t~:>  The data is being retrieved "$USER"!!" "One Moment... \t\t\t<Beep:Beep:Beep>"
-  echo -e " \t~:>  I Found The Data You Requested... \t\t\t\t\t<Beep:Beep:Beep>\n"
-  echo -e " \t~:>  Here Is The Data For "$HOSTNAME"'s"" OS System You Wanted....."
-  echo -e " \t     Thank You For Using Your Hal-9000 Computer...\t\t\t<Beep:Beep:Beep>\n"
-  echo -e " \t~<:> Goodbye $USER! \t\t\t\t\t\t\t<Beep:Beep:Beep>"
+  echo -e " \t\t\t<:>  The data is being retrieved ""$USER""!!" "One Moment... "
+  echo -e " \t\t\t<:>  I Found The Data You Requested... \n"
+  echo -e " \t\t\t<:>  Here Is The Data For ""$HOSTNAME""'s"" OS System You Wanted....."
+  echo -e " \t\t\t     Thank You For Using Your Hal-9000 Computer...\n"
+  echo -e " \t\t\t<:>		Goodbye $USER! "
   echo -e  "\t\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
  echo -e "\t\t\t    <<<---==============================--->>>"
 } >> "$infofile"
