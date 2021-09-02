@@ -1,4 +1,4 @@
-# Changelog.md
+# Change-log.md
       _                                           
      /  |_   _. ._   _   _  |  _   _    ._ _   _| 
      \_ | | (_| | | (_| (/_ | (_) (_| o | | | (_| 
@@ -7,7 +7,7 @@
 
  Lead Developer: Bruce E. Scott
  Script Creator: Bruce E. Scott
- Github: https://github.com/bescott9944
+ GitHub: https://github.com/bescott9944
  Forums: https://www.ezeelinux.com/talk/bescott9944
          https://forum.endeavouros.com/bescott9944
  Licensed under the GNU and MIT respectively
@@ -17,17 +17,22 @@
 
 ### -----------------------------------------------------
 
-#### Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
-* Script Name  : Hal-9000-info.sh v.1.3.0
+#### Current Version: v.1.3.2 Modified by Bruce Scott 09/01/2021
+* Script Name  : Hal-9000-info.sh v.1.3.2
 * Description  : Terminal Based script to displays System and IP Network Information
 * Dependencies : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
 * Arguments    : None
-* Author       : Bruce E. Scott, 03 Jun 2019
-* Linux Form   : I can be reached at https://www.ezeelinux.com/talk/index.php (bescott9944)
-* Comment 1.   : v.0.3 script concept and building.. Current Version: v.1.3.0 Modified by Bruce Scott 09/2/2020
-* Comment 2.   : Requires root/sudo privileges
-* Note         : dmidecode may produce error messages in some systems. They can be
-                safely ignored and removed from file with any text editor.
+* Author        : Bruce E. Scott, 03 April 2019
+* Started On    : 12 April 12:44 p.m. EST 2019 v.0.3 Beta
+* Last Change   : 31 August 10:15 a.m. EST 2021
+* Author E-Mail : bescott9944@gmail.com
+* Author GitHub : https://github.com/bescott9944
+* Author Gitlab : https://gitlab.com/bescott9944
+* Linux Forms   : I can be reached at https://www.ezeelinux.com/talk/index.php (bescott9944)
+* Comment 1.    : v.0.3 script concept and building.. Current Version is v.1.3.2 -Bruce - 08/31/2021
+* Comment 2.    : Requires root/sudo privileges
+* Note          : dmidecode may produce error messages on some systems. They can be
+*                safely ignored and removed from file with any text editor.
 
 ### -----------------------------------------------------
 
@@ -225,10 +230,22 @@ Started the MyScript.sh
  a path issues. Will work on that issue in a day or two...          -Bruce
 ### -----------------------------------------------------
 
+#### V.1.3.2 Change Log 09/01/2021
+ Well it has been a year of hell from rain. drought, COVID and other 2020 crap.
+ Any rate while the Covid took things to strange levels I have worked on Hal-9000-Info.sh
+ from time to time. Made some changes here and there with some important additions.
+ Two main ones were improvements to the Laptop Battery information and the INXI issue
+ that just keeps on giving.
+ The Battery now shows more information like on charge and percentage and so on.
+ INIX seams to be installed in several places on Distro's so I added some checking for
+ INXI and then use that file.
+ I also have started to implement the dependencies checking to make sure that they are installed
+ on the system. NOTE this is a work in progress at this time.
+ I also moved the version number to because of the changes to V.1.3.2...
+ PLEASE Use this at you Own Risk as all software has the possibility of Fubaring your system.
+ Thank you for giving my incarnation of Hal-9000-Info script... -Bruce
 ### -----------------------------------------------------
 
 ### -----------------------------------------------------
 
 ### -----------------------------------------------------
-
-
