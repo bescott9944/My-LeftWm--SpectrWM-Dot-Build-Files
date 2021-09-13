@@ -5,10 +5,10 @@
 # Script Name   : Hal-9000-Info.sh v.1.3.2
 # Description   : Displays System and IP Network information
 # Dependencies  : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
-# Arguments     : None
+# Arguments     : Version: -v, Help: -h
 # Author        : Bruce E. Scott, 03 April 2019
 # Started On    : 12 April 12:44 p.m. EST 2019 v.0.3 Beta
-# Last Change   : 31 Augest 10:15 a.m. EST 2021
+# Last Change   : 05 September 10:15 p.m. EST 2021
 # Author E-Mail : bescott9944@gmail.com
 # Author GitHub : https://github.com/bescott9944
 # Auther Gitlab : https://gitlab.com/bescott9944
@@ -31,14 +31,24 @@
 #####################################################################
 #
 #####################################################################
-#       <---> "ABOUT Hal-9000-Info v.1.3.2" <--->     Copyright (C) 2019, Bruce E. Scott
+#       <---> "ABOUT Hal-9000-Info v.1.3.2" <--->
 #####################################################################
 #
-# This script was created using other scripts and commands that I added
-# to get to more system Information. This script should be in the ~/bin...
-# mystat.sh - This file - Copyright (C) 2019, by Bruce E. Scott
+#                   The Purpose:
+# The purpose of the script is togather system information for 
+# help forum's to assist in fixing issues with your OS and/or your hardware.
+# alot of the work. I also gotsome of the commands from the 2 "Snippet Scripts"
+# of Richard's which do I found other commands from various scripts and forum posts
+# which do most of the work and I add some of my own to make up this full
+# script. The script will displays information on screen and to a file
+# in your /home/your-name under the file name of the system "XXXXX.stat"...
+# I merged all the scripts and commands to make it all work in this one script...
+# I also wrote some of the code myself and modified a lot of it for better output.
+#                                            Copyright (C) 2019, by Bruce E. Scott
 #
 ####################################################################
+#
+# ----> Richard Romig Scriptes that were used.. <----
 #
 # A BIG Thanks goes out to Richard Romig for his 2 scripts.
 #               # Mystat.sh is based on these fantastic scripts...
@@ -51,16 +61,17 @@
 # for the script.... Thank You very Much!! Leon.P
 # He can be reached at https://www.ezeelinux.com/talk/index.php
 # Web: https://leon-plickat.org/
+#----------------------------------------
+#
+# ----> Terminalforlife Scriptes that were used.. <----
+# GitHub:https://github.com/terminalforlife
+# I would like to thank terminalforlife for the use of his scripts
+# and functions, Error checking, and other misc things that I swipped...
+# Tyler is a great teacher of Bash Scripting so give him a watch at his
+# YouTube channel... https://www.youtube.com/channel/UCfp-lNJy4QkIGnaEE6NtDSg
+# Email: terminalforlife@yahoo.com
 #
 ####################################################################
-#
-# I pulled all the commands from the 2 above "Snippet Scripts" which do most of the work
-# and I add my own to make up this full script. This script displays the information on screen
-# and a file in your /home/your-name under the name of the system "XXXXX.stat"...
-# I merged all the scripts and commands to make it all work...
-# I also wrote some of the code my self and modified a lot of it for better output... :D --Bruce E. Scott
-#
-#####################################################################
 #
 #            <<====> ( GNU General Public License )<====>>
 #
@@ -200,7 +211,7 @@
 # I fixed The Battery Display option when script is Ran on a Laptop
 # so that the information is correct. Was never checked on my Laptop
 # until today.
-# Also added the ( echo -e "Battery Information:") to the output, it did not have one
+# Also added the ( printf "%s\n" "Battery Information:") to the output, it did not have one
 # Things to do; write the code to show when the "AC" power is plugged in and it is charging... 09/19/2019/ -Bruce
 #----------------------------------------
 # Changed the AWK output to read the "IP4.GATEWAY to get a better IP output
@@ -293,55 +304,153 @@
 #
 # Added this to the main Hal-9000 on 08/31/2021.. -Bruce
 #----------------------------------------#
+# v.1.3.1 Change Log 09/05/2021
 #
+# Today we got the DF -h permission issue fixed...
+# Also we added "Looking for Dependencies Now Section."
+# by adding Dependencies Checking to the script to make sure that they
+# are all installed. Shows up as a Dependencies check with a STD to the terminal
+# output with messages found or error's at the start of the script... -Bruce 09/05/2021
 #
+# Also got a new error section added for the Dependency check.
+# Got this Error section from one of TerminalForLife scripts.
+# I like it better than joe Collins version that is commented out. 09/05/2021 -Bruce
+#----------------------------------------#
+# v.1.3.1 Change Log 09/06/2021
+#
+# 09/05/2021 -Bruce
+#----------------------------------------#
+#
+#----------------------------------------#
+#
+#----------------------------------------#
+
 ####################################################################
 
-# Set BASH to quit script and exit on errors:
+#This Help/Version/Error script section came from TerminalForLife.
+#GitHub:https://github.com/terminalforlife
+CurVer=' v.1.3.1 2021-09-06 '
+Progrm=${0##*/}
 
- set -e pipefail #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+Err(){
+	printf 'ERROR: %s\n' "$2" 1>&2
+	[ $1 -gt 0 ] && exit $1
 
+}
+
+USAGE(){
+	while read; do
+		printf "%s\n" "$REPLY"
+	done <<-EOF
+		            ${Progrm^^} ($CurVer)
+		            Written by Bruce E. Scott <bescott9944@gmail.com>
+
+		            Simple Script program togather system information for help forum's.
+
+		SYNTAX:     $_PROJECT_ [OPTS]
+
+		OPTS:       --help|-h|-?            - Displays this help information.
+		            --version|-v            - Output only the version datestamp.
+		            --debug|-D              - Enables the built-in bash debugging.
+		            
+		            
+
+		NOTE:       The purpose of the script is together system information for 
+            help forum's to assist in fixing issues with your OS and/or your hardware.
+            I pulled commands from various scripts and forum posts
+            which do most of the work and I add my own to make up this full
+            script. The script will displays information on screen and to a file
+            in your /home/your-name under the file name of the system "XXXXX.stat"...
+            I merged all the scripts and commands to make it all work...
+            I also wrote some of the code myself and modified a lot of it
+            for better output. --Bruce E. Scott
+	EOF
+}
+
+while [ "$1" ]; do
+	case $1 in
+		--help|-h|-\?)
+			USAGE; exit 0 ;;
+		--version|-v)
+			printf '%s\n' "$CurVer"; exit 0 ;;
+		--debug|-D)
+			DEBUGME='true' ;;
+		
+		-*)
+			Err 1 $LINENO "Incorrect argument(s) specified." ;;
+		*)
+			break ;;
+	esac
+	shift
+done
+
+#-------------------------------------------------------------------#
+
+# Set BASH to quit script and exit on any errors:
+ #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
+ set -e pipefail
+
+#-------------------------------------------------------------------#
 # Dependencies Function
 # Checking for Dependencies : awk, ip, nmcli, wget, dmidecode, grep, hdparm, lsblk, inxi, network-tools
 # Added this to the main Hal-9000 on 08/31/2021.. -Bruce
-# NOTE: Work in progress...
+# NOTE: Work in progress... Still 09/06/2021 -Bruce
+#
+# Looking for Dependencies Now...
+# Added Dependencies Checking to the script to make sure that they
+# are all installed. Shows up as a Dependencies check with a STD to the terminal
+# output with messages found or error's at the start of the script... -Bruce 09/05/2021
+# Got the Error section from one of TerminalForLife scripts.
+# I like it better than joe Collins version that is was using. 09/05/2021 -Bruce
 
-#if [[ -d /usr/bin ]]  && [[ -f /usr/bin/dmidecode ]]; then
 
-if [[ -d /usr/sbin ]]  && [[ -f /usr/sbin/dmidecode ]]; then
+if [[ -f /usr/bin/dmidecode ]]  || [[ -f /usr/sbin/dmidecode ]]; then
 
-echo -e "dmidecode : All Good Found in /usr/bin/dmidecode"
+printf "dmidecode : All Good I Found dmidecode in /usr/sbin/dmidecode%s\n" 2>/dev/null
 
 else
 
-echo -e "ERROR : dmidecode not found Please Install Missing Package!" >&2
-exit
+Err 1 "dmidecode not found.. Please Install Missing Dependency Package!"
 
 fi
 
-if [[ -d /usr/bin ]]  && [[ -f /usr/bin/awk ]]; then
+if [[ -f /usr/sbin/hdparm ]]  || [[ -f /usr/bin/hdparm ]]; then
 
-echo -e "Awk : All Good Found in /usr/bin/awk"
+printf "Hdparm : All Good I Found Hdparm in /usr/bin/hdparm%s\n" 2>/dev/null
 
   else
 
-echo -e "ERROR : awk not found Please Install Missing Package!" >&2
-exit
+Err 1 "Hdpram not found.. Please Install Missing Dependency Package!"
+
 fi
+
+if [[ -f /usr/bin/ip ]] && [[ -f /usr/sbin/ip ]] && [[ -f /usr/bin/awk ]] &&\
+ [[ -f /usr/bin/nmcli ]] && [[ -f /usr/bin/grep ]] && [[ -f /usr/bin/lsblk ]]; then
+
+printf "Core-Utils : All Good I Found All the Core-Utils%s\n" 2>/dev/null
+
+  else
+
+Err 1 "Core-Utils not found.. Please Install Missing Core-Utils Package!"
+
+fi
+
+# End of checking for Dependencies...
 
 #
   echo
-  echo -e  "\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
-  echo -e "\t<<<---================}[ Hal-9000 OS v.2010 ]{================--->>>"
-  echo -e  "\t\t<---====+++++++++++++++++++++++++++++++++++====--->\n"
-  echo -e "\t\t<:>  Hello, I'm The HAL-9000 Computer.\n"
-  echo -e "\t\t<:>  I will be Processing Your Information today.."
-  echo -e "\t\t<:>  Please Hold this will take a Bit..  Thank You!"
-  echo -e "\t\t<:>  We May Need You Password $USER.. \n"
-  echo -e "\t\t<:>  I am Checking......."
-  echo -e "\t\t<:>  ...---___---****---___...---___---****---___..."
-  echo -e "\t\t<:>  Yes we need your password.. Please Enter It Now!......."
-  echo -e  "\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
+  printf "%s\n\t<---====+++++++++++++++++++++++++++++++++++++++++++++++++====--->"
+  printf "%s\n\t<<<---================}[ Hal-9000 OS v.2010 ]{================--->>>"
+  printf "%s\n\t<---====+++++++++++++++++++++++++++++++++++++++++++++++++====--->\n"
+  printf "%s\n\t\t<:>  Hello, I'm The HAL-9000 Computer.\n"
+  printf "%s\n\t\t<:>  I will be Processing Your Information today.."
+  printf "%s\n\t\t<:>  Please Hold this will take a Bit..  Thank You!"
+  printf "%s\n\t\t<:>  We May Need You Password $USER.. \n"
+  printf "%s\n\t\t<:>  I am Checking......."
+  printf "%s\n\t\t<:>  ...---___---****---___...---___---****---___..."
+  printf "%s\n\t\t<:>  Yes we need your password.. Please Enter It Now!......."
+  printf "%s\n\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
+  printf "%s\n"
 #
 # Base variables
 #
@@ -368,8 +477,7 @@ bsernum=$(sudo /usr/sbin/dmidecode -s baseboard-serial-number 2>/dev/null)
 
 # RAM and CPU
 
-physmem=$(grep MemTotal /proc/meminfo | awk '{print $2}' | xargs -I {} \
-echo "scale=4; {}/1024^2" | bc)
+physmem=$(grep MemTotal /proc/meminfo | awk '{print $2}' | xargs -I {} printf "%s\n" "scale=4; {}/1024^2" | bc)
 cpuinfo=$(grep 'model name' /proc/cpuinfo | uniq | cut -c 14-)
 
 # Network
@@ -408,123 +516,123 @@ localip2=$(ip -o -f inet addr show | awk -v name="$wifint" '$0~name {print $4}')
 
 clear
 {
-  echo -e
-  echo -e  "\t    <---====+++++++++++++++++++++++++++++++++++====--->
+  printf "%s\n"
+  printf "%s\n\t    <---====+++++++++++++++++++++++++++++++++++====--->
 \t <<<---================}[ Hal-9000-Info ]{================--->>>
 \t Mystat.sh, v.0.3 created on 04/12/2019 Copyright 2019, Bruce E. Scott
 \t SysInfo, Copyright 2019, Richard Romig....
 \t Current Version: v.1.3.2 Modified by Bruce Scott 08/31/2021" > "$infofile"
 #
-  echo -e  "\t    <---====+++++++++++++++++++++++++++++++++++====--->"
-  echo -e "============"
-  echo -e "File created:"
-  echo -e "============"
-  echo -e "$today\n"
+  printf "%s\n\t    <---====+++++++++++++++++++++++++++++++++++====--->"
+  printf "%s\n============"
+  printf "%s\nFile created:"
+  printf "%s\n============"
+  printf "%s\n$today\n"
 #
-  echo -e  "\t    <---====+++++++++++++++++++++++++++++++++++====--->"
-  echo -e "\t           System information for $myhost:"
-  echo -e  "\t    <---====+++++++++++++++++++++++++++++++++++====--->"
+  printf "%s\n\t\t    <---====+++++++++++++++++++++++++++++++++++====--->"
+  printf "%s\n\t\t         System information for $myhost:"
+  printf "%s\n\t\t    <---====+++++++++++++++++++++++++++++++++++====--->"
 #
-  echo -e "\n============"
-  echo "Bios Information:"
-  echo -e "============"
-  echo -e "\tBios Manufacturer: $biov"
-  echo -e "\tBios Release Date: $biodate"
+  printf "%s\n============"
+  printf "%s\nBios Information:"
+  printf "%s\n============"
+  printf "%s\n\tBios Manufacturer: $biov"
+  printf "%s\n\tBios Release Date: $biodate"
 #
-  echo -e "\n============"
-  echo "System Information:"
-  echo -e "============"
-  echo -e "\tSystem Manufacturer: $mfgname"
-  echo -e "\tSystem Product Name: $prodname"
-  echo -e "\tSystem Version: $vername"
-  echo -e "\tSystem Serial Number: $sernum"
+  printf "%s\n============"
+  printf "%s\nSystem Information:"
+  printf "%s\n============"
+  printf "%s\n\tSystem Manufacturer: $mfgname"
+  printf "%s\n\tSystem Product Name: $prodname"
+  printf "%s\n\tSystem Version: $vername"
+  printf "%s\n\tSystem Serial Number: $sernum"
 #
-  echo -e "\n============"
-  echo "Board Information:"
-  echo -e "============"
-  echo -e "\tBoard Manufacturer: $bmfgname"
-  echo -e "\tBoard Product Name: $bprodname"
-  echo -e "\tBoard Version: $bvername"
-  echo -e "\tBoard Serial Number: $bsernum"
+  printf "%s\n============"
+  printf "%s\nBoard Information:"
+  printf "%s\n============"
+  printf "%s\n\tBoard Manufacturer: $bmfgname"
+  printf "%s\n\tBoard Product Name: $bprodname"
+  printf "%s\n\tBoard Version: $bvername"
+  printf "%s\n\tBoard Serial Number: $bsernum"
 #
-  echo -e "\n============"
-  echo "Distro Information:"
-  echo -e "============"
-#  echo -e "\tDistro OS: $(/usr/bin/lsb_release -d | cut -c 14-)"  # Changed to "OS" to "Disto OS" to get info in the $infofile. 6/14/19 -bruce.
-#  echo -e "\tCodename: $(/usr/bin/lsb_release -c | cut -c 11-)"   # Added to get Codename 6/14/19 -bruce.
-#  echo -e "\tRelease: $(/usr/bin/lsb_release -r | cut -c 10-)"  # Added to get Release 6/14/19 -bruce.
+  printf "%s\n============"
+  printf "%s\nDistro Information:"
+  printf "%s\n============"
+#  printf "%s\n\tDistro OS: $(/usr/bin/lsb_release -d | cut -c 14-)"  # Changed to "OS" to "Disto OS" to get info in the $infofile. 6/14/19 -bruce.
+#  printf "%s\n\tCodename: $(/usr/bin/lsb_release -c | cut -c 11-)"   # Added to get Codename 6/14/19 -bruce.
+#  printf "%s\n\tRelease: $(/usr/bin/lsb_release -r | cut -c 10-)"  # Added to get Release 6/14/19 -bruce.
 
-  echo -e "\tDistro OS: $(/usr/bin/lsb_release -d | cut -c 14-)"  # Changed to "OS" to "Disto OS" to get info in the $infofile. 6/14/19 -bruce.
-  echo -e "\tDesktop: $(inxi -S 2>/dev/null | grep 'Desktop' | awk '{print $4 " " $5}')" # Added to get Desktop Info 10/19/16 -Bruce
-  echo -e "\tCodename: $(/usr/bin/lsb_release -c | cut -c 11-)"   # Added to get Codename 6/14/19 -bruce.
-  echo -e "\tRelease: $(/usr/bin/lsb_release -r | cut -c 10-)"  # Added to get Release 6/14/19 -bruce.
-  echo -e "\tKernel Ver: $(cat /proc/sys/kernel/osrelease 2>/dev/null grep '.' | awk '{print}')" # Added to get Kernel Ver Info 6/19/16 -Bruce
-#  echo -e "\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$6" "$7" "$8$9}')"
-#  echo -e "\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$7" "$8$9}')" # Added to get Kernel Bit Ver Info 10/19/16 -Bruce
-  echo -e "\tSoftware Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print $6 " " $7}')" # Added to get Kernel Bit Ver Info 10/19/16 -Bruce
+  printf "%s\n\tDistro OS: $(/usr/bin/lsb_release -d | cut -c 14-)"  # Changed to "OS" to "Disto OS" to get info in the $infofile. 6/14/19 -bruce.
+  printf "%s\n\tDesktop: $(inxi -S 2>/dev/null | grep 'Desktop' | awk '{print $4 " " $5}')" # Added to get Desktop Info 10/19/16 -Bruce
+  printf "%s\n\tCodename: $(/usr/bin/lsb_release -c | cut -c 11-)"   # Added to get Codename 6/14/19 -bruce.
+  printf "%s\n\tRelease: $(/usr/bin/lsb_release -r | cut -c 10-)"  # Added to get Release 6/14/19 -bruce.
+  printf "%s\n\tKernel Ver: $(cat /proc/sys/kernel/osrelease 2>/dev/null grep '.' | awk '{print}')" # Added to get Kernel Ver Info 6/19/16 -Bruce
+#  printf "%s\n\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$6" "$7" "$8$9}')"
+#  printf "%s\n\tKernel Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print$7" "$8$9}')" # Added to get Kernel Bit Ver Info 10/19/16 -Bruce
+  printf "%s\n\tSoftware Bit: $(inxi -S 2>/dev/null | grep 'Kernel' | awk '{print $6 " " $7}')" # Added to get Kernel Bit Ver Info 10/19/16 -Bruce
 #
-  echo -e "\n============"
-  echo "CPU Information:"
-  echo -e "============"
-  echo -e "\t$cpuinfo"
+  printf "%s\n============"
+  printf "%s\nCPU Information:"
+  printf "%s\n============"
+  printf "%s\n\t$cpuinfo"
 #
-  echo -e "\n============"
-  echo "RAM Information:"
-  echo -e "============"
-  echo -e "\t$physmem GB"
+  printf "%s\n============"
+  printf "%s\nRAM Information:"
+  printf "%s\n============"
+  printf "%s\n\t$physmem GB"
 #
- echo -e "\n============"
-  echo "Graphics Adapter: "
-  echo -e "============"
-  echo -e "\t$(/usr/bin/lspci | grep 'VGA' | cut -c 36-)"
+ printf "%s\n============"
+  printf "%s\n""Graphics Adapter: "
+  printf "%s\n============"
+  printf "%s\n\t$(/usr/bin/lspci | grep 'VGA' | cut -c 36-)"
 #
 # Network Interfaces Section
 #
-  echo -e "\n============"
-  echo "Network Adapters:"
-  echo -e "============"
+  printf "%s\n============"
+  printf "%s\nNetwork Adapters:"
+  printf "%s\n============"
  if [ -n "$ethernet" ]; then
-   echo -e "\tEthernet:"
-	echo -e "\tPort Name: $ethint"
-	echo -e "\tNic Card: $ethernet"
-#   echo -e "\tEthernet: $ethint = $ethernet"
+  printf "%s\n\tEthernet:"
+	printf "%s\n\tPort Name: $ethint"
+	printf "%s\n\tNic Card: $ethernet"
+#   printf "%s\n\tEthernet: $ethint = $ethernet"
 #    read -r ethadd < "/sys/class/net/enp3s10/address"
     read -r ethadd < "/sys/class/net/$ethint/address"
-    echo -e "\tMAC Address: $ethadd"
+    printf "%s\n\tMAC Address: $ethadd"
  fi
 if [ -n "$ethint" ] && [ -n "$localip1" ]; then
-  echo -e "\tEthernet Address: $localip1"
+  printf "%s\n\tEthernet Address: $localip1"
 elif [ -n "$ethint" ]; then
-  echo -e "\tEthernet Cable: Not connected\n"
+  printf "%s\n\tEthernet Cable: Not connected\n"
 fi
 #
 # Wirless Wifi Section
 #
   if [ -n "$wireless" ]; then
-    echo -e "\n============"
-    echo -e "Wireless Information:"
-    echo -e "============"
-    echo -e "\tWireless:"
-    echo -e "\tPort Name: $wifint"
-    echo -e "\tNic Card: $wireless"
+    printf "%s\n============"
+    printf "%s\nWireless Information:"
+    printf "%s\n============"
+    printf "%s\n\tWireless:"
+    printf "%s\n\tPort Name: $wifint"
+    printf "%s\n\tNic Card: $wireless"
     read -r wifiadd < "/sys/class/net/$wifint/address"
-    echo -e "\tMAC Address: $wifiadd"
+    printf "%s\n\tMAC Address: $wifiadd"printf "%s\n"
   fi
 if [ -n "$wifint" ] && [ -n "$localip2" ]; then
-  echo -e "\tWireless Ethernet: $localip2"
+  printf "%s\n\tWireless Ethernet: $localip2"
 elif [ -n "$wifint" ]; then
-  echo -e "\tWireless Ethernet: Not connected\n"
+  printf "%s\n\tWireless Ethernet: Not connected\n"
 fi
 #
 ####
 #    Added the "IP Route" to get Nic card Information...
 #
-  echo -e "\n============"
-  echo -e "IP Route Inforomation:" # Added this to get more Nic Information. 6/14/19 -bruce.
-  echo -e "============"
-#	/usr/bin/ip route
-#   /sbin/ip route
-  /sbin/ip route | awk '/default/ "\t"{print}'  #--=== #### NOTE: I Added the "AWK Output" to change
+  printf "%s\n============"
+  printf "%s\nIP Route Inforomation:" # Added this to get more Nic Information. 6/14/19 -bruce.
+  printf "%s\n============\n"
+#	/usr/bin/ip route | awk '/default/ "\t"{print}'
+#   /sbin/ip route | awk '/default/ "\t"{print}'
+  /sbin/ip route | awk '/default/ "{print}"'  #--=== #### NOTE: I Added the "AWK Output" to change
                                                        #### the IP Router Information on 09/17/2019  -Bruce
 #  If your "IP" is not in the /sbin/ip. Then uncomment the above
 #  "/usr/bin/ip route" line. Then add a line "#" comment to the /sbin/ip/route
@@ -536,35 +644,35 @@ fi
 ###  This make for a cleaner look in the IP Information Section. Took out the empty spacing with the "new line \n tag" too.
 ### I also changed some of the commands and added Variables to better fix the output on the screen
 ### and I think it works a bit better too! -Bruce
-  echo -e "\n=============="
-  echo -e "IP Information:"
-  echo "=============="
-  echo -e "\tLocal IP:"
+  printf "%s\n=============="
+  printf "%s\nIP Information:"
+  printf "%s\n=============="
+  printf "%s\n\tLocal IP:"
 if [ -n "$ethint" ] && [ -n "$localip1" ]; then
-  echo -e "\tEthernet:\t$localip1"
+  printf "%s\n\tEthernet:\t$localip1"
 elif [ -n "$ethint" ]; then
-  echo -e "\tEthernet:\tNot connected"
+  printf "%s\n\tEthernet:\tNot connected"
 fi
 # /sbin/ip route | awk '/default/ {print "\t"$3}'
 eadaptor=$(/sbin/ip route | awk '/default/ {print "\t"$5}')
-  echo -e "\tE-Adaptor ID:$eadaptor"
+  printf "%s\n\tE-Adaptor ID:$eadaptor"
 # /sbin/ip route | awk '/default/ {print "\t"$5}' ### NOTE: Split the AWK command into 2 AWK commands to get
 # /sbin/ip route | awk '/scope/ {print "\t"$9}'  ### better Gatway and Adaptor information on 09/17/2019  -Bruce
 # NOTE:->>  If you have a error here, change this "/sbin/ip" to "/bin/ip" for your system if needed.
 # To find out in a terminal,type: "whereis ip on CLi" -bruce
 #
 if [ -n "$wifint" ] && [ -n "$localip2" ]; then
-  echo -e "\tWireless:\t$localip2"
+  printf "%s\n\tWireless:\t$localip2"
 elif [ -n "$wifint" ]; then
-  echo -e "\tWireless:\tNot connected"
+  printf "%s\n\tWireless:\tNot connected"
 fi
-  echo -e "\tPublic IP:\t$publicip"
+  printf "%s\n\tPublic IP:\t$publicip"
 #
 gate=$(/sbin/ip route | awk '/default/ {print "\t"$3}')
- echo -e "\tGateway:$gate"
+ printf "%s\n\tGateway:$gate"
 #
 dnssrv=$(/usr/bin/nmcli dev show | awk '/IP4.DNS/ {printf "%s",$2}')
-  echo -e "\tDNS Servers:\t$dnssrv\n"
+  printf "%s\n\tDNS Servers:\t$dnssrv\n"
 # /usr/bin/nmcli dev show | awk '/IP4.DNS/ {printf "\t%s\n",$2}'
 #         ## Changed the AWK output to read the "IP4.GATEWAY to get a better IP output
 #         ## because some Distro's do not use the IP$.DNS, like Ubuntu Server 18.04. I checked Mint 18.3,
@@ -575,11 +683,12 @@ dnssrv=$(/usr/bin/nmcli dev show | awk '/IP4.DNS/ {printf "%s",$2}')
 #
 # Hard drive
 #    Note: On some Distro's "hdpram" is not installed by default.
+#    Thanks goes out to Leon.P for his Hdd Function for the script...
 #    You will have to install it for this section to function... -Bruce E. Scott -6/18/19
-  echo -e "============"
+  printf "%s\n============"
 #  fi
-echo -e "Hard Disk Information:"
-  echo -e "============"
+printf "%s\nHard Disk Information:"
+  printf "%s\n============"
    for Disk in /dev/sd[a-z]
 do
 
@@ -589,30 +698,31 @@ do
     trans=$(sudo /sbin/hdparm -I "${Disk}" | grep 'Transport:' | cut -c 22-)
     firm=$(sudo /sbin/hdparm -I "${Disk}" | grep 'Firmware Revision' | cut -c 22-)
 
-    echo -e "\tModel Number:\t$hdmodel"
-    echo -e "\tSerial Number:\t$hdserial"
-    echo -e "\tCapacity:\t$hdsize"
-    echo -e "\tTransport:\t$trans"
-    echo -e "\tFirmware Revision:\t$firm\n"
+    printf "%s\n\tModel Number:\t$hdmodel"
+    printf "%s\n\tSerial Number:\t$hdserial"
+    printf "%s\n\tCapacity:\t$hdsize"
+    printf "%s\n\tTransport:\t$trans"
+    printf "%s\n\tFirmware Revision:\t$firm\n"
 
 done
 ### Note: Added "Other HDD Information:" to get more HDD information on 09/17/2019  -Bruce
-  echo -e "============"
-  echo -e "Other DF HDD Information:"
-  echo -e "============"
+  printf "%s\n============"
+  printf "%s\nOther DF HDD Information:"
+  printf "%s\n============\n"
     sudo df -h     >> "$infofile"
 ####
-  echo -e "\n============"
-  echo -e "Partition Information:"
-  echo -e "============"
+  printf "%s\n============"
+  printf "%s\n Partition Information:"
+  printf "%s\n============\n"
     /bin/lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,VENDOR,UUID  #### NOTE: Added VENDOR, UUID information to the"lsblk" on 09/17/2019  -Bruce
+printf "%s\n"
 ##
 # Battery Interfaces
 #-----
 # I fixed The Battery Display option when script is Ran on a Laptop
 # so that the information is correct. Was never checked on my Laptop
 # until today.
-# Also added the ( echo -e "Battery Information:") to the output, it did not have one
+# Also added the ( printf "%s\n" "Battery Information:") to the output, it did not have one
 # Things to do; write the code to show when the "AC" power is plugged in and it is charging... 09/19/2019/ -Bruce
 #
 # Change Log 10/19/2020
@@ -625,11 +735,11 @@ done
 #
 
 if [ "$(ls -A /sys/class/power_supply/)" ]; then
-  echo -e "\n============"
-  echo -e "Battery Information:"
-  echo -e "============"
-  echo -e "\nPower and battery:"
-  echo -e " Notice if you see hidpp_battery_?
+  printf "%s\n============"
+  printf "%s\nBattery Information:"
+  printf "%s============"
+  printf "%s\nPower and battery:"
+  printf "%s\nNotice if you see hidpp_battery_?
  This is your wireless keyboard/mouse. Not configured at this time.:"
  #   ls -1 /sys/class/power_supply
   fi
@@ -652,23 +762,23 @@ if [[ -d /sys/class/power_supply/BAT0/ ]];then
  fi
 
  if [ "$ONLINE" = "1" ] && [ -d /sys/class/power_supply/BAT0/ ];then
-	echo -e "Battery Capacity : $EXTERNAL%"
-	echo -e "Battery Status   : On Mains Voltage & $STATUS"
+	printf "%s\nBattery Capacity : $EXTERNAL%"
+	printf "%s\nBattery Status   : On Mains Voltage & $STATUS"
   
   elif [ -d /sys/class/power_supply/BAT0/ ];then #Added this to keep the below
   # from showing up on Desktops until I find a better way... -Bruce 08/31/2021
 	
-	echo -e "Battery Capacity : $EXTERNAL%"
-	echo -e "Battery Status   : Not On Mains Voltage & $STATUS"
+	printf "%s\nBattery Capacity : $EXTERNAL%"
+	printf "%s\nBattery Status   : Not On Mains Voltage & $STATUS"
 
  fi
 
 ####
 set -e pipefail #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
-# set -e
- echo -e "\n============"
- echo -e "Inxi - System Data Information:"
- echo -e "============"
+
+ printf "%s============"
+ printf "%s\n Inxi - System Data Information:\n"
+ printf "%s============\n"
 #
 #   On 8/20/19 Deck_luck on EzeeTalk.com came up with this small script that fix's
 #   the INXI command from hanging and getting caught in a loop on any INXI v2.3.x.x-00
@@ -681,6 +791,7 @@ set -e pipefail #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
  fi
 #
 # INXI Verable's... Looking for INXI on the system...
+###
 # Looking for INXI 06/06/2020
 # revisiting INXI 10/20/2020 - Might work!
 # revisiting INXI again 10/26/2020 - I think I got all the (if) statements
@@ -690,36 +801,45 @@ set -e pipefail #Added this to the main Hal-9000 on 08/31/2021.. -Bruce
 
 # if [ -f /bin/inxi ];then
 #	/bin/inxi -c0 -Fxzd
-#		echo -e "\n \t    All Good Found INXI in /bin/inxi!"
+#		printf "%s\n" "\n \t    All Good Found INXI in /bin/inxi!"
 #  else
-#        echo  "*** ERROR! - INXI Not Found in /bin/inxi!" >&2
+#        printf "%s\n" "*** ERROR! - INXI Not Found in /bin/inxi!" >&2
 # fi
 
  if [ -f /usr/bin/inxi ];then
 	/usr/bin/inxi -c0 -Fxzd
-        echo -e "\n \t    All Good Found INXI in /usr/bin/inxi!"
+    printf "%s\n"
+    printf "%s   \t\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
+       printf "%s\n\t\t\t Searching for INIX:   All Good Found INXI in /usr/bin/inxi!"
   else
-        echo  "*** ERROR! - INXI Not Found in /usr/bin/inxi!" >&2
+  printf "%s\n"
+  printf "%s   \t\t\t<---====+++++++++++++++++++++++++++++++++++====---> \n"
+        printf "%s\t\t\n  *** ERROR! - INXI Not Found in /usr/bin/inxi!\n" >&2
  fi
 
  if [ -f /usr/local/bin/inxi ];then
 	/usr/local/bin/inxi -c0 -Fxzd
-     echo -e "\n \t    All Good Found INXI in /usr/local/bin/inxi!"
+    printf "%s\n"
+    printf "%s   \t\t\t<---====+++++++++++++++++++++++++++++++++++====---> \n"
+     printf "%s\n\t\t\t Searching for INIX:   All Good Found INXI in /usr/local/bin/inxi!"
   else
-        echo  "*** ERROR! - INXI Not Found in /usr/local/bin/inxi!" >&2
+  printf "%s\n"
+  printf "%s   \t\t\t<---====+++++++++++++++++++++++++++++++++++====---> \n"
+        printf "%s\t\t\n *** ERROR! - INXI Not Found in /usr/local/bin/inxi!\n" >&2
  fi
 #
-  echo -e "\n"
-  echo -e  "\t\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
-  echo -e "\t\t  <<<---================ Hal-9000 OS v.2010 ================--->>>\n"
-  echo -e " \t\t\t<:>  The data is being retrieved ""$USER""!!" "One Moment... "
-  echo -e " \t\t\t<:>  I Found The Data You Requested... \n"
-  echo -e " \t\t\t<:>  Here Is The Data For ""$HOSTNAME""'s"" OS System You Wanted....."
-  echo -e " \t\t\t     Thank You For Using Your Hal-9000 Computer...\n"
-  echo -e " \t\t\t<:>		Goodbye $USER! "
-  echo -e  "\t\t\t<---====+++++++++++++++++++++++++++++++++++====--->"
- echo -e "\t\t\t    <<<---==============================--->>>"
+  printf "%s\n"
+  printf "%s   \t\t\t<---====+++++++++++++++++++++++++++++++++++====---> \n"
+  printf "%s \t\t  <<<---================ Hal-9000 OS v.2010 ================--->>> \n"
+  printf "%s \t\t\t<:>  The data is being retrieved $USER!! One Moment... \n"
+  printf "%s \t\t\t<:>  I Found The Data You Requested... \n"
+  printf "%s \t\t\t<:>\n"
+  printf "%s \t\t\t<:>  Here's The Data For ""$HOSTNAME""'s"" OS System You Wanted.....\n"
+  printf "%s \t\t\t<:>  Thank You For Using Your Hal-9000 Computer...\n"
+  printf "%s \t\t\t<:>   		Goodbye $USER! \n"
+  printf "%s    \t\t\t<---====+++++++++++++++++++++++++++++++++++====--->\n"
+  printf "%s \t\t\t     <<<---==============================--->>>\n"
 } >> "$infofile"
 #
-cat "$infofile"
-exit
+cat < "$infofile"
+exit 0
