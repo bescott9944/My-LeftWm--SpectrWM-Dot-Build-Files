@@ -246,6 +246,19 @@ Started the MyScript.sh
  Thank you for giving my incarnation of Hal-9000-Info script... -Bruce
 ### -----------------------------------------------------
 
+#### V.1.3.2 Change Log 09/13/2021
+ Ok, I have been watching TerminalForLife's videos about scripting and he keeps
+ going on about printf. So I ahave been changing all 'echo' commands to printf '%s\n'
+ and fixing th placement of the menu lines.
+ Still have some work to do on them but for now there ok.
+ Made some changes to the Testing section for the checking for the dependencies.
+ Did some tweeking in the InxI checking too. That still needs some more work
+ too... I also snitched TerminalForLife's Err function and added
+ his --help & --version flags section. Once more Into the Flames of Hell! -Bruce
+### -----------------------------------------------------
+
+### -----------------------------------------------------
+
 ### -----------------------------------------------------
 
 ### -----------------------------------------------------
