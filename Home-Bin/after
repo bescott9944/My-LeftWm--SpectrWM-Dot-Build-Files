@@ -1,0 +1,4 @@
+# !/bin/bash
+# sudo umount Videos Data/home/bruce/Music/ServerMusic
+# sudo umount /home/bruce/Music/ServerMusic
+sudo mount -a

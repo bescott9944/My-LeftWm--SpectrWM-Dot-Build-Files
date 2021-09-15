@@ -1,0 +1,1 @@
+/home/bruce/Github/My-LeftWm--SpectrWm-Dot-Build-Files/spectrwm-git/baraction.sh

@@ -1,0 +1,29 @@
+Interactive scripts belong more into the domain of DOS than of UNIX.
+
+Code:
+#!/bin/sh
+sudo apt update
+sudo apt install $*
+
+
+You can also adapt it to fit into your bashrc, so you don't need an extra file for this.
+
+Code:
+function install
+{
+   sudo apt update
+   sudo apt install $*
+}
+
+
+If you really want to print a status message at the end, you should check the return
+value to see if the operation was successfull.
+
+Code:
+function install
+{
+   sudo apt update
+   sudo apt install $*
+   [[ "$?" -eq 0 ]] && echo "Success" || echo "Operation failed"
+}
+

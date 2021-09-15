@@ -1,0 +1,2 @@
+[0;31m[1m ALT ([0;32mMoD-Key[0;31m[1m) KEY BINDINGS FOR SPECTRWM
+[0m(B[m

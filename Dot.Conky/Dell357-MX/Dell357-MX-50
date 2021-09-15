@@ -1,0 +1,184 @@
+# Name: Dell357-MX-50-Main Conky
+#
+# Author: Bruce E. Scott (bescott9944@gmail.com)
+#
+# Description
+# This simple conky configuration shows the following information:
+# conky - Main System information;
+#
+# Apart from the requirement for the Ubuntu font, this configuration is
+# really simple, using only a few conky objects and a script provided
+# with the configuration file. The aforementioned script (see mail.sh) is
+# used to get the number of unread mails from google via pipelining several
+# comands and using CURL.
+#
+# Installation (see below for terminal installation)
+# To install and use, the following 5 main steps are required:
+# 1. Install conky and the Ubuntu font (if using recent Ubuntu (based) 
+#    distributions, this step is most certainly not necessary.
+# 2. Create a directory named .conky in your home folder;
+# 3. Download the .zip file and unzip the contents to the newly 
+#    created folder;
+# 4. Edit the file mail.sh and place your gmail credentials (otherwise it #    will not fetch the number of mails in the gmail account).
+# 5. Run conky.sh (if it does not run, make sure it is executable, 
+#    otherwise type chmod +x ~.conky/conky.sh in the terminal before
+#    running the script).
+#
+# If you want conky to startup with gnome, copy the file named
+# conky.sh.desktop to ~.config/autostart/
+# If you do not want a given module to run (e.g. the GMAIL module),
+# edit the conky.sh file and comment or remove the line that loads the
+# respective configuration file (in the case of GMAIL, that would be
+# conky.conf.24 - line 2 - column 4).
+#
+# To install using the terminal, follow the next steps
+# 1. In Ubuntu (I have not tested the config in Ubuntu, only in Arch)
+#    sudo apt-get install conky-all
+#    In Arch Linux
+#    sudo yaourt -S conky-lua ttf-ubuntu-font-family 
+# 2. mkdir ~/.conky && cd ~/.conky
+# 3. wget http://www.deviantart.com/download/260230653/metro_style_conky_by_kant_o-d4axn99.zip
+# 4. unzip MetroStyleConky.zip
+# 5. chmod +x conky.sh
+# 6. chmod +x mail.sh
+# 7. ./conky.sh   
+# 8. (optional) run gnome-session-properties and add a new 
+#    startup program pointing to conky.sh to have the conky
+#    automatically comming up when you start the computer. 
+#
+alignment top_right
+background yes
+border_width 1
+cpu_avg_samples 1
+default_color ffffff
+draw_outline no
+draw_borders yes
+draw_shades no
+use_xft yes
+# xftfont Ubuntu:size=12
+xftfont Bitstream Vera Sans Mono:size=8
+# size of text area
+minimum_size 340 120
+maximum_width 360
+max_text_width 3600
+
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+own_window yes
+own_window_transparent yes
+own_window_class Conky
+own_window_type normal
+own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
+stippled_borders 0
+update_interval 1.0
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+own_window_colour 000000
+update_interval 5
+
+gap_x 35
+gap_y 10
+own_window_argb_value 0
+own_window_argb_visual yes
+TEXT
+# ${color yellow}System ${hr 2}$color
+# ${color white}$nodename $sysname $kernel
+# ${color white}${execi 3600 cat /etc/mx-version}
+# # ${color White}On Linux Ver ${color Green}$machine Linux
+# ${color white}System Uptime: ${color green}$uptime
+# ${color white}${time %A %B %e, %G} ${color 00ff00} ${time %I:%M:%S}${time %p} ${time %Z}
+#
+${color yellow}System ${hr 2}$color
+${color white}$nodename $sysname Ver: ${alignr}${color Green}$machine Linux
+${color white}Kernel Version: ${alignr}${color Green}$kernel
+#
+# Note: The next line is for MX 18.2 OS. You will have to change the file path for the "cat" command to read and display the
+# os-release file on your system to show the Linux Version Name. Ie "Linux Mint 18.3"
+# Mint places it file is in the /usr/lib and others OS's are in the /etc, just do a search for the "os-release" file name
+# and chance the path below to reflect the path your os-release file...
+#
+${color white}On Linux: ${alignr}${color green}${execi 3600 cat /etc/mx-version}
+${color white}System Uptime: ${alignr}${color green}$uptime
+${color white}${time %A %B %e, %G} ${alignr}${color 00ff00} ${time %I:%M:%S}${time %p} ${time %Z}
+
+${color yellow}Cpu ${hr 2}$color
+#
+# Note: The next line deals with displaying the CPU and Cores. And wasted screen space............
+# To keep from having 2-8 Core displayed on the Conky, you will have to copy the information from the "cpuinfo" file
+# on your system (/proc/cpuinof on Mint and most other OS's) and make a "cpuinfo" file
+# in your ~/.conly/system-folder-name. This file must contain the first Cores (0) information only copied from the systems "cpuinfo"
+# file, just the first Core ONLY!
+# Then place the copied info into your "cpuinfo" file that you created in your ~/.conky/system-folder-name folder, that way the
+# the CPU Core will be displayed on one line and not all 2-8 lines of core's as in the systems "cpuinfo" file. If you want to see all 0-8
+# core's displayed just use the "cpuinfo" located in /proc/cpuinfo, it will list them all.... ):-D
+#
+# ---------------------------
+${color green}AMD CPU Mfg:${color FF8700}${execi 1000 lscpu | grep Model\ name | sed 's/name:\ //' | cut -c 27- | sed "s/([^)]*)/()/g" | sed 's/[)(]//g'}
+# ---------------------------
+#
+# ${color FF8700}${execi 1000 cat ~/.conky/Dell357-MX/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}
+# ${color FF8700}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -s 's/model name.*: //'}
+# ${color FF8700}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'}
+#
+#  ${color green}CPU Speed: ${color white}${freq}Ghz
+# ${color white}CPU Usage:$color $cpu% ${color #cc2222} ${cpubar }
+#
+${color green}CPU Speed: ${color white}${freq}Ghz
+${color white}CPU Usage:$color $cpu% ${color #cc2222} ${alignr}${cpubar 6,200}
+# ${color green}CPU Speed:     ${color white}${freq}Ghz
+#
+${color white}Core 1%:$color ${cpu cpu1} ${color #cc2222} ${alignr}${cpubar cpu1 6,220}
+${color white}Core 2%:$color ${cpu cpu2} ${color #cc2222} ${alignr}${cpubar cpu2 6,220}
+${color white}Core 3%:$color ${cpu cpu3} ${color #cc2222} ${alignr}${cpubar cpu3 6,220}
+${color white}Core 4%:$color ${cpu cpu4} ${color #cc2222} ${alignr}${cpubar cpu4 6,220}
+# ${color white}Core 5%:$color ${cpu cpu5} ${color #cc2222} ${alignr}${cpubar cpu4 6,220}
+# ${color white}Core 6%:$color ${cpu cpu6} ${color #cc2222} ${alignr}${cpubar cpu4 6,220}
+#
+${color white}Bar: ${alignr}${color red}${cpugraph 15,220 0000ff 00ff00}
+### ${cpugraph 10,280 ffba00 00ff00}
+# ${cpugraph 20,280 0000ff 00ff00}
+${color yellow}Memory ${hr 2}$color
+${color white}Ram:${color white} $mem/$memmax - $memperc% ${alignr}${color FF6D00}${membar 5,110}
+${color white}Swap:${color white} $swap/$swapmax - $swapperc% ${alignr}${color 00d8ff}${swapbar 5,110}
+# $color$stippled_hr
+
+${color yellow}Top Processes ${hr 2}$color
+${color white}NAME             PID       CPU%      MEM%
+${color 00BEFF} ${top name 1} ${top pid 1}   ${top cpu 1}    ${top mem 1}
+${color white} ${top name 2} ${top pid 2}   ${top cpu 2}    ${top mem 2}
+${color eeee00} ${top name 3} ${top pid 3}   ${top cpu 3}    ${top mem 3}
+${color 00ee00} ${top name 4} ${top pid 4}   ${top cpu 4}    ${top mem 4}
+${color lightgrey} ${top name 5} ${top pid 5}   ${top cpu 5}    ${top mem 5}
+${color lightgrey} ${top name 6} ${top pid 6}   ${top cpu 6}    ${top mem 6}
+
+${color yellow}MEM Usage:${hr 2}$color
+${color ff4500} ${top_mem name 1} ${top_mem pid 1}   ${top_mem cpu 1}   ${top_mem mem 1}
+${color eeee00} ${top_mem name 2} ${top_mem pid 2}   ${top_mem cpu 2}   ${top_mem mem 2}
+${color 00ee00} ${top_mem name 3} ${top_mem pid 3}   ${top_mem cpu 3}   ${top_mem mem 3}
+${color lightgrey} ${top_mem name 4} ${top_mem pid 4}   ${top_mem cpu 4}   ${top_mem mem 4}
+${color lightgrey} ${top_mem name 5} ${top_mem pid 5}   ${top_mem cpu 5}   ${top_mem mem 5}
+${color lightgrey} ${top_mem name 6} ${top_mem pid 6}   ${top_mem cpu 6}   ${top_mem mem 6}
+
+${color yellow}Hard Disk I/O ${hr 2}$color
+${color white}I/O:${color white} ${diskio} ${alignr}${color white}${diskiograph 15,220 ffba00 00ff00}
+# ${color white}I/O:${color white} ${diskio} 
+# ${color FFFFFF}${diskiograph FF00AB FFE200}
+# ${color lightgrey}HDD I/O:$color $diskio
+# ${color red}$diskiograph ffba00 00ff00
+# $diskiograph ffba00 00ff00
+${color yellow}Disk Space ${hr 2}$color
+${color white}Root / ${color white}${fs_used /}/${fs_size /}${alignr}${color 00d8ff}${fs_bar 5,120 /}
+# ${color white} usr ${color white}${fs_used /usr}/${fs_size /usr}${alignr}${color white}${fs_bar 5,120 /usr}
+${color white}Bruce ${color white}${fs_used /home/bruce}/${fs_size /home/bruce}${alignr}${color 00d8ff}${fs_bar 5,120 /home/bruce}
+${color white}Data ${color white}${fs_used /home/bruce/Data}/${fs_size /home/bruce/Data}${alignr}${color 00d8ff}${fs_bar 5,120 /home/bruce/Data}
+${color white}Videos ${color white}${fs_used /home/bruce/Videos}/${fs_size /home/bruce/Videos}${alignr}${color 00d8ff}${fs_bar 5,120 /home/bruce/Videos}
+# ${hr 2}$color
+# ${color yellow}${hr 2}$color

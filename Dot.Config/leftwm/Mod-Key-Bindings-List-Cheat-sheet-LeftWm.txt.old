@@ -1,0 +1,439 @@
+
+####################################################################################################################
+#
+#     __       _____ _      __        _      ___         __             __  ___                           
+#    / /  ___ / _/ /| | /| / /_ _    | | /| / (_)__  ___/ /__ _    __  /  |/  /__ ____  ___ ____ ____ ____
+#   / /__/ -_) _/ __/ |/ |/ /  ' \   | |/ |/ / / _ \/ _  / _ \ |/|/ / / /|_/ / _ `/ _ \/ _ `/ _ `/ -_) __/
+#  /____/\__/_/ \__/|__/|__/_/_/_/   |__/|__/_/_//_/\_,_/\___/__,__/ /_/  /_/\_,_/_//_/\_,_/\_, /\__/_/   
+#                                                                                          /___/  small slant.ttf
+#                                     _                                       
+#     |\/|  _   _|   |/  _        /   |_) o ._   _| o ._   _   _   |  o  _ _|_ 
+#     |  | (_) (_|   |\ (/_ \/   /    |_) | | | (_| | | | (_| _>   |_ | _>  |_ 
+#                           /                              _|                  
+#              _                    __                  
+#             /  |_   _   _. _|_   (_  |_   _   _ _|_ | 
+#             \_ | | (/_ (_|  |_   __) | | (/_ (/_ |_ o  Mini.ttf
+#
+#            +++++++++++++++++++++++++++++++++++++++++++++++++++
+#             ++         LeftWm Window Manager              ++
+#              +++   Mod Key Bindings List Cheat sheet!    +++
+#             ++       3/08/2021 By Bruce E. Scott           ++
+#            +++++++++++++++++++++++++++++++++++++++++++++++++++
+#
+####################################################################################################################
+
+
+#------------------------------------------------------------------------------
+#					Define MOD Key
+#------------------------------------------------------------------------------
+To get a window to float:
+Mod + right click (or mod+ left click).
+
+#------------------------------------------------------------------------------
+#					Keybinding List
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "tilix -e /home/bruce/.config/leftwm/keybind.sh"
+modifier = ["modkey", "Control"]
+key = "k"
+
+#------------------------------------------------------------------------------
+#				Exit Menus & Hard/Soft Reset, Quit Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/spectrwm/bes-exit-leftwm"
+modifier = ["modkey", "Control"]
+key = "q"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/spectrwm/powerspec"
+modifier = ["Control", "Shift"]
+key = "q"
+
+[[keybind]]
+command = "SoftReload"
+modifier = ["modkey", "Shift"]
+key = "b"
+
+[[keybind]]
+command = "SoftReload"
+modifier = ["modkey", "Shift"]
+key = "r"
+
+[[keybind]]
+command = "Execute"
+value = "pkill leftwm"
+modifier = ["modkey", "Shift"]
+key = "q"
+
+#------------------------------------------------------------------------------
+#				Terminal Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "tilix"
+modifier = ["modkey"]
+key = "Return"
+
+[[keybind]]
+command = "Execute"
+value = "sakura"
+modifier = ["modkey"]
+key = "o"
+
+[[keybind]]
+command = "Execute"
+value = "dmenu.sh"
+modifier = ["modkey"]
+key = "d"
+
+
+#------------------------------------------------------------------------------
+#				File Menu / Manager Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "~/bin/jgmenu_rm_lock.sh"
+modifier = ["modkey", "Control"]
+key = "m"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-combi-icons.sh"
+modifier = ["modkey", "Control"]
+key = "i"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-dmenu-like.sh"
+modifier = ["modkey", "Control"]
+key = "o"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-locate"
+modifier = ["modkey", "Control"]
+key = "l"
+
+[[keybind]]
+command = "Execute"
+value = "/home/bruce/.config/rofi/rofi-drun.sh"
+modifier = ["modkey", "Control"]
+key = "u"
+
+[[keybind]]
+command = "Execute"
+value = "nemo"
+modifier = ["modkey", "Control"]
+key = "f"
+
+[[keybind]]
+command = "Execute"
+value = "pcmanfm"
+modifier = ["modkey", "Control"]
+key = "p"
+
+#------------------------------------------------------------------------------
+#				Text Editors Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "xed"
+modifier = ["modkey", "Control"]
+key = "e"
+
+
+#------------------------------------------------------------------------------
+#				Graphics Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "gimp"
+modifier = ["modkey", "Control"]
+key = "g"
+
+#------------------------------------------------------------------------------
+#				Audio Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "audacity"
+modifier = ["modkey", "Control"]
+key = "a"
+
+[[keybind]]
+command = "Execute"
+value = "deadbeef"
+modifier = ["Shift", "Control"]
+key = "a"
+
+[[keybind]]
+command = "Execute"
+value = "clementine"
+modifier = ["modkey", "Control"]
+key = "c"
+
+[[keybind]]
+command = "Execute"
+value = "pavucontrol"
+modifier = ["modkey", "Control"]
+key = "v"
+
+#------------------------------------------------------------------------------
+#				Screen Capture Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "scrot '%m-%d-%Y-%R.png' -e 'mv $f ~/Pictures/shots'"
+modifier = ["modkey"]
+key = "s"
+
+[[keybind]]
+command = "Execute"
+value = "scrot -u '%m-%d-%Y-%R-w.png' -e 'mv $f ~/Pictures/shots'"
+modifier = ["modkey", "Shift"]
+key = "s"
+
+#------------------------------------------------------------------------------
+#				Wallpaper Changer Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "alacritty -e /home/bruce/.config/spectrwm/wallok"
+modifier = ["modkey", "Control"]
+key = "b"
+
+#------------------------------------------------------------------------------
+#				Web Browser Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "Execute"
+value = "brave"
+modifier = ["modkey", "Shift"]
+key = "w"
+
+[[keybind]]
+command = "Execute"
+value = "google-chrome-stable"
+modifier = ["modkey", "Control"]
+key = "w"
+
+#------------------------------------------------------------------------------
+#				Close Windows Keybinding
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "CloseWindow"
+modifier = ["modkey"]
+key = "x"
+
+#------------------------------------------------------------------------------
+#				Indecrease / Decrease Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "IncreaseMainWidth"
+value = "3"
+modifier = ["modkey"]
+key = "l"
+
+[[keybind]]
+command = "DecreaseMainWidth"
+value = "3"
+modifier = ["modkey"]
+key = "h"
+
+#------------------------------------------------------------------------------
+#				Move To Last Woekspace Keybinding
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "MoveToLastWorkspace"
+modifier = ["modkey"]
+key = "period"
+
+#------------------------------------------------------------------------------
+#				Move To Last Tag Keybinding
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "SwapTags"
+modifier = ["modkey"]
+key = "comma"
+
+#------------------------------------------------------------------------------
+#				Move/Rotate Window Stack Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "MoveWindowUp"
+modifier = ["modkey", "Shift"]
+key = "k"
+
+[[keybind]]
+command = "MoveWindowDown"
+modifier = ["modkey", "Shift"]
+key = "j"
+
+[[keybind]]
+command = "MoveWindowTop"
+modifier = ["modkey", "Shift"]
+key = "Return"
+
+#------------------------------------------------------------------------------
+#				Focus Tags / Window Up or Down Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "FocusNextTag"
+modifier = ["modkey"]
+key = "Right"
+
+[[keybind]]
+command = "FocusPreviousTag"
+modifier = ["modkey"]
+key = "Left"
+
+[[keybind]]
+command = "FocusWindowUp"
+modifier = ["modkey"]
+key = "k"
+
+[[keybind]]
+command = "FocusWindowDown"
+modifier = ["modkey"]
+key = "j"
+
+#------------------------------------------------------------------------------
+#				Move To LayOuts (Arrow Keys) Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "NextLayout"
+modifier = ["modkey", "Control"]
+key = "Up"
+
+[[keybind]]
+command = "PreviousLayout"
+modifier = ["modkey", "Control"]
+key = "Down"
+
+[[keybind]]
+command = "FocusWorkspaceNext"
+modifier = ["modkey", "Shift"]
+key = "Right"
+
+[[keybind]]
+command = "FocusWorkspacePrevious"
+modifier = ["modkey", "Shift"]
+key = "Left"
+
+#------------------------------------------------------------------------------
+#				GoToTag Number Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "GotoTag"
+value = "1"
+modifier = ["modkey"]
+key = "1"
+
+[[keybind]]
+command = "GotoTag"
+value = "2"
+modifier = ["modkey"]
+key = "2"
+
+[[keybind]]
+command = "GotoTag"
+value = "3"
+modifier = ["modkey"]
+key = "3"
+
+[[keybind]]
+command = "GotoTag"
+value = "4"
+modifier = ["modkey"]
+key = "4"
+
+[[keybind]]
+command = "GotoTag"
+value = "5"
+modifier = ["modkey"]
+key = "5"
+
+[[keybind]]
+command = "GotoTag"
+value = "6"
+modifier = ["modkey"]
+key = "6"
+
+[[keybind]]
+command = "GotoTag"
+value = "7"
+modifier = ["modkey"]
+key = "7"
+
+[[keybind]]
+command = "GotoTag"
+value = "8"
+modifier = ["modkey"]
+key = "8"
+
+[[keybind]]
+command = "GotoTag"
+value = "9"
+modifier = ["modkey"]
+key = "9"
+
+#------------------------------------------------------------------------------
+#				Move To Tag Keybindings
+#------------------------------------------------------------------------------
+[[keybind]]
+command = "MoveToTag"
+value = "1"
+modifier = ["modkey", "Shift"]
+key = "1"
+
+[[keybind]]
+command = "MoveToTag"
+value = "2"
+modifier = ["modkey", "Shift"]
+key = "2"
+
+[[keybind]]
+command = "MoveToTag"
+value = "3"
+modifier = ["modkey", "Shift"]
+key = "3"
+
+[[keybind]]
+command = "MoveToTag"
+value = "4"
+modifier = ["modkey", "Shift"]
+key = "4"
+
+[[keybind]]
+command = "MoveToTag"
+value = "5"
+modifier = ["modkey", "Shift"]
+key = "5"
+
+[[keybind]]
+command = "MoveToTag"
+value = "6"
+modifier = ["modkey", "Shift"]
+key = "6"
+
+[[keybind]]
+command = "MoveToTag"
+value = "7"
+modifier = ["modkey", "Shift"]
+key = "7"
+
+[[keybind]]
+command = "MoveToTag"
+value = "8"
+modifier = ["modkey", "Shift"]
+key = "8"
+
+[[keybind]]
+command = "MoveToTag"
+value = "9"
+modifier = ["modkey", "Shift"]
+key = "9"

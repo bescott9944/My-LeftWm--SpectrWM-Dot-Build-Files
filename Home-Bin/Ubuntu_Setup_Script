@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Ubuntu (GNOME) 18.04 setup script.
+
+# First, let's install a bunch of software:
+
+sudo apt install virtualbox virtualbox-guest-additions-iso virtualbox-ext-pack \
+net-tools htop grsync lame asunder soundconverter brasero git mc \
+openssh-server sshfs gedit-plugin-text-size simplescreenrecorder libreoffice \
+ubuntu-restricted-extras mpv vlc gthumb gnome-tweaks tracker chrome-gnome-shell \
+qt5-style-plugins spell gdebi synaptic gparted conky-all samba -yy
+
+# Add me to any groups I might need to be a part of:
+
+sudo adduser bruce vboxusers
+
+# Remove undesirable packages if installed:
+
+sudo apt purge gstreamer1.0-fluendo-mp3 deja-dup shotwell -yy
+
+# Remove snaps and get packages from apt:
+
+sudo snap remove gnome-characters gnome-calculator gnome-system-monitor
+sudo apt install gnome-characters gnome-calculator gnome-system-monitor
+
+# Purge Firefox, install Google Chrome:
+
+rm -r .mozilla .cache/mozilla
+sudo apt purge firefox -yy
+sudo apt purge firefox-locale-en -yy
+mkdir /tmp/gc-install-tmp
+pushd /tmp/gc-install-tmp
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo gdebi -n google-chrome-stable_current_amd64.deb
+popd
+rm -rf /tmp/gc-install-tmp
+
+# set Qt variable in /etc/environment:
+
+sudo bash -c "echo 'QT_QPA_PLATFORMTHEME=gtk2' >> /etc/environment"
+
+# Gotta reboot now Bruce:
+
+echo "*** All done! Please reboot now. ***"
+exit

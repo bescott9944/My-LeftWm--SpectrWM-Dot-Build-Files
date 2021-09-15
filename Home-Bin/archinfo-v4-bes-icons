@@ -1,0 +1,171 @@
+#!/usr/bin/env bash
+
+#------------------------------------------------------------------------------
+# Project Name      - end-info-v4-bes-icons
+# Started On        - Tue 14 Sep 12:44 p.m. EST 2020
+# Last Change       - Sun 01 Aug  12:15 p.m. EST 2021
+# Author E-Mail     - bescott9944@gmail.com
+# Author GitHub     - https://github.com/bescott9944
+# Auther Gitlab     - https://gitlab.com/bescott9944
+#------------------------------------------------------------------------------
+# Bash version 4.0 or greater is required.
+#------------------------------------------------------------------------------
+#
+##################################################################################
+# This script uses lsb_release, lscpu, and glxinfo. make sure they are installed. #
+###################################################################################
+#
+# #Done a lot of changes that wer not documented but hay it is working... -Bruce
+#
+# There has a lot of changes as it is a new Fetch buile for Arch so it is
+# still a work in progess. Have made lots of changes in July as you can see from the
+# Removed Section below.
+#
+# #Knowen issues
+# The New >$term_used< variable does not show the Terminal being uses on reload or run
+# from the command line, it just shows the $SHELL variable. Does work as it should 
+# when a new terminal is launched. Looking for a fix...
+#
+# #Things TODO. 
+# Always something of a new idea..
+# Looking for a fix for the Terminal $ not showing right on manual launch of  the fetcher 8/1/2021
+#
+# START OF SCRIPT
+#
+# Stuff glened form Neofetch...
+# -->inxi -FzjJxy 80 | grep 'base:' | awk '{print $4 $5}'
+# -->Base: ${c7}$os_base -> os_base="$(inxi -Fzx | grep 'base:' | awk '{print $16 " " $17}')"
+# -->                       os_base="$(cat /etc/os-release | grep ID_LIKE | sed 's/ID_LIKE=//g'| sed 's/"//g')"
+#
+#----- Removes items that were updated but saving old for refference
+# OS="$(lsb_release -sirc)"
+# OS="$(cat /etc/os-release | grep PRETTY_NAME | sed 's/PRETTY_NAME=//g'| sed 's/"//g')"
+# GPU="$(lspci | grep VGA | sed 's/[][]//g' | awk '{print $12" "$13" "$18" "$19}')"
+# wm_theme="$(gsettings get org.cinnamon.desktop.wm.preferences theme)"
+# CPU=$(grep 'model name' /proc/cpuinfo | uniq | cut -c 14-)
+# CPU="$(lscpu | grep Model\ name | sed 's/name:\ //' | sed "s/([^)]*)/()/g" | sed 's/[)(]//g')"
+# LOCALIP=$(echo -e "${COLOR_INFO}Local IP\t${COLOR_HL}$LOCALIP${NC}")
+# EXTERNALIP=$(echo -e "${COLOR_INFO}External IP\t${COLOR_HL}$EXTERNALIP${NC}")
+#
+# termfont="$(gsettings get org.gnome.desktop.interface monospace-font-name | sed "s/'//g" | awk '{print $1}')"
+# Shell="$(basename "$SHELL")"
+# Shell="$(/usr/bin/zsh --version | grep 'zsh' | awk '{print $1 " " $2}')"
+# zsh --version | grep 'zsh' | awk '{print $1 " "$2}' ---  bash --version | grep 'bash' | sed "s/,//g" | awk '{print $2 " " $4}'
+# hostn="$(uname -a | grep 'Linux' | awk '{print $2}')"
+##  Shell2="$(basename "$SHELL")"
+# term_used="$(pstree -sA $$ | awk -F "---" '{ print $6 }')"
+
+
+clear ; clear
+
+# Universal variables
+user="${USER}\e[33m@"
+hostn="$(less /etc/hostname | awk '{print}')"
+Desktop="${XDG_CURRENT_DESKTOP}"
+OS="$(lsb_release -si)"
+os_base="$(cat /etc/os-release | grep ID_LIKE | sed 's/ID_LIKE=//g'| sed 's/"//g')"
+Kernel="$(uname -sr)"
+Uptime="$(uptime -p | sed 's/up //')"
+GPU="$(/usr/bin/lspci | grep 'VGA' | cut -c 65-)"
+CPU="$(lscpu | grep Model\ name | awk '{print $4" "$5" "$6}')"
+RAM="$(free -h | awk '/^Mem:/ {print $3 " / " $2}')"
+gtktheme="$(grep gtk-theme-name ~/.config/gtk-3.0/settings.ini | sed 's/gtk-theme-name=//')"
+icontheme="$(grep gtk-icon ~/.config/gtk-3.0/settings.ini | sed 's/gtk-icon-theme-name=//')"
+gtk_termfont="$(grep gtk-font-name ~/.config/gtk-3.0/settings.ini | sed 's/gtk-font-name=//')"
+term_used="$(basename "/"$(ps -f -p $(less /proc/$(echo $$)/stat | cut -d \  -f 4) | tail -1 | sed 's/^.* //'))"
+Uptime="$(uptime -p | sed 's/up //')"
+Packages="$(pacman -Q | wc -l)"
+
+## LOCAL IP
+LOCALIP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+
+## EXTERNAL IP
+EXTERNALIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+## Desktop / Window Manager
+if [ -z "${WM}" ]; then
+	if [ "${XDG_CURRENT_DESKTOP}" ]; then
+		envtype='Desktop'
+		WM="${XDG_CURRENT_DESKTOP}"
+	elif [ "${DESKTOP_SESSION}" ]; then
+		envtype='Desktop'
+		WM="${DESKTOP_SESSION}"
+	else
+		envtype='WM'
+		WM="$(tail -n 1 "${HOME}/.xinitrc" | cut -d ' ' -f 2)"
+	fi
+else
+	envtype='WM'
+
+fi
+
+## Getting SHELL and version
+ if [ -f /usr/bin/zsh ]; then
+    Shell2="$(zsh --version | grep 'zsh' | awk '{print $1 " " $2}')"
+
+    elif [ -f /usr/bin/bash ]; then
+    Shell2="$(bash --version | grep 'bash' | sed "s/,//g" | awk '{print $2 " " $4}')"
+        
+  fi
+
+# colors
+ c1="\e[31;1m" # Red
+ c2="\e[32m" # Light Green
+ c3="\e[33m" # Yellow
+ c4="\e[34m"  # Calm Blue
+ c5="\e[35;1m" # Violet
+ c6="\e[36m" # Arch Blue
+ c7="\e[37m" # White
+ c8="\e[38m" # Sky Blue
+ c9="\e[39m" # Light Grey
+ c10="\e[30m" # Dark Grey
+ c20="\e[0m" # Normal
+ c21="\e[0;94m" # High Intenisty Blue
+
+# An Error echo wrapper
+err0r()
+{
+
+    echo >&2 "$(tput bold; tput setaf 1)[-] ERROR: ${*}$(tput sgr0)"
+    echo ""
+    exit 86
+}
+
+# A Warning echo wrapper
+warn()
+{
+ echo >&2 "$(tput bold; tput setaf 3)[!] WARNING: ${*}$(tput sgr0)"
+ echo ""
+}
+
+# A Message echo wrapper
+msg()
+{
+ echo "$(tput bold; tput setaf 2)[+] ${*}$(tput sgr0)"
+}
+
+# #Output
+
+echo ""
+echo -e "${c21}                   _             __  __                      _                                        "
+echo -e "${c21}                  .o+\`          / / / / ______  _______     / \            __   ___                  "           
+echo -e "${c21}                 \`ooo/         / / / / / /___/ / /  / /    / _ \  ________/ /  / (_)__  __  ____ __  "           
+echo -e "${c21}                \`+oooo:       / /_/ / / /___/ / /__/_/    / ___ \/ __/ __/ _ \/ / / _ \/ / / /\ \ /  "            
+echo -e "${c21}               \`+ooooo:       \____/ /_/     /_/         /_/   \/_/  \__/_//_/_/_/_//_/\__,_//_\_\   "    
+echo -e "${c21}               \`+oooooo:   "     "${c3}   ---------------------------------------------------------- V4 Icon"
+echo -e "${c21}               -+oooooo+:                 " ${c6}Logged In: ${c7}${user}${c7}${hostn}
+echo -e "${c21}             \`/:-:++oooo+:                " ${c6}OS:  ${c7}$OS ${c6} Base:  ${c7}$os_base # added ID_LIKE=BTW-Arch ->/etc/os-release manually. 07-24-2021
+echo -e "${c21}            \`/++++/+++++++:               " ${c6}$envtype:  ${c7}$WM
+echo -e "${c21}           \`/++++++++++++++:              " ${c6}GTK Theme:  ${c7}$gtktheme
+echo -e "${c21}          \`/+++ooooooooooooo/\`            " ${c6}GTK Icon Theme:  ${c7}$icontheme
+echo -e "${c21}         ./ooosssso++osssssso+\`           " ${c6}GTK Fonts:  ${c7}$gtk_termfont
+echo -e "${c21}        .oossssso-\`\`\`\`/ossssss+\`          " ${c6}Kernel:  ${c7}$Kernel
+echo -e "${c21}       -osssssso.      :ssssssso.         " ${c6}Shell:  ${c7}$Shell2 ${c6}Terminal:  ${c7}$term_used
+echo -e "${c21}      :osssssss/        osssso+++.        " ${c6}CPU:  ${c7}$CPU
+echo -e "${c21}     /ossssssss/        +ssssooo/-        " ${c6}GPU:  ${c7}$GPU
+echo -e "${c21}   \`/ossssso+/:-        -:/+osssso+-      " ${c6}RAM:  ${c7}$RAM
+echo -e "${c21}  \`+sso+:-\`                 \`.-/+oso:     " ${c6}Packages:  ${c7}$Packages
+echo -e "${c21} \`++:.                           \`-/+/    " ${c6}Uptime:  ${c7}${Uptime}
+echo -e "${c21} /.\`                                .\`/   " ${c6}Local Net IP:  ${c7}$LOCALIP
+echo -e "${c10}                                          " ${c6}External IP:  ${c7}$EXTERNALIP
+echo ""

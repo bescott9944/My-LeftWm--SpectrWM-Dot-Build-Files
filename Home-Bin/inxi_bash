@@ -1,0 +1,81 @@
+Hello all,
+
+I am still working in my MYSTATS bash script and it was going real well with the help of leon.p and other good folks on the forms until the BUT!
+   Yep we have a BUT!!!
+
+Grab a cup of coffee of your favorite brew and set a spell..... :D
+
+I am having a small issue with "inxi"... Actually HUGE! 
+
+While the script works just fine on Mint 18.3 Cinnamon, Peppermint 10.
+Now on MX 18.3 and Manjaro Illyria 18.04 that is another story and issue, maybe other Distro's too not sure.
+Please note:These are on real systems, (whatever the buzz word is today) an not VM's...
+
+When I run the script on Mint it runs as it should taking 3 sec. or less to run. Then it outputs to the screen and a text file in the "/home".
+Now On MX and Manjaro about 99% of the time the script will hang at the "inxi" section of the script and if you leave it there and wait for the output, nothing, if you keep waiting for output the system will use all the CPU and Memory until the system will Freeze and die! I can see this in Htop...
+You will have to turn off the computer and restart it...
+
+I think it is getting stuck in a loop or something and I am not sure how to fix it.
+If after 3 sec, say 4 sec. I hit "Ctrl + C" to get out of the script. The output log that I have the script write to (>> "$infofile") stops at the INXI section of the script every time...
+
+Now this does happen more often than not, but sometimes after rebooting the script will work as intended on MX and Manjaro, with no hanging just "1" time, from there it hangs every time in MX and Manjaro.
+Now if it was just a Debian base or Arch base system well OK, but it is both?
+
+I have checked the $PATH for "inxi" it is the same on Mint, Peppermint, MX  and Manjaro (/usr/bin/inxi)...
+And now if I run "inxi -c0 -Fxzd" from the terminal on all of them it works as it should.
+Now if you use the same command "inxi -c0 -Fxzd" in the script, it hangs the script on MX and Manjaro. I also tried to issued "/usr/bin/inxi -c0 -Fxzd" in the script, thinking it was a path thing and still, it hangs.
+
+Here is some of the code in question...
+ echo -e "\nInxi System Data Information:"
+ echo "================"
+ /usr/bin/inxi -c0 -Fxzd
+# /home/$myuser/bin/test
+ >> "$infofile"
+
+If you need more of the code I can post it....
+
+So this leads me to think it is the way the command is issued in the script or the $PATH.
+I have done some searching on my own and I keep going in circles.....
+
+WEIRD Things ----------------------------------------------------------------- From Here!
+
+Now on the Manjaro box, if I run the script from "/home/bruce" ~>$./mystatMJ, it runs as it should...
+BUT move the script to the "/home/bruce/bin" , then run ~:>$mystatMJ, it will hang every time at the "inxi" section...
+The same for the MX Box.... Sigh!!! (Notice the commands above, not the same...)
+
+Mint is fine from either ~:>$ or from ~ /bin:>$ works....
+
+I would like to run all of my scripts from my "bin" in "/home/bruce/bin" on all my systems right?
+No! not happening!
+Here is the reason that I think it is a $PATH issue somewhere (me thinks)...
+
+Here is another weird thing, if I issue "echo $PATH" in a terminal on all the systems I get these outputs...
+
+I get on my Mint 18.3 (/home/bruce/bin:/home/bruce/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games)
+
+On my Manjaro it is (/home/bruce/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+)
+
+On my MX it is (/home/bruce/:/home/bruce/.local/bin:/home/bruce/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games)
+
+The "/home/bruce/bin and /usr/bin" are all in the $PATH on all the Distro's....
+
+More Weirdness ----------------------------------------------------------------- From Here!
+
+When I move the script to my "Bash Path" for "bin" it will not run and hangs, take it out of the "Bash Path""/home/bruce/bin" put in say, /home/bruce, works fine! ~>$./mystatMJ, or in /home/bruce/bill_n_ted  >:$./mystatMJ works fine.....
+
+Mint does not care apparently as for the placement in the path and just run's the script and it works..... 
+
+DAMN my head hurts!!!
+
+( Hay Joe! I have tried to explain this the best I can and give all the information I can... LOL)
+
+But! Really, if you need something else let me know!!!!
+I may have repeated something in a different way just putting out information.... Sorry!   
+
+Thanks for your help in advance and thoughts!
+Also for letting me VENT some.... :D
+LLAP
+
+
+Damn my head hurts where's my Jack Daniels! 

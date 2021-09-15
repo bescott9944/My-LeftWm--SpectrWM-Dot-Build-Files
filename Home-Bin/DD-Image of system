@@ -1,0 +1,24 @@
+You don't need any additional software in Linux to do this. You could simply enter a terminal and use dd ;
+
+Code:
+sudo dd if=/dev/sda of=/mnt/usb1/system-sda.img bs=1M conv=fdatasync status=progress
+
+This will create a raw image file called "system-sda.img" in the directory /mnt/usb1 (assuming that is where you have the backup drive mounted, otherwise change it to suit).
+This also assumes that your system drive is /dev/sda.
+
+Use:
+Code:
+lsblk
+to find out what your drive locations are.
+
+"bs=1M" is specifying the block size and is optional.
+"conv=fdatasync" forces the program to wait until the buffer has fully finished copying before returning to prompt and is optional but recommended.
+"status=progress" is optional and just prints to screen what is happening as it copies.
+
+I have used this method to create system images and I find it so quick and easy. Although it is not a GUI, it is simple once you understand the command.
+
+To restore the image, you could just to the reverse. Eg.
+Code:
+sudo dd if=/mnt/usb1/system-sda.img of=/dev/sda bs=1M conv=fdatasync status=progress
+
+As usual, be warned that this command can be dangerous if you enter the wrong drive as it can and will wipe the destination device. Just type carefully.

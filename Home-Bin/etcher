@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# A very simple script to copy inages with balenaEtcher-1.5.52-x64.AppImage
+# to USB Sticks... 10-07-2020
+
+/home/bruce/bin/balenaEtcher-1.5.109-x64.AppImage

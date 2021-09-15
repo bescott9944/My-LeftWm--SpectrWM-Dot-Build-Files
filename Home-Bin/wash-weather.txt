@@ -1,0 +1,30 @@
+{
+    "current_condition": [
+        {
+            "FeelsLikeC": "18",
+            "FeelsLikeF": "65",
+            "cloudcover": "0",
+            "humidity": "88",
+            "localObsDateTime": "2020-06-24 11:19 PM",
+            "observation_time": "03:19 AM",
+            "precipMM": "0.0",
+            "pressure": "1013",
+            "temp_C": "18",
+            "temp_F": "65",
+            "uvIndex": 1,
+            "visibility": "16",
+            "weatherCode": "113",
+            "weatherDesc": [
+                {
+                    "value": "Clear"
+                }
+            ],
+            "weatherIconUrl": [
+                {
+                    "value": ""
+                }
+            ],
+            "winddir16Point": "N",
+            "winddirDegree": "0",
+            "windspeedKmph": "0",
+            "windspeedMiles": "0"

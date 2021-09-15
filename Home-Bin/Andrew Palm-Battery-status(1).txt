@@ -1,0 +1,44 @@
+
+Andrew Palm
+19 hours ago
+I recall using bash, acpi, cut, and sed, to get a battery status in my Herbstluftwm dzen-based panel.
+It was modified from someone else's work, I think, but still very satisfying when it eventually worked.  
+
+fgcolor="#cfcfcf"
+batt() {
+  # For Battery 0
+  charge=$(acpi | cut -d "," -f 2 | sed -n '1p')
+  state=$(acpi | cut -d " " -f 3 | sed -n '1p')
+  # For Battery 1 (needed sometimes when using bluetooth mouse)
+  #charge=$(acpi | sed "1 d" | cut -d "," -f 2 | sed -n '1p')
+  #state=$(acpi | sed "1 d" | cut -d " " -f 3 | sed -n '1p')
+  if [ "$state" = "Full," ]; then
+    statech="F"
+  elif [ "$state" = "Discharging," ]; then
+    statech="D"
+  elif [ "$state" = "Charging," ]; then
+    statech="C"
+  fi
+  echo -n "^fg($fgcolor)Batt: $statech $charge^fg($fgcolor)"
+  return
+}
+
+-----------------------------------------
+
+LatePaul
+16 hours ago
+Since you asked, ;), what I would have done differently:
+
+if [ "$STATUS" = "Charging" ] 
+then
+        ICON="<lightning emoji>"
+else
+       ICON="<battery emoji>"
+fi
+echo "$ICON I${INTERNAL}% E${EXTERNAL}%"
+
+Not using the brackets as status bar real estate is scarce so the smaller we can make it the better.
+
+The other thing you can do is a notification as the Mate desktop does. You can use a program called notify-send and a daemon called dunst (as dwm doesn't have a notification service built in like say Mate). I'll leave you to look into that if you fancy it.
+
+

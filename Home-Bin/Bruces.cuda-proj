@@ -1,0 +1,11 @@
+{
+    "nodes": [
+        "/home/bruce/.config",
+        "/home/bruce/arco-work",
+        "/home/bruce/bin",
+        "/home/bruce/.config/leftwm",
+        "/home/bruce/.config/polybar",
+        "/home/bruce/.config/rofi",
+        "/home/bruce/.config/spectrwm"
+    ]
+}

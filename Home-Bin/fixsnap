@@ -1,0 +1,5 @@
+#!/bin/bash
+# OTB's script
+
+find -L ~/.local/share/applications -type l -delete
+ln -sf /var/lib/snapd/desktop/applications/*.desktop ~/.local/share/applications/

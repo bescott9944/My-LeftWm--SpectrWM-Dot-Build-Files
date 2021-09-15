@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# A very simple script to check on system rescourses.
+
+clear
+echo "Memory Useage:"
+/usr/bin/free -h
+
+echo $'\n'$"Disk Usage:"
+/bin/df -h /dev/sd[a-z][1-10] 2>/dev/null
+
+echo $'\n'"Uptime:"
+/usr/bin/uptime
+
+exit

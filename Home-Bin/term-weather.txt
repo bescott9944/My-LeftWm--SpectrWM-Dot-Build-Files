@@ -1,0 +1,5 @@
+It is currently [1mPartly cloudy[0m
+[33mTemperature: 90℉ [39m
+It Feels Like: [34m104℉ [39m
+The Humidity is: [33m50%
+[30mFile Created on: September 14, 2021 -  4:30:02 pm

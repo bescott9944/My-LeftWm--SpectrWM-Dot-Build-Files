@@ -1,0 +1,249 @@
+#!/usr/bin/env bash
+# vim: noai:ts=4:sw=4:expandtab
+# shellcheck source=/dev/null
+# shellcheck disable=2009
+
+###################################################################################
+# This script uses lsb_release, lscpu, and glxinfo. make sure they are installed. #
+###################################################################################
+#
+# START OF SCRIPT
+#
+#
+clear ; clear
+
+# Universal variables
+user="${USER}\e[33m@"
+Desktop="${XDG_CURRENT_DESKTOP}"
+Kernel="$(uname -sr)"
+Uptime="$(uptime -p | sed 's/up //')"
+Shell="$(basename "$SHELL")"
+CPU="$(lscpu | grep Model\ name | sed 's/name:\ //' | sed "s/([^)]*)/()/g" | sed 's/[)(]//g')"
+GPU="$(glxinfo -B | grep Device: | sed "s/([^)]*)/()/g" | sed 's/[)(]//g')"
+RAM="$(free -h | awk '/^Mem:/ {print $3 " / " $2}')"
+OS1="$(lsb_release -si)"
+OS="$(lsb_release -sirc)"
+
+# colors
+ c1="\e[31m" # Red
+ c2="\e[32m" # Light Green
+ c3="\e[33m" # Yellow
+ c4="\e[34m"  # Calm Blue
+ c5="\e[35m" # Violet
+ c6="\e[36m" # Arch Blue
+ c7="\e[37m" # White
+ c8="\e[38m" # Sky Blue
+ c9="\e[39m" # Light Grey
+ c10="\e[30m" # Dark Grey
+ c20="\e[0m" # Normal
+
+# Package count for Debian based systems
+Packages_dpkg(){
+         
+         Packages="$(dpkg -l | grep -c ^i)"
+}
+
+# Package count for Arch based systems
+Arch_Packages(){
+
+         Packages="$(pacman -Qs | wc -l)"
+
+}
+
+# An Error echo wrapper
+err0r()
+{
+
+    echo >&2 "$(tput bold; tput setaf 1)[-] ERROR: ${*}$(tput sgr0)"
+    echo ""
+    exit 86
+}
+
+# A Warning echo wrapper
+warn()
+{
+ echo >&2 "$(tput bold; tput setaf 3)[!] WARNING: ${*}$(tput sgr0)"
+ echo ""
+}
+
+# A Message echo wrapper
+msg()
+{
+ echo "$(tput bold; tput setaf 2)[+] ${*}$(tput sgr0)"
+}
+
+
+Debian_Linux(){
+
+    Packages_dpkg
+
+echo ""
+echo -e "${c7}         _,met\$\$\$\$\$gg.          "     ${c1}${user}${c7}$(hostname)
+echo -e "${c7}      ,g\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$P.       "     ${c1}OS: ${c7}$OS
+echo -e "${c7}    ,g\$\$P\"\"       \"\"\"Y\$\$.\".     "     ${c1}Desktop: ${c7}$Desktop
+echo -e "${c7}   ,\$\$P'              \`\$\$\$.     "     ${c1}Kernel: ${c7}$Kernel
+echo -e "${c7}  ',\$\$P       ,ggs.     \`\$\$b:   "     ${c1}Packages: ${c7}$Packages
+echo -e "${c7}  \`d\$\$'     ,\$P\"\'   ${c1}.${c7}    \$\$\$   "    ${c1}Shell: ${c7}$Shell
+echo -e "${c7}   \$\$P      d\$\'     ${c1},${c7}    \$\$P   "    ${c1}CPU: ${c7}$CPU
+echo -e "${c7}   \$\$:      \$\$.   ${c1}-${c7}    ,d\$\$'    "     ${c1}GPU: ${c7}$GPU
+echo -e "${c7}   \$\$\;      Y\$b._   _,d\$P'     "      ${c1}RAM: ${c7}$RAM
+echo -e "${c7}   Y\$\$.    ${c1}\`.${c7}\`\"Y\$\$\$\$P\"'         "
+echo -e "${c7}   \`\$\$b      ${c1}\"-.__              "
+echo -e "${c7}    \`Y\$\$                        "
+echo -e "${c7}     \`Y\$\$.                      "
+echo -e "${c7}       \`\$\$b.                    "
+echo -e "${c7}         \`Y\$\$b.                 "
+echo -e "${c7}            \`\"Y\$b._             "
+echo -e "${c7}                \`\"\"\"\"           "
+echo -e "${c7}                                ${c20}"
+echo ""
+
+}
+
+
+
+
+Ubuntu_Linux(){
+
+    Packages_dpkg
+    
+echo ""
+echo -e "${c1}                          ./+o+-      ${c7}"     ${c1}${user}${c7}$(hostname)
+echo -e "${c7}                  yyyyy- ${c1}-yyyyyy+     ${c7}"     ${c1}OS: ${c7}$OS
+echo -e "${c7}               ${c7}://+//////${c1}-yyyyyyo     ${c7}"     ${c1}Desktop: ${c7}$Desktop
+echo -e "${c3}           .++ ${c7}.:/++++++/-${c1}.+sss/\`     ${c7}"     ${c1}Kernel: ${c7}$Kernel
+echo -e "${c3}         .:++o:  ${c7}/++++++++/:--:/-     ${c7}"     ${c1}Packages: ${c7}$Packages
+echo -e "${c3}        o:+o+:++.${c7}\`..\`\`\`.-/oo+++++/    ${c7}"     ${c1}Shell: ${c7}$Shell
+echo -e "${c3}       .:+o:+o/.${c7}          \`+sssoo+/   ${c7}"     ${c1}CPU: ${c7}$CPU
+echo -e "${c7}  .++/+:${c3}+oo+o:\`${c7}             /sssooo.  ${c7}"     ${c1}GPU: ${c7}$GPU
+echo -e "${c7} /+++//+:${c3}\`oo+o${c7}               /::--:.  ${c7}"      ${c1}RAM: ${c7}$RAM
+echo -e "${c7} \+/+o+++${c3}\`o++o${c1}               ++////.  ${c7}"
+echo -e "${c7}  .++.o+${c3}++oo+:\`${c1}             /dddhhh.  ${c7}"
+echo -e "${c3}       .+.o+oo:.${c1}          \`oddhhhh+   ${c7}"
+echo -e "${c3}        \+.++o+o\`${c1}\`-\`\`\`\`.:ohdhhhhh+    ${c7}"
+echo -e "${c3}         \`:o+++ ${c1}\`ohhhhhhhhyo++os:     ${c7}"
+echo -e "${c3}           .o:${c1}\`.syhhhhhhh/${c3}.oo++o\`     ${c7}"
+echo -e "${c1}               /osyyyyyyo${c3}++ooo+++/    ${c7}"
+echo -e "${c1}                   \`\`\`\`\` ${c3}+oo+++o\:    ${c7}"
+echo -e "${c3}                          \`oo++.      ${c20}"
+echo ""
+
+}
+
+Linux_Mint(){
+
+            Packages_dpkg
+
+echo -e "${c2}                                      "
+echo -e "${c2} MMMMMMMMMMMMMMMMMMMMMMMMMmds+.       "     ${c2}${user}${c7}$(hostname)
+echo -e "${c2} MMm----::-://////////////oymNMd+\`    "     ${c2}OS: ${c7}$OS
+echo -e "${c2} MMd      ${c7}/++                ${c2}-sNMd:   "     ${c2}Desktop: ${c7}$Desktop
+echo -e "${c2} MMNso/\`  ${c7}dMM    \`.::-. .-::.\` ${c2}.hMN:  "     ${c2}Kernel: ${c7}$Kernel
+echo -e "${c2} ddddMMh  ${c7}dMM   :hNMNMNhNMNMNh: ${c2}\`NMm  "     ${c2}Packages: ${c7}$Packages
+echo -e "${c2}     NMm  ${c7}dMM  .NMN/-+MMM+-/NMN\` ${c2}dMM  "     ${c2}Shell: ${c7}$Shell
+echo -e "${c2}     NMm  ${c7}dMM  -MMm  \`MMM   dMM. ${c2}dMM  "     ${c2}CPU: ${c7}$CPU
+echo -e "${c2}     NMm  ${c7}dMM  -MMm  \`MMM   dMM. ${c2}dMM  "     ${c2}GPU: ${c7}$GPU
+echo -e "${c2}     NMm  ${c7}dMM  .mmd  \`mmm   yMM. ${c2}dMM  "      ${c2}RAM: ${c7}$RAM
+echo -e "${c2}     NMm  ${c7}dMM\`  ..\`   ...   ydm. ${c2}dMM  "
+echo -e "${c2}     hMM- ${c7}+MMd/-------...-:sdds  ${c2}dMM  "
+echo -e "${c2}     -NMm- ${c7}:hNMNNNmdddddddddy/\`  ${c2}dMM  "
+echo -e "${c2}      -dMNs-${c7}\`\`-::::-------.\`\`    ${c2}dMM  "
+echo -e "${c2}       \`/dMNmy+/:-------------:/yMMM  "
+echo -e "${c2}          ./ydNMMMMMMMMMMMMMMMMMMMMM  "
+echo -e "${c2}             \.MMMMMMMMMMMMMMMMMMM    "
+echo -e "${c2}                                      ${c20}"
+echo ""
+}
+
+Peppermint_Linux(){
+
+        Packages_dpkg
+
+echo ""
+echo -e "${c1}             8ZZZZZZ${c7}MMMMM              "     ${c1}${user}${c7}$(hostname)
+echo -e "${c1}          .ZZZZZZZZZ${c7}MMMMMMM.           "     ${c1}OS: ${c7}$OS
+echo -e "${c7}        MM${c1}ZZZZZZZZZ${c7}MMMMMMM${c1}ZZZZ         "     ${c1}Desktop: ${c7}$Desktop
+echo -e "${c7}      MMMMM${c1}ZZZZZZZZ${c7}MMMMM${c1}ZZZZZZZM       "     ${c1}Kernel: ${c7}$Kernel
+echo -e "${c7}     MMMMMMM${c1}ZZZZZZZ${c7}MMMM${c1}ZZZZZZZZZ.      "     ${c1}Packages: ${c7}$Packages
+echo -e "${c7}    MMMMMMMMM${c1}ZZZZZZ${c7}MMM${c1}ZZZZZZZZZZZI     "     ${c1}Shell: ${c7}$Shell
+echo -e "${c7}   MMMMMMMMMMM${c1}ZZZZZZ${c7}MM${c1}ZZZZZZZZZZ${c7}MMM    "     ${c1}CPU: ${c7}$CPU
+echo -e "${c1}   .ZZZ${c7}MMMMMMMMMM${c1}IZZ${c7}MM${c1}ZZZZZ${c7}MMMMMMMMM   "     ${c1}GPU: ${c7}$GPU
+echo -e "${c1}   ZZZZZZZ${c7}MMMMMMMM${c1}ZZ${c7}M${c1}ZZZZ${c7}MMMMMMMMMMM   "      ${c1}RAM: ${c7}$RAM
+echo -e "${c1}   ZZZZZZZZZZZZZZZZ${c7}M${c1}Z${c7}MMMMMMMMMMMMMMM   "
+echo -e "${c1}   .ZZZZZZZZZZZZZ${c7}MMM${c1}Z${c7}M${c1}ZZZZZZZZZZ${c7}MMMM   "
+echo -e "${c1}   .ZZZZZZZZZZZ${c7}MMM${c1}7ZZ${c7}MM${c1}ZZZZZZZZZZ7${c7}M    "
+echo -e "${c1}    ZZZZZZZZZ${c7}MMMM${c1}ZZZZ${c7}MMMM${c1}ZZZZZZZZ77     "
+echo -e "${c7}     MMMMMMMMMMMM${c1}ZZZZZ${c7}MMMM${c1}ZZZZZZ77      "
+echo -e "${c7}      MMMMMMMMMM${c1}7ZZZZZZ${c7}MMMMM${c1}ZZZ77       "
+echo -e "${c7}       .MMMMMMM${c1}ZZZZZZZZ${c7}MMMMM${c1}Z7Z7        "
+echo -e "${c7}         MMMMM${c1}ZZZZZZZZZ${c7}MMMMMMM         "
+echo -e "${c1}           NZZZZZZZZZZZ${c7}MMMMM           "
+echo -e "${c1}              ZZZZZZZZZ${c7}MM              ${c20}"
+echo ""
+}
+
+Arch_Linux(){
+
+     Arch_Packages
+
+echo ""
+echo -e "${c6}                   -\`                 "       ${user}${c7}$(hostname)
+echo -e "${c6}                  .o+\`                "       OS: ${c7}$OS
+echo -e "${c6}                 \`ooo/                "       Desktop: ${c7}$Desktop
+echo -e "${c6}                \`+oooo:               "       Kernel: ${c7}$Kernel
+echo -e "${c6}               \`+oooooo:              "       Packages: ${c7}$Packages
+echo -e "${c6}               -+oooooo+:             "        Shell: ${c7}$Shell
+echo -e "${c6}             \`/:-:++oooo+:            "       CPU: ${c7}$CPU
+echo -e "${c6}            \`/++++/+++++++:           "       GPU: ${c7}$GPU
+echo -e "${c6}           \`/++++++++++++++:          "       RAM: ${c7}$RAM
+echo -e "${c6}          \`/+++ooooooooooooo/\`        "
+echo -e "${c6}         ./ooosssso++osssssso+\`       "
+echo -e "${c6}        .oossssso-\`\`\`\`/ossssss+\`      "
+echo -e "${c6}       -osssssso.      :ssssssso.     "
+echo -e "${c6}      :osssssss/        osssso+++.    "
+echo -e "${c6}     /ossssssss/        +ssssooo/-    "
+echo -e "${c6}   \`/ossssso+/:-        -:/+osssso+- "
+echo -e "${c6}  \`+sso+:-\`                 \`.-/+oso: "
+echo -e "${c6} \`++:.                           \`-/+/ "
+echo -e "${c6} .\`                                 \`/ ${c20}"
+echo ""
+
+}
+
+if_then_else(){
+
+if [[ "${OS1}" == 'Arch' ]]
+   then
+       Arch_Linux
+   else
+       if [[ "${OS1}" == 'Ubuntu' ]]
+           then
+                Ubuntu_Linux
+           else
+               if [[ "${OS1}" == 'Peppermint' ]]
+                   then
+                       Peppermint_Linux
+                   else
+                         if [[ "${OS1}" == 'LinuxMint' ]]
+                           then
+                                  Linux_Mint
+                          else
+                               if [[ "${OS1}" == 'Debian' ]]
+                                  then
+                                       Debian_Linux
+                                   else
+                                        warn "You are using ${OS1} but this script is not setup for ${OS1}"
+                                       err0r "Can NOT continue! Exiting....."
+                              fi
+                      fi
+                fi
+       fi
+
+fi
+}
+
+
+if_then_else
+
+# END OF SCRIPT
+#

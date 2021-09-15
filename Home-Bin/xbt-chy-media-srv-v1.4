@@ -1,0 +1,1668 @@
+# !/bin/bash
+#
+# Current Version; v. 1.4
+#
+# Welcome to XBT-Cheyenne Media Server Movie Backup Tool (v. 1.0) -- by Bruce E. Scott
+# Hello om 02/08/2020 I decited to port Joe Collins Famous XBT External Backup Tool
+# so I can backup my Media Serer... Read on if you like...
+#
+# Here is Joes information about the orginal program! Thanks Joe for a great tool!
+#
+# XBT -- External Backup Tool (v. 3.1) -- by Joe Collins. (www.ezeelinux.com)
+# ...Special Thanks to Jeremy O'Connell and Jody James. (February 18th, 2017)
+# (GNU/General Public License version 2.0)
+#
+# Use For Debian 9 and up, Ubuntu 16.04 and up and Linux Mint 18.x and up.
+#
+# A Script to create a snapshot backup of /etc and /home on a dedicated
+# external USB drive.
+#
+##*****************************************************************************
+# Date: 02/08/2020
+# I re-wrote Joe Colins XBT program so I had a tool to backup my Media Server
+# and all my movies! Up to Now they were NEVER backed-up! Not anymore!
+# This backup tool backups to 3 USB drives they are 3 Tb each and holds all
+# the movies from all 8 smaler drives.. I feel better now that they are
+# backed-up! I have several drives with alot of the same movies in there
+# non-modified state and will not be needed any longer! I can merge some of
+# them and put the others to good use as XBT secondary (rotating) drives.
+# Well that is the plan for now! Wish me luck! --Bruce
+#
+# Alot of this version is from the orignal XBT and also from my port of
+# XBT-Deb-v3 I updated last month for my use's.. For more information on that
+# version please se XBT-Deb-v3 program... --Bruce
+##*****************************************************************************
+# Date: 0/0/2020
+#
+#
+# Debian/Ubuntu USB Path example:
+# /media/bruce/WL-TJY-3T-Sata/I-Drive/My TvRecordings
+
+# ...And away we go!
+
+# Declare static variables:
+user=$USER
+host=$HOSTNAME
+# Declare static USB Drive variables:
+drive1=WL-TJY-3T-Sata
+drive2=NT-3-HT-2TB-SATA
+drive3=WL-G5R-3T-Sata
+drive4=IBM-1164-1T-SATA
+
+# Here we update the packages and Repo Information: 07/03/19 -Bruce
+# echo "    Starting full system update $USER..."
+# sudo apt update
+# sudo apt dist-upgrade
+# -yy 
+
+# Check for rsync, less and parted, install if needed:
+
+dpkg -l | grep -qw less || sudo apt-get install -yyq less
+dpkg -l | grep -qw parted || sudo apt-get install -yyq parted
+dpkg -l | grep -qw rsync || sudo apt-get install -yyq rsync
+
+# Set functions:
+
+cya() {
+# Cya, Copyright (c) 2017, Jeremy O'Connell
+# System Backup Utility...
+# The "cya_s" is a small script kept in the "~/bin" to
+# pass the "cya save" terminal command so that
+# this menu will work. Other wise use the Terminal for
+# other options....
+clear
+cya_s
+clear
+ greeting
+}
+
+# Set functions:
+
+before() {
+# umounting mounted drives in the fstab before backup
+# for Vm-Data and the ServerMusic network drive.
+clear
+sudo umount /home/bruce/Music/ServerMusic /home/bruce/Documents/Master-Docs
+clear
+ greeting
+}
+
+after() {
+# Remounting all drives in the fstab after backup!
+clear
+sudo mount -a
+clear
+ greeting
+}
+
+############################################################################
+backup() {
+
+# XBT backup. Runs full backup of /etc and /home directories on host machine.
+
+# Checking for valid media:
+
+if [ ! -d /media/$user/$drive1 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure $drive1 USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive1/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive1/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive1/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /Etc /Home sent to $drive1 Drive USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive1/$host
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /etc..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** --exclude=/bruce/D-Drive-300Gb-Max-Ide \
+--exclude=/bruce/G-Drive-3TB-WL-Sata --exclude=bruce/H-Drive-2TB-WD-Sata \
+--exclude=/bruce/I-Drive-3TB-WL-Sata --exclude=/bruce/J-Drive-2TB-WD2-Sata \
+--exclude=/bruce/K-Drive-SG-EXP-2TB-WD-Sata --exclude=/bruce/L-Drive-2TB-HT-Sata /etc/ \
+    /media/$user/WL-TJY-3T-Sata/$host/Etc_Backup/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /etc..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** --exclude=/bruce/D-Drive-300Gb-Max-Ide \
+--exclude=/bruce/G-Drive-3TB-WL-Sata --exclude=bruce/H-Drive-2TB-WD-Sata \
+--exclude=/bruce/I-Drive-3TB-WL-Sata --exclude=/bruce/J-Drive-2TB-WD2-Sata \
+--exclude=/bruce/K-Drive-SG-EXP-2TB-WD-Sata --exclude=/bruce/L-Drive-2TB-HT-Sata /etc/ \
+    /media/$user/$drive1/$host/Etc_Backup/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors errors. Moving on to /home anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+        local etc_error_code=yes
+    fi
+fi
+
+    echo $'\n'$"Backing up /home..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** --exclude=/bruce/D-Drive-300Gb-Max-Ide \
+--exclude=/bruce/G-Drive-3TB-WL-Sata --exclude=bruce/H-Drive-2TB-WD-Sata \
+--exclude=/bruce/I-Drive-3TB-WL-Sata --exclude=/bruce/J-Drive-2TB-WD2-Sata \
+--exclude=/bruce/K-Drive-SG-EXP-2TB-WD-Sata --exclude=/bruce/L-Drive-2TB-HT-Sata /home/ \
+  /media/$user/$drive1/$host/Home_Backup/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /home..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** --exclude=/bruce/D-Drive-300Gb-Max-Ide \
+--exclude=/bruce/G-Drive-3TB-WL-Sata --exclude=bruce/H-Drive-2TB-WD-Sata \
+--exclude=/bruce/I-Drive-3TB-WL-Sata --exclude=/bruce/J-Drive-2TB-WD2-Sata \
+--exclude=/bruce/K-Drive-SG-EXP-2TB-WD-Sata --exclude=/bruce/L-Drive-2TB-HT-Sata /home/ \
+    /media/$user/$drive1/$host/Home_Backup/ 2>> /tmp/backup.log
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: /Etc backup successful! Some errors with /Etc - /home" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: /Etc /Home Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with /Etc - /home backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of /Etc /Home had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove Backup USB Drives."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Media Serve BackUp for /Etc /Home.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+
+###############################################################################
+backupg() {
+
+# XBT backup. Runs full backup of G-Drive directories on host machine.
+
+# Checking for valid media:
+if [ ! -d /media/$user/$drive3 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive3/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive3/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive3/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /G-Drive/My TvRecording/* sent to $drive USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive3/$host/G-Drive
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /G-Drive/My TvRecordings..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/G-Drive-3TB-WL-Sata/My\ TvRecordings/ \
+    /media/$user/$drive3/$host/G-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /G-Drive/My TvRecordings..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/G-Drive-3TB-WL-Sata/My\ TvRecordings/ \
+    /media/$user/$drive3/$host/G-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors. Moving on to end anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+#        local etc_error_code=yes
+        local G-Drive_error_code=yes
+    fi
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: G-Drive backup successful! Some errors with G-Drive" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: G-Drive Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive3/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with G-Drive backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of G-Drive had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive3/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove XBT_Drive."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Midea Serve BackUp.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+
+#########################################################
+backupi() {
+
+# XBT backup. Runs a backup of /I-Drive/My TvRecording directories on host machine.
+
+# Checking for valid media:
+if [ ! -d /media/$user/$drive1 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive1/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive1/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive1/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /I-Drive/My TvRecording/* sent to $drive1 USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive1/$host/I-Drive
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /I-Drive/My TvRecordings..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/I-Drive-3TB-WL-Sata/My\ TvRecordings/ \
+    /media/$user/$drive1/$host/I-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /I-Drive/My TvRecordings..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/I-Drive-3TB-WL-Sata/My\ TvRecordings/ \
+    /media/$user/$drive1/$host/I-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors errors. Moving on to the end anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+#        local etc_error_code=yes
+        local I-Drive_error_code=yes
+    fi
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: I-Drive backup successful! Some errors with I-Drive" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with I-Drive backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of I-Drive had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove XBT_Drive."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Movie Serve BackUp.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+#########################################################
+backupj() {
+
+# XBT backup. Runs a backup of /J-Drive/My TvRecording directories on host machine.
+
+# Checking for valid media:
+if [ ! -d /media/$user/$drive1 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive1/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive1/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive1/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /J-Drive/My TvRecording/* sent to $drive1 USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive1/$host/J-Drive
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /J-Drive/My TvRecordings..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/J-Drive-2TB-WD2-Sata/My\ TVrecordings/ \
+    /media/$user/$drive1/$host/J-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /J-Drive/My TvRecordings..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/J-Drive-2TB-WD2-Sata/My\ TVrecordings/ \
+    /media/$user/$drive1/$host/J-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors errors. Moving on to end anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+#        local etc_error_code=yes
+        local J-Drive_error_code=yes
+    fi
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: J-Drive backup successful! Some errors with J-Drive" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with J-Drive backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of J-Drive had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove XBT_Drive."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Movie Serve BackUp.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+
+###############################################################################
+backupl() {
+
+# XBT backup. Runs a backup of /L-Drive/My TvRecording directories on host machine.
+
+# Checking for valid media:
+if [ ! -d /media/$user/$drive2 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive2/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive2/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive2/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /L-Drive/My TvRecording/* sent to $drive2 USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive2/$host/L-Drive
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /L-Drive/My TvRecordings..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/L-Drive-2TB-HT-Sata/My\ TvRecordings/ \
+    /media/$user/$drive2/$host/L-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /L-Drive/My TvRecordings..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/L-Drive-2TB-HT-Sata/My\ TvRecordings/ \
+    /media/$user/$drive2/$host/L-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors errors. Moving on to end anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+#        local etc_error_code=yes
+        local L-Drive_error_code=yes
+    fi
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: L-Drive backup successful! Some errors with L-Drive" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive2/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with L-Drive backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of L-Drive had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive2/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove XBT_Drive."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Movie Serve BackUp.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+#########################################################
+backupd() {
+
+# XBT backup. Runs a backup of /D-Drive/My TvRecording directories on host machine.
+
+# Checking for valid media:
+if [ ! -d /media/$user/$drive4 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive4/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive4/D-Drive/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive4/D-Drive/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /D-Drive/My TvRecording/* sent to $drive4 USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive4/$host/D-Drive
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /D-Drive/My TvRecordings..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/D-Drive-300Gb-Max-Ide/My\ TvRecordings/ \
+    /media/$user/$drive4/$host/D-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /D-Drive/My TvRecordings..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/D-Drive-300Gb-Max-Ide/My\ TvRecordings/ \
+    /media/$user/$drive4/$host/D-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors. Moving on to end anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+#        local etc_error_code=yes
+        local D-Drive_error_code=yes
+    fi
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: /D-Drive/My TvRecordings successful! Some errors with D-Drive" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive4/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with D-Drive backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of D-Drive had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive4/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove XBT_Drive."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Media Serve BackUp.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+#########################################################
+
+backuph() {
+
+# XBT backup. Runs full backup of /H-Drive/My TvRecordings and /home directories on host machine.
+
+# Checking for valid media:
+if [ ! -d /media/$user/$drive3 ]; then
+
+    clear
+    echo $'\n'$"XBT Backup"
+    echo "XBT Error: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+	echo "If you just set up the XBT Drive, remove it and plug it back in."
+    greeting
+
+fi
+
+# Checking for sudo permissions:
+
+sudo ls > /dev/null
+
+# Making sure user has ownership of the XBT Drive:
+
+sudo chown $user /media/${user}/$drive3/
+
+# Generate XBT log file file if not there already:
+
+if [ ! -f /media/$user/$drive3/xbt-backup.log ]; then
+    echo "XBT -- External Backup Tool - Log File" \
+    > /media/$user/$drive3/xbt-backup.log
+fi
+
+# Log file is created in /tmp:
+
+date_and_time="$(date)"
+echo $'\n'$"Backup of /H-Drive/My TvRecording/* sent to $drive3 USB from $host by user '$user' on" \
+> /tmp/backup.log
+echo "$date_and_time. Any errors?" >> /tmp/backup.log
+
+# Begin backup operations using rsync:
+
+# Creating machine specific directories:
+
+mkdir -p /media/$user/$drive3/$host/H-Drive
+
+# Starting synchronization:
+
+clear
+echo $'\n'$"XBT Backup"
+echo $'\n'$"Backing up /H-Drive/My TvRecordings..."
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/H-Drive-2TB-WD-Sata/My\ TvRecordings/ \
+    /media/$user/$drive3/$host/H-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+
+# Checking status of rsync exit code:
+
+if [ "$?" != "0" ]; then
+    echo "Starting second pass for /H-Drive/My TvRecordings..." | tee -a /tmp/backup.log
+    sudo rsync -aAHXv --delete --progress --exclude=/tmp/* \
+--exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/** --exclude=/media/*/** \
+--exclude=swapfile --exclude=**/lost+found*/ --exclude=/bruce/.cache/ \
+--exclude=**/*cache*/ --exclude=**/*Cache*/ --exclude=/var/run/** \
+--exclude=**/*Trash*/ --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/** \
+--exclude=/bruce/Documents/Master-Docs/** --exclude=/bruce/Videos/** \
+--exclude=/timeshift/** --exclude=/cya/** /home/bruce/H-Drive-2TB-WD-Sata/My\ TvRecordings/ \
+    /media/$user/$drive3/$host/H-Drive/My\ TvRecordings/ 2>> /tmp/backup.log
+    if [ "$?" != "0" ]; then
+        echo "...Second pass had some errors. Moving on to end anyway." \
+        | tee -a /tmp/backup.log
+        # Set error flag for log file completion:
+#        local etc_error_code=yes
+        local H-Drive_error_code=yes
+    fi
+fi
+
+if [ "$?" == "0" ]; then
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with H-Drive/My TvRecords backup if there were any:
+
+    if  [ "$etc_error_code" == "yes" ]; then
+        echo "XBT Backup: H-Drive backup successful! Some errors with H-Drive" \
+        >> /tmp/backup.log
+        echo "Please review XBT Log to see them."
+    else
+        echo "No errors! :)" >> /tmp/backup.log
+    fi
+
+    echo "XBT Backup: Successfully completed at $time!" | tee -a /tmp/backup.log
+
+    # Log file is created or appended on XBT_Drive from /tmp:
+    # (backup.log will be removed from /tmp on next reboot.)
+
+    cat /tmp/backup.log >> /media/$user/$drive3/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+
+else
+
+    # Alert user there were some errors and return to Main Menu:
+
+    # Clear any accidental input during backup:
+
+    read -t 1 -n 10000 discard
+
+    # Get the time:
+
+    time="$(date +"%T")"
+
+    clear
+
+    # Report errors with /etc backup if there were any:
+
+    if  [ "$etc_error_code" = "yes" ]; then
+        echo "XBT Backup: There were some errors with D-Drive backup!"
+        echo "Please review XBT Log to see them."
+    fi
+
+    echo "XBT Backup: Backup of H-Drive had errors after two passes at $time!" \
+    | tee -a /tmp/backup.log
+    echo "Please review XBT Log to see them."
+    cat /tmp/backup.log >> /media/$user/$drive3/xbt-backup.log
+    cat /tmp/backup.log >> /media/$user/$drive1/xbt-backup.log
+    echo "Wait! Syncing drives..."
+    sync
+    echo "...Done."
+    greeting
+
+fi
+
+# Writing all cached data to drives and returning to Main Menu:
+
+echo $'\n'$"Wait! Syncing drives..."
+sync
+echo "..Done."
+echo "It's now safe to remove XBT_Drive."
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	echo "Exiting XBT Cheyenne-Tv Media Serve BackUp.. Goodbye $USER!"
+	exit
+fi
+
+greeting
+
+}
+##########################################################################
+greeting() {
+
+# XBT Main Menu.
+
+	cat << _EOF_
+ ******************************************************************           
+ *  <:Excluded Items can edited in the xbt-chy-media-srv File:>   *
+ *   sudo rsync -aAHXv --delete --progress --exclude=/tmp/*       *
+ ******************************************************************
+   XBT-Debian Addition -- External Media Backup Tool (Version 1.2)
+  Updated to work for Debian OS's and $HOSTNAME Cheyenne-Tv
+     Media Center Movie Serve BackUp on 02/08/2020
+ ******************************************************************
+   Welcome To XBT Cheyenne-Tv Media Center Serve BackUp tool..
+         Main Menu: What would you like to do $USER?
+   *************************************************************
+   *           ***>>--Warning $USER---<<***                    *
+   *     Make Sure That All 3 USB Drives Are Pluged-In         *
+   *************************************************************
+ Press the number or letter of your choice $USER:
+    d - Backup D-Drive/My TvRecordings
+    g - Backup G-Drive/My TvRecordings
+    h - Backup H-Drive/My TvRecordings
+    i - Backup I-Drive/My TvRecordings
+    j - Backup J-Drive/My TvRecordings
+    l - Backup L-Drive/My TvRecordings
+    1 - Backup /Home & /Etc Only.
+      - Restore. # Not working
+    3 - Setup XBT Drive. # Not working
+    4 - Get some help.
+    5 - View All backup log. ('q' exits.}
+    [ - View L-Drive backup log ONLY. ('q' exits.}
+    6 - Refresh $host USB Status.
+    7 - *Unmount drives before backup.
+    8 - *Remount drives after backup.
+    9 - *Cya System BackUp Utility. (*"Not User Home"*)
+        {Set to "Save" backup. Otherwise Use The Terminal CL.}
+    0 - Exit XBT.
+_EOF_
+
+# Confirming that XBT_Drive USB is ready:
+
+if [ ! -d /media/$user/$drive1 ]; then
+
+    # Alert user that XBT Drive is not found:
+
+    echo $'\n'$"$host USB Status: NO XBT DRIVE FOUND! Please make sure XBT_Drive USB is connected."
+    if [[ $(lsblk -S -o  TRAN | grep 'usb') = *usb* ]]; then
+
+        # Alert user that drives are connected but no XBT Drive:
+
+        echo "            USB drive(s) connected. Plug in XBT Drive or setup a new one now."
+
+    fi
+
+else
+
+    # Alert user that XBT Drive is ready for action:
+
+    echo $'\n'$"$host USB Status: XBT Drive is ready!"
+
+fi
+
+
+# Hide the cursor.
+
+tput civis
+
+# Wait for user to make a choice and run chosen functions:
+
+read -n 1 -s choice;
+	case $choice in
+	    1) backup;;
+	    2) restore;;
+	    3) setup_drive;;
+	    4) help;;
+        5) log;;
+        [) log2;;
+        6) clear;echo $'\n'$"Refreshing USB Status...";sleep 2;clear;greeting;;
+        7) before;;
+        8) after;;
+	    9) cya;;
+	    d) backupd;;
+	    g) backupg;;
+	    h) backuph;;
+	    i) backupi;;
+        j) backupj;;
+        l) backupl;;
+            0) clear;echo $'\n'$"Exiting XBT Media Center BackUp... Goodbye $USER!";sleep 2;tput cnorm;exit;;
+            *) echo "Not a valid choice: Please try again.";sleep 2;clear;greeting;;
+
+	esac
+
+}
+
+help() {
+
+    # Print help information using less utility:
+
+	clear
+    less << _EOF_
+
+ XBT -- Movie External Backup Tool -- Help
+ (v.1) Updated to work for Debian OS's (Only!) (02/08/2020)
+
+ Press "q" to exit this Help page and return to Main Menu.
+
+ Commands:
+
+       i - Backup I-Drive/My TvRecordings
+       j - Backup J-Drive/My TvRecordings
+ xbt = Starts XBT program with menu options.
+ xbt --backup = Fully backs up host's /etc and /home directories to XBT_Drive.
+ xbt --restore = Fully restores host machine's /home directory from XBT_Drive.
+ xbt --help = Prints this help information.
+ xbt --log = Prints log from XBT drive in interactive viewer. ("q" to exit.)
+
+ Description:
+
+ (--- XBT has been updated so that it will work for Debian
+ OS's & APT package manager To back-up "/My TvRedordings/" Dir.---)
+
+ XBT is a program that makes keeping all of your user data safely backed up on
+ a dedicated External USB drive easy.
+
+ XBT will update files that have changed, remove files that have been
+ deleted and add any new files that have been created since the last backup.
+ The initial backup can take a lot of time if you have a lot of data stored
+ in your system's /home directory. XBT creates a directory with the host name
+ of the machine it's backing up from inside XBT-Backups. This allows users to
+ share one XBT_Drive with multiple machines.
+
+ The directory structure and all files are stored openly to allow users easy
+ access if they only need to retrieve a few files or directories using a file
+ manager. Data from /home can be restored with the built in "xbt restore"
+ command if the user wants to roll back to the exact state of /home when the
+ last backup was taken.
+
+ A simple log file is added to the XBT_Drive that shows when each new
+ backup is taken and any errors that might occur. This file is appended
+ every time XBT is run. The log file is placed in XBT-Backups. You can view the
+ last several backups by using the XBT Log viewer. Press "q" to exit when
+ you're done.
+
+ Requirements:
+
+ Note: *****
+ This XBT has been updated and tested so that it will work on
+ Debian OS's APT package manager.
+
+ This XBT was designed to work Linux Ubuntu type Distro's.
+ You need to prepare an XBT Drive.
+ This can be any USB storage device. The dedicated USB drive must be
+ formatted to a Linux native file system such as Ext4 to ensure that file
+ permissions will be stored unchanged. The USB drive needs to have enough
+ free capacity to store all data in /home on all of the machines you want to
+ use the drive for. The drive MUST be labeled as "XBT_Drive" for the script
+ to run. If XBT_Drive is not detected, the script exits with an error.
+
+ XBT Drive Setup allows you to choose a drive to designate as the XBT Drive.
+ The selected drive will be "blanked," formatted with ext4 and labeled
+ 'XBT_Drive." This option is available in the Main Menu.
+
+ Feedback:
+
+ Feel free to contact EzeeLinux with comments and suggestions for XBT and
+ future projects.
+
+  www.ezeelinux.com
+
+ Enjoy using XBT!
+
+ - Joe Collins
+
+   December, 2017
+
+ *************************************************************
+ I updated this great project to function for "Solus 4.0"
+ Update comments.. Contact - Bruce E. Scott
+ at - "bescott9944@gmail.com"   April, 2019
+ *************************************************************
+ Date: 5/21/2019 (V. 3.0.2) Update ---- Bruce E. Scott
+
+ Hello,
+ I ported Joe's great XBT backup tool so that it will work
+ on Solus Budgie 4.0 and the EOPKG package manager as
+ well as Ubuntu Distro's...
+
+ This tool still in accordance with (GNU/General Public License version 2.0)
+ and all changes were made by me (Bruce E. Scott) on 5/12/2019...
+
+ This should work with any Distro that uses the EOPKG manager!
+ It has been tested on Solus 4.0 "Fortitude" ONLY and works so far!!
+
+ Note: when lanching XBT there is a 6 seconds delay while EOPKG checks for
+ Less, Parted, Rsync to see if there installed. If not, they will be
+ installed and you will be asked for your SuDo passward to install them!
+
+ Use this adapted Solus & Manjaro Arch software at your own RISK!!! You have
+ been warned! - Bruce E. Scott
+  *************************************************************
+ Date:  6/5/19 (V. 3.0.3) Update ---- Bruce E. Scott
+  
+  		"CYA Backup Solution Added"
+  	"Cya, Copyright (c) 2017, Jeremy O'Connell"
+ Hello,
+ I added Jeremy O'Connell "CYA Backup Solution" to the Function & Menu areas
+ so that it can be ran from inside XBT-Solus.
+ The command line function for CYA is set to "CYA Save"... Any other commands
+ options will need to be done from a "Terminal Command Line"
+ 
+ I add this to make the backup prossess easier to do from one "Menu"
+ Bruce E. Scott...
+  *************************************************************
+ I updated this script to now work on Manjaro Arch and the PACMAN package manager
+ on 07/03/19 -Bruce
+ *************************************************************
+ I updated this script to now work on Manjaro Arch and the PACMAN package manager
+ on 07/03/19 -Bruce
+ *************************************************************
+ Date:  01/18/2020 (V. 3.1) Update ---- Bruce E. Scott
+ I updated V3.0 to work for Debian OS's with the APT Package Manager.
+ I updated this script to now work with differant switches and
+ "excluding" items. They are:
+     sudo rsync -aAHXv --delete --progress --exclude=/tmp/*
+    --exclude=**/*tmp*/ --exclude=/run/** --exclude=/mnt/**
+    --exclude=/media/*/** --exclude=swapfile --exclude=**/lost+found*/
+    --exclude=/bruce/.cache/ --exclude=**/*cache*/
+    --exclude=**/*Cache*/ --exclude=/var/run/** --exclude=**/*Trash*/
+    --exclude=**/*trash*/ --exclude=/bruce/Music/ServerMusic/**
+    --exclude=/bruce/Documents/Master-Docs/** --exclude=/timeshift/**
+    --exclude=/bruce/Videos/** --exclude=/cya/**
+ to keep them from being back-up to the XBT drive. They do not need to
+ be back-uped. This is done on the server...
+ Also a verson update to V 3.1... 01/18/2020
+  *************************************************************
+Date:  02/08/2020 (V.1) Rewrite of XBT for Movie Backup --Bruce E. Scott
+I spent the last two days re-writing Joe's XBT Backup Tool so that
+I can backup all of the drives on Cheyeene-Tv Media Center's with the
+folders of "/My TvRecording/" for of all of my MOVIE's.
+This is mostly hard coded to certain USB Drives for backup
+of all the "/My TvRecording/" on all of the Media Center's Drives...
+Disreguard all other updates as they pertain to the Orignal XBT...
+  *************************************************************
+ Disclaimer:
+
+ THIS SOFTWARE IS PROVIDED BY EZEELINUX “AS IS” AND ANY EXPRESS OR IMPLIED
+ WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ EVENT SHALL EZEELINUX BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGE.
+
+_EOF_
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	exit
+fi
+
+clear
+greeting
+
+}
+
+log() {
+
+# XBT Log Viewer. Shows the log file with less.
+
+# Check for valid media and log file:
+
+if [ ! -f /media/$user/$drive1/xbt-backup.log ]; then
+
+    # Check for log file and return to Main Menu with error if not found:
+
+    clear
+    echo $'\n'$"XBT Log Viewer"
+    echo "XBT Error: No log file found. Make sure XBT_Drive USB is connected."
+    echo "Note: The log is generated during the first XBT Backup."
+    greeting
+
+fi
+
+# Load log file into less:
+# "less +G" opens file and scrolls to end."
+
+less +G /media/$user/$drive1/xbt-backup.log
+clear
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	exit
+fi
+
+greeting
+
+}
+
+log2() {
+
+# XBT Log Viewer. Shows the log file with less.
+
+# Check for valid media and log file:
+
+if [ ! -f /media/$user/$drive2/xbt-backup.log ]; then
+
+    # Check for log file and return to Main Menu with error if not found:
+
+    clear
+    echo $'\n'$"XBT Log Viewer"
+    echo "XBT Error: No log file found. Make sure XBT_Drive USB is connected."
+    echo "Note: The log is generated during the first XBT Backup."
+    greeting
+
+fi
+
+# Load log file into less:
+# "less +G" opens file and scrolls to end."
+
+less +G /media/$user/$drive2/xbt-backup.log
+clear
+
+# Exit if running from command line:
+
+if [ "$mode" == "CLI" ]; then
+	exit
+fi
+
+greeting
+
+}
+
+
+# Execution Section
+
+# Checking for command line arguments:
+
+if [ "$1" == "--help" ]; then
+	mode=CLI
+	help
+fi
+
+if [ "$1" == "--log" ]; then
+	mode=CLI	
+	log
+fi
+
+if [ "$1" == "--log2" ]; then
+	mode=CLI	
+	log2
+fi
+
+if [ "$1" == "--backup" ]; then
+	mode=CLI	
+	backup
+fi
+
+if [ "$1" == "--backupi" ]; then
+	mode=CLI	
+	backupi
+fi
+
+if [ "$1" == "--backupj" ]; then
+	mode=CLI	
+	backupj
+fi
+
+if [ "$1" == "--backupl" ]; then
+	mode=CLI	
+	backupl
+fi
+
+if [ "$1" == "--backupd" ]; then
+	mode=CLI	
+	backupd
+fi
+
+if [ "$1" == "--backupg" ]; then
+	mode=CLI	
+	backupg
+fi
+
+if [ "$1" == "--backuph" ]; then
+	mode=CLI	
+	backuph
+fi
+#if [ "$1" == "--restore" ]; then
+#	mode=CLI	
+#	restore
+#fi
+
+if  [ -n "$1"  ]; then
+    echo "XBT Error: Invalid argument. Exiting to Main Menu."
+    sleep 3
+fi
+
+if [ "$1" == "--before" ]; then
+	mode=CLI
+	before
+fi
+
+if [ "$1" == "--cya" ]; then
+	mode=CLI
+	cya
+fi
+
+
+if [ "$1" == "--after" ]; then
+	mode=CLI
+	after
+    greeting
+fi
+
+clear
+echo "  Greetings and Salutations $USER! You are using $HOSTNAME..."
+
+greeting

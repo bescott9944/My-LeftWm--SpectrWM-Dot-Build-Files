@@ -1,0 +1,41 @@
+# 
+# Name: UFP-Arch-Main-Net Conky
+#
+# Author: Bruce E. Scott 6/12/2020.
+#
+# Description:
+# SpectrWM Bar Conky
+# Source:
+# https://wiki.archlinux.org/index.php/Spectrwm
+#
+# This is my Conky I copied of of the Arch SpectrWm Wiki. I added some of my
+# own conky settings from on I made for UFP-Defiant conky. I like the way it
+# looks for now until I get colors working later... -Bruce 06/12/2020
+#
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#
+out_to_x no
+out_to_console yes
+update_interval 1.0
+total_run_times 0
+use_spacer none
+TEXT
+| Time: ${time %I:%M %p  |  %a,%d-%#b-%y} | Sys-Up:${uptime_short} | IP-Add:${addr enp7s0} | Root HDD :${fs_used /} / ${fs_size /} | Bruce :${fs_used /home/bruce} / ${fs_size /home/bruce} | RAM:$memperc% | CPU % Used :${cpu}% | CPU Speed:${freq}Ghz |  Down-SP: ${downspeedf enp7s0} | Up-SP: ${upspeed enp7s0}
+
+# | ${execi 1000 cat /etc/os-release | grep 'PRETTY_NAME' | sed -e 's/PRETTY_NAME.//'}
+
+
+# ${execi 1000 amixr get Master | awk -F'[][]' 'END{ print $4":"$2 }'
+
+
+# tested-->  amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }'
+
+# Verson:${execi 6000 lsb_release -a | grep 'Release'|awk {'print $2""$3""$4""$5'}
+
+
+# print_vol() {
+#    vol=`amixer get Master | awk -F'[][]' 'END{ print $4":"$2 }'`
+#    echo -n "VOL: $vol  |  "
+# }
+
+

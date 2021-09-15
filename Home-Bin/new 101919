@@ -1,0 +1,5 @@
+inxi -S 2>/dev/null | grep 'Desktop' | awk '{print $4 " " $5}'
+lsb_release -a 2>/dev/null | grep 'Description' | cut -c 14- | awk '{print}'
+df -h /dev/sd[a-z][1-9] 2>/dev/null
+df -h /dev/sd[a-z][1-9] 2>/dev/null | awk '{print}'
+

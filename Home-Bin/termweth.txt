@@ -1,0 +1,4 @@
+It is currently [1mSunny[0m
+[33mTemperature: 86℉ [39m
+It Feels Like: [31m94℉ [39m
+The Humidity is: [33m63%

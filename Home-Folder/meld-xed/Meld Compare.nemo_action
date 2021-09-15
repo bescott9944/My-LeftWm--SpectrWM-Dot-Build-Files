@@ -1,0 +1,9 @@
+[Nemo Action]
+Active=true
+Name=Meld Compare Files
+Comment=Check and Compare the difference of the files
+Exec=meld %F
+Icon-Name=gtk-execute
+Selection=any
+Extensions=any;
+

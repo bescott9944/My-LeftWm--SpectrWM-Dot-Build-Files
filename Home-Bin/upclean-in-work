@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Base variables
+#
+myuser=$USER
+myhost=Update-Complete-Bruce
+infofile="/home/$myuser/$myhost.update"
+# today=$(date +"%d %B %Y %H:%M:%S")
+#
+
+# > "$infofile"
+#
+#
+up --clean
+# >> Update-Complete-Bruce
+# >> "$infofile"
+cat  "$infofile"
+exit 0

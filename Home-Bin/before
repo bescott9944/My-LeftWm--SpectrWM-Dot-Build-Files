@@ -1,0 +1,4 @@
+# !/bin/bash
+sudo umount /vm-data /vm-data-1 /home/bruce/Music/ServerMusic
+
+# sudo mount /home/bruce/Music/ServerMusic

@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# Up -- Debian/Ubuntu Update Tool (Version 2.5)
+# Advanced command to fully update system: "up" Adding the option "--clean" will
+# remove orphaned packages and auto-clean the apt cache. (January, 2018)
+# By Joe Collins www.ezeelinux.com (GNU/General Public License version 2.0)
+
+# Update: ---------------------------------------------------
+#    On 8/29/19 I modified the UP utility from Joe Collins for Debion systems
+#    To work on Arch Manjaro. It should work on other Arch based systems...
+#    All APT commands were replaced with PACMAN & AUR commands... -Bruce
+#   I also changed the Version Number to v2.5 because of my updates... -Bruce
+
+# Set BASH to quit script and exit on errors:
+
+set -e
+
+# Declare static variables:
+user=$USER
+host=$HOSTNAME
+
+# Functions:
+
+update() {
+
+echo "Starting full System / AUR Updates..."
+sudo pacman -Syu -yy    # Updating the cache packages and the system 
+# yay -Syu --aur          # Updating the AUR cache and updating the system
+pamac upgrade -a        # Updating the AUR cache and updating the system
+
+}
+
+clean() {
+
+echo "Cleaning up..."
+sudo pacman -Rs $(pacman -Qdtq)      # Removing Orphan files
+sudo paccache -rvk3                  # Cleaning Cache of old packages
+                                     # except for the lastes 3 new packages
+
+}
+
+leave() {
+
+echo "--------------------"
+echo "- Update Complete $user! -"
+echo "--------------------"
+exit
+
+}
+
+up-help() {
+
+cat << _EOF_
+
+                    ----> UP Upate Utility <----
+ Up is a tool that automates the update procedure for Arch Manjaro
+ and other Arch based Linux systems.
+
+ Commands:
+    up = full system update.
+
+    Running "up" with no options will update the apt cache and then perform a
+    full distribution update automatically.
+
+    up --clean = full system update with cleanup.
+
+    Adding the "--clean" option will invoke the apt commands to search for and
+    remove locally cached packages that are no longer in the repositories and
+    remove orphaned packages that are no longer needed by programs.
+
+    up --help = shows this help page.
+
+ By Joe Collins www.ezeelinux.com (GNU/General Public License version 2.0)
+    Update: ---------------------------------------------------
+    On 8/29/19 I modified the UP utility from Joe Collins for Debion systems
+    To work on Arch Manjaro. It should work on other Arch based systems...
+    All APT commands were replaced with PACMAN & AUR commands... -Bruce
+_EOF_
+
+}
+
+# Execution.
+
+# Tell 'em who we are...
+
+echo "Up -- Manjaro / Arch Update Tool (Version 1.0)"
+
+# Update and clean:
+
+if [ "$1" == "--clean" ]; then
+    update
+    clean
+    leave
+fi
+
+if [ "$1" == "--help" ]; then
+    up-help
+    exit
+fi
+
+# Check for invalid argument
+
+if  [ -n "$1"  ]; then
+    echo "Up Error: Invalid argument $USER. Try 'up --help' for more info."
+    exit 1
+fi
+
+update
+leave

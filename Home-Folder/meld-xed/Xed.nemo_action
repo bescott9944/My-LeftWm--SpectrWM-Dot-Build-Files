@@ -1,0 +1,9 @@
+[Nemo Action]
+Active=true
+Name=Xed Text Files
+Comment=Check and Compare the difference of the files
+Exec=xed %F
+Icon-Name=gtk-execute
+Selection=any
+Extensions=any;
+
