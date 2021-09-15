@@ -7,7 +7,7 @@
 
  Lead Developer: Bruce E. Scott
  Script Creator: Bruce E. Scott
- GitHub: https://github.com/bescott9944
+ GitLab: https://gitlab.com/bescott9944
  Forums: https://www.ezeelinux.com/talk/bescott9944
          https://forum.endeavouros.com/bescott9944
  Licensed under the GNU and MIT respectively
@@ -18,10 +18,10 @@
 ### -----------------------------------------------------
 
 #### Current Version: v.1.3.2 Modified by Bruce Scott 09/01/2021
-* Script Name  : Hal-9000-info.sh v.1.3.2
-* Description  : Terminal Based script to displays System and IP Network Information
-* Dependencies : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
-* Arguments    : None
+* Script Name   : Hal-9000-info.sh v.1.3.2
+* Description   : Terminal Based script to displays System and IP Network Information
+* Dependencies  : awk, ip, nmcli, wget, dmidecode, awk, grep, hdpram, lsblk, inxi, network-tools
+* Arguments     :  help -h, version -v
 * Author        : Bruce E. Scott, 03 April 2019
 * Started On    : 12 April 12:44 p.m. EST 2019 v.0.3 Beta
 * Last Change   : 31 August 10:15 a.m. EST 2021
