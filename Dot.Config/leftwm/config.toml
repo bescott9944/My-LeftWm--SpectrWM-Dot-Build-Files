@@ -1,6 +1,6 @@
 modkey = "Mod1"
 workspaces = []
-tags = ["","", "", "", "", "", "", ""]
+tags = ["","", "", "", "Shell", "", "", "", "",]
 
 [[keybind]]
 command = "Execute"
@@ -28,15 +28,33 @@ key = "m"
 
 [[keybind]]
 command = "Execute"
-value = "tilix"
+value = "terminator"
 modifier = ["modkey"]
 key = "Return"
+
+[[keybind]]
+command = "Execute"
+value = "tilix"
+modifier = ["modkey", "Control"]
+key = "t"
 
 [[keybind]]
 command = "Execute"
 value = "sakura"
 modifier = ["modkey"]
 key = "o"
+
+[[keybind]]
+command = "Execute"
+value = "alacritty"
+modifier = ["modkey", "Control"]
+key = "r"
+
+[[keybind]]
+command = "Execute"
+value = "st"
+modifier = ["modkey", "Control"]
+key = "s"
 
 [[keybind]]
 command = "Execute"
@@ -180,6 +198,16 @@ modifier = ["modkey"]
 key = "h"
 
 [[keybind]]
+command = "FloatingToTile"
+modifier = ["modkey", "Shift"]
+key = "t"
+
+[[keybind]]
+command = "ToggleFullScreen"
+modifier = ["modkey"]
+key = "f"
+
+[[keybind]]
 command = "MoveToLastWorkspace"
 modifier = ["modkey"]
 key = "period"
@@ -225,6 +253,16 @@ modifier = ["modkey"]
 key = "j"
 
 [[keybind]]
+command = "FocusWindowUp"
+modifier = ["modkey"]
+key = "Up"
+
+[[keybind]]
+command = "FocusWindowDown"
+modifier = ["modkey"]
+key = "Down"
+
+[[keybind]]
 command = "NextLayout"
 modifier = ["modkey", "Control"]
 key = "Up"
@@ -245,6 +283,17 @@ modifier = ["modkey", "Shift"]
 key = "Left"
 
 [[keybind]]
+command = "SetLayout"
+value = "Monocle"
+modifier = ["modkey", "Shift"]
+key = "m"
+
+[[keybind]]
+command = "RotateTag"
+modifier = ["modkey"]
+key = "z"
+
+[[keybind]]
 command = "GotoTag"
 value = "1"
 modifier = ["modkey"]
@@ -351,3 +400,15 @@ command = "MoveToTag"
 value = "9"
 modifier = ["modkey", "Shift"]
 key = "9"
+
+# Create a scratchpad for alacritty
+[[scratchpad]]
+name = "Alacritty" # This is the name which is referenced when calling (case-sensitive)
+value = "alacritty" # The command to load the application if it isn't started
+
+[[keybind]]
+command = "ToggleScratchPad"
+value = "Alacritty" # Name set for the scratchpad
+modifier = ["modkey"]
+key = "p"
+

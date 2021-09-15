@@ -2,5 +2,5 @@
 
 # SSH login shorthand command: "sshin(x) (last two digits of IP)"
 
-ssh -X 192.168.1.1"$1"
+ssh -X 10.28.93.1"$1"
 

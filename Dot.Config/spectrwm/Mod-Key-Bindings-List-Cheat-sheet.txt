@@ -42,6 +42,16 @@
  program[sakura]        	= sakura
  bind[sakura] 		        = MOD+o
 
+  program[tilix] 	        = tilix
+ bind[tilix] 		        = MOD+control+t
+
+ program[stterm]	        = /home/bruce/.config/spectrwm/st.sh
+ bind[stterm] 		        = MOD+control+s
+
+ program[Alacritty]	        = alacritty
+ bind[Alacritty] 		    = MOD+control+r
+
+
 # program[menu]              = dmenu_run $dmenu_bottom -fn $bar_font -nb $bar_color -nf $bar_font_color -sb $bar_color_selected -sf $bar_font_color_selected
  program[menu]	            =dmenu.sh
  bind[menu]		            = MOD+d
@@ -89,9 +99,6 @@
 
  program[pcmanfm]	    = pcmanfm
  bind[pcmanfm] 		    = MOD+control+p
-
- program[stterm]	    = /home/bruce/.config/spectrwm/st.sh
- bind[stterm] 		    = MOD+control+s
 
  program[pavu]			= pavucontrol
  bind[pavu]		     	= MOD+Control+v

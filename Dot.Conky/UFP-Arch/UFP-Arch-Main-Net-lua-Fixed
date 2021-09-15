@@ -65,12 +65,12 @@ conky.config = {
 
 	--Placement
 
-	alignment = 'middle_left',						-- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
+	alignment = 'top_right',						-- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
 												-- middle_left,middle_middle,middle_right,none
 	--Arch Duoscreen
 	--gap_x = -1910,
-	gap_x = 435,									-- pixels between right or left border
-	gap_y = 60,									-- pixels between bottom or left border
+	gap_x = 25,									-- pixels between right or left border
+	gap_y = 10,									-- pixels between bottom or left border
 	minimum_height = 600,						-- minimum height of window
 	minimum_width = 300,						-- minimum height of window
 	maximum_width = 300,						-- maximum height of window
@@ -244,7 +244,7 @@ ${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /d
 ${offset 30}${color6}Boot :${color6} ${alignr}${offset -10}${fs_used /boot} / ${fs_size /boot}${color1}${alignr}${fs_bar 8,100 /boot}
 ${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda3}${alignr}${color FF6D00}${diskiograph_read sda3 8,100}
 ${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda3}${alignr}${color 00d8ff}${diskiograph_write sda3 8,100}
-enp7s0
+
 ${offset 30}${color6}Bruce :${color6} ${alignr}${offset -10}${fs_used /home/bruce} / ${fs_size /home/bruce}${color1}${alignr}${fs_bar 8,100 /home/bruce}
 ${offset 30}${color6}I/O Read:${color6} ${alignr}${offset -10}${diskio_read /dev/sda2}${alignr}${color FF6D00}${diskiograph_read /dev/sda2 8,100}
 ${offset 30}${color6}I/O Write:${color6} ${alignr}${offset -10}${diskio_write /dev/sda2}${alignr}${color 00d8ff}${diskiograph_write /dev/sda2 8,100}
@@ -260,3 +260,6 @@ ${color6}${offset 30}Eth Down:${color6} ${alignr}${offset -10$}${downspeed enp7s
 ${color6}${offset 30}Total Dl :${color 00d8ff}${totaldown enp7s0} ${alignr}${offset -30}${color6}Total UL: ${alignr}${offset -30}${color FF6D00}${totalup enp7s0}
 #
 ]];
+
+
+

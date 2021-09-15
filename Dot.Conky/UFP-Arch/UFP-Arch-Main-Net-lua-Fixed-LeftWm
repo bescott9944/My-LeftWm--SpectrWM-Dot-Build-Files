@@ -72,8 +72,8 @@ conky.config = {
 	gap_x = 435,									-- pixels between right or left border
 	gap_y = 60,									-- pixels between bottom or left border
 	minimum_height = 600,						-- minimum height of window
-	minimum_width = 300,						-- minimum height of window
-	maximum_width = 300,						-- maximum height of window
+	minimum_width = 390,						-- minimum height of window
+	maximum_width = 390,						-- maximum height of window
 
 	--Graphical
 
@@ -212,12 +212,12 @@ ${color6}${offset 30}CPU Core 4:${color6} ${alignr}${offset -30}${cpu cpu4}%${co
 ${color6}${offset 30}CPU Core 5:${color6} ${alignr}${offset -30}${cpu cpu5}%${color1}${alignr}${cpubar cpu5 8,100}
 ${color6}${offset 30}CPU Core 6:${color6} ${alignr}${offset -30}${cpu cpu6}%${color1}${alignr}${cpubar cpu6 8,100}
 #
-${color6}Top Processes ${color2}${goto 170}PID${goto 228}cpu%${goto 288}mem%${color}
-${voffset 4}     ${color6}1  -  ${color9}${top name 1}${alignr} ${goto 168}${top pid 1} ${goto 170} ${goto 222}${top cpu 1} ${goto 274}${top mem 1}
-     ${color6}2  -  ${color8}${top name 2}${alignr} ${goto 168}${top pid 2} ${goto 222}${top cpu 2} ${goto 274}${top mem 2}
-     ${color6}3  -  ${color7}${top name 3}${alignr} ${goto 168}${top pid 3} ${goto 222}${top cpu 3} ${goto 274}${top mem 3}
-     ${color6}4  -  ${top name 4}${alignr} ${goto 168}${top pid 4} ${goto 222}${top cpu 4} ${goto 274}${top mem 4}
-     ${color6}5  -  ${top name 5}${alignr} ${goto 168}${top pid 5} ${goto 222}${top cpu 5} ${goto 274}${top mem 5}
+${color6}Top Processes ${color2}${goto 234}PID${goto 301}cpu%${goto 358}mem%${color}
+${voffset 4}     ${color6}1  -  ${color9}${top name 1}${alignr} ${goto 220}${top pid 1} ${goto 298}${top cpu 1} ${goto 354}${top mem 1}
+     ${color6}2  -  ${color8}${top name 2}${alignr} ${goto 220}${top pid 2} ${goto 298}${top cpu 2} ${goto 354}${top mem 2}
+     ${color6}3  -  ${color7}${top name 3}${alignr} ${goto 220}${top pid 3} ${goto 298}${top cpu 3} ${goto 354}${top mem 3}
+     ${color6}4  -  ${top name 4}${alignr} ${goto 220}${top pid 4} ${goto 298}${top cpu 4} ${goto 354}${top mem 4}
+     ${color6}5  -  ${top name 5}${alignr} ${goto 220}${top pid 5} ${goto 298}${top cpu 5} ${goto 354}${top mem 5}
 #
 ${color5}${font Roboto:size=7.5}${voffset 2}M E M O R Y   ${hr 2}${font}${color}
 # ${color yellow}Memory ${hr 2}$color
@@ -229,12 +229,12 @@ ${color5}${font Roboto:size=7}M E M O R Y  U S A G E ${hr 2}${font}${color}
 # ${color2}${offset 30}RAM:  ${color6} ${alignr}${offset -10}${mem} / ${memmax}${alignr}${membar 8,100}
 # ${color2}${offset 30}Swap:  ${color6} ${alignr}${offset -10}${swap} / ${swapmax}${alignr}${swapbar 8,100}
 #
-${color6}Top Processes ${color2}${goto 170}PID${goto 228}cpu%${goto 288}mem%${color}
-${voffset 4}     ${color6}1  -  ${color9}${top_mem name 1}${alignr}${goto 168}${top_mem pid 1} ${goto 170} ${goto 222}${top_mem cpu 1} ${goto 274}${top_mem mem 1}
-     ${color6}2  -  ${color8}${top_mem name 2}${alignr}${goto 168}${top_mem pid 2} ${goto 170} ${goto 222}${top_mem cpu 2} ${goto 274}${top_mem mem 2}
-     ${color6}3  -  ${color7}${top_mem name 3}${alignr}${goto 168}${top_mem pid 3} ${goto 170} ${goto 222}${top_mem cpu 3} ${goto 274}${top_mem mem 3}
-     ${color6}4  -  ${top_mem name 4}${alignr}${goto 168}${top_mem pid 4} ${goto 170} ${goto 222}${top_mem cpu 4} ${goto 274}${top_mem mem 4}
-     ${color6}5  -  ${top_mem name 5}${alignr}${goto 168}${top_mem pid 5} ${goto 170} ${goto 222}${top_mem cpu 5} ${goto 274}${top_mem mem 5}
+${color6}Top Processes ${color2}${goto 234}PID${goto 301}cpu%${goto 358}mem%${color}
+${voffset 4}     ${color6}1  -  ${color9}${top_mem name 1}${alignr}${goto 220}${top_mem pid 1} ${goto 298}${top_mem cpu 1} ${goto 354}${top_mem mem 1}
+     ${color6}2  -  ${color8}${top_mem name 2}${alignr}${goto 220}${top_mem pid 2} ${goto 170} ${goto 298}${top_mem cpu 2} ${goto 354}${top_mem mem 2}
+     ${color6}3  -  ${color7}${top_mem name 3}${alignr}${goto 220}${top_mem pid 3} ${goto 170} ${goto 298}${top_mem cpu 3} ${goto 354}${top_mem mem 3}
+     ${color6}4  -  ${top_mem name 4}${alignr}${goto 220}${top_mem pid 4} ${goto 170} ${goto 298}${top_mem cpu 4} ${goto 354}${top_mem mem 4}
+     ${color6}5  -  ${top_mem name 5}${alignr}${goto 220}${top_mem pid 5} ${goto 170} ${goto 298}${top_mem cpu 5} ${goto 354}${top_mem mem 5}
 #
 ${color5}${font Roboto:size=7}D R I V E   S P A C E   ${hr 2}${font}${color}
 ${offset 30}${color6}Root HDD : ${alignr}${offset -10}${fs_used /} / ${fs_size /}${color1}${alignr}${fs_bar 8,100 /}
@@ -258,5 +258,8 @@ ${color6}${offset 30}IP Address: ${color6} ${alignr}${offset -10$}${color8}${add
 ${color6}${offset 30}Eth Up:${color6} ${alignr}${offset -10$}${upspeed enp7s0}${alignr}${color FF6D00}${upspeedgraph enp7s0 8,100}
 ${color6}${offset 30}Eth Down:${color6} ${alignr}${offset -10$}${downspeed enp7s0}${alignr}${color 00d8ff}${downspeedgraph enp7s0 8,100}
 ${color6}${offset 30}Total Dl :${color 00d8ff}${totaldown enp7s0} ${alignr}${offset -30}${color6}Total UL: ${alignr}${offset -30}${color FF6D00}${totalup enp7s0}
+
+${execpi 3600 /home/bruce/bin/ping_conky.sh}
+
 #
 ]];

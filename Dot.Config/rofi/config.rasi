@@ -301,3 +301,4 @@ configuration {
     text-color: @normal-foreground;
 }
 
+@import "/usr/share/rofi/themes/gruvbox-dark-soft.rasi"

@@ -2,8 +2,8 @@
 
 yad --form --center --undecorated --align=left --width=165 --borders=10 --height=320 --title="Exit" --skip-taskbar \
 	--image=/home/bruce/bin/b-spectrwm.png --image-on-top \
-	--field="  Shutdown!gnome-shutdown!Shut Down":fbtn "systemctl poweroff" \
-	--field="  Reboot!system-reboot!Restart":fbtn "systemctl reboot" \
 	--field="  Log Out!gnome-logout!Log out":fbtn "pkill spectrwm" \
+	--field="  Reboot!system-reboot!Restart":fbtn "systemctl reboot" \
+	--field="  Shutdown!gnome-shutdown!Shut Down":fbtn "systemctl poweroff" \
   --button=cancel!gtk-cancel --buttons-layout=center
 

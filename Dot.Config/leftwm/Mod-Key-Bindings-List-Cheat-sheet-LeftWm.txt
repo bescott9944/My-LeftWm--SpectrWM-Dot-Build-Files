@@ -74,9 +74,27 @@ key = "q"
 #------------------------------------------------------------------------------
 [[keybind]]
 command = "Execute"
-value = "tilix"
+value = "terminator"
 modifier = ["modkey"]
 key = "Return"
+
+[[keybind]]
+command = "Execute"
+value = "tilix"
+modifier = ["modkey", "Control"]
+key = "t"
+
+[[keybind]]
+command = "Execute"
+value = "alacritty"
+modifier = ["modkey", "Control"]
+key = "r"
+
+[[keybind]]
+command = "Execute"
+value = "st"
+modifier = ["modkey", "Control"]
+key = "s"
 
 [[keybind]]
 command = "Execute"
@@ -230,7 +248,7 @@ modifier = ["modkey"]
 key = "x"
 
 #------------------------------------------------------------------------------
-#				Indecrease / Decrease Keybindings
+#				Indecrease / Decrease Width Keybindings
 #------------------------------------------------------------------------------
 [[keybind]]
 command = "IncreaseMainWidth"

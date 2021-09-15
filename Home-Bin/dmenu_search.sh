@@ -3,22 +3,23 @@
 # Small dmenu script that asks the user which search engine to use then ask for the user's query.
 # Opens a webpage in the user's default browser
 
-#The $BROWSER environement variable might not be set for you in which case you should either set it,
-# or change every instance of $BROWSER in this script to your browser command of choice
-# e.g: 'google-chrome', 'firefox', 'brave'
+#The $BROWSER environement variable might not be set for you in which case the script will
+# use Firefox by default.
+if [[ -z "${BROWSER}" ]]; then
+    BROWSER=$'google-chrome-stable'
+
+fi
 
 # If the user enters something other then one of the proposed search engines, the script defaults to google search the user's input
 
-#set default BROWSER
-BROWSER=google-chrome
-
-# Function the get the query of the user
-#set $BROWSER
+# Function to get the query of the user
+# exits on empty query
 get_query() {
-        query=$(echo "" | dmenu -b -p Query: | sed 's/ /+/g')
-        
+        query=$(echo "" | dmenu -b -p "Search $engine_select": | sed 's/ /+/g')
+        if [ $query == '']; then
+            exit
+        fi
 }
-
 # List of all the proposed engine
 engine_list=$'Google
 ArchWiki
@@ -45,8 +46,12 @@ case $engine_select in
         get_query
         $BROWSER "https://duckduckgo.com/?q="$query
         ;;
+    "")
+        ;;
+
+
     *)
-        query=$engine_select
+        query=$(echo $engine_select | sed 's/ /+/g')
         $BROWSER "https://www.google.com/search?q="$query 
         ;;
 esac

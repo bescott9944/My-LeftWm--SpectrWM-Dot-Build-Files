@@ -1,5 +1,5 @@
 #!/bin/bash
-# OTB's script
+# OTB's script for network speed
  
 R1=`cat /sys/class/net/enp7s0/statistics/rx_bytes`
 T1=`cat /sys/class/net/enp7s0/statistics/tx_bytes`
